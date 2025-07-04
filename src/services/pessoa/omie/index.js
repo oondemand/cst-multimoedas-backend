@@ -23,7 +23,7 @@ const importarDoOmie = async ({ event, appKey }) => {
     caracteristicas,
   });
 
-  await Pessoa.findOneAndUpdate(
+  const pessoa = await Pessoa.findOneAndUpdate(
     {
       $and: [
         {
@@ -38,6 +38,8 @@ const importarDoOmie = async ({ event, appKey }) => {
     pessoaObj,
     { new: true }
   );
+
+  await pessoa.save();
 };
 
 module.exports = { importarDoOmie };

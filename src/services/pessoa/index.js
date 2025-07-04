@@ -3,6 +3,7 @@ const Pessoa = require("../../models/Pessoa");
 const FiltersUtils = require("../../utils/pagination/filter");
 const PaginationUtils = require("../../utils/pagination");
 const PessoaNaoEncontradaError = require("../errors/pessoa/pessoaNaoEncontradaError");
+const { LISTA_PAISES_OMIE } = require("../../constants/omie/paises");
 
 const criar = async ({ pessoa }) => {
   return await PessoaBusiness.criar({ pessoa });
@@ -12,21 +13,6 @@ const atualizar = async ({ id, pessoa }) => {
   const pessoaAtualizada = await Pessoa.findByIdAndUpdate(id, pessoa, {
     new: true,
   });
-
-  if (pessoaAtualizada.tipo === "pj" || pessoaAtualizada.tipo === "ext") {
-    pessoaAtualizada.pessoaFisica = {
-      apelido: null,
-      dataNascimento: null,
-      rg: null,
-    };
-  }
-
-  if (pessoaAtualizada.tipo === "pf" || pessoaAtualizada.tipo === "ext") {
-    pessoaAtualizada.pessoaJuridica = {
-      nomeFantasia: null,
-      regimeTributario: null,
-    };
-  }
 
   await pessoaAtualizada.save();
   if (!pessoaAtualizada) return new PessoaNaoEncontradaError();

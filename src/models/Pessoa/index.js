@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const pessoaFisica = require("./pessoaFisica");
 const pessoaJuridica = require("./pessoaJuridica");
+const { LISTA_PAISES_OMIE } = require("../../constants/omie/paises");
 const { Schema } = mongoose;
 
 const schema = new Schema(
@@ -46,6 +47,39 @@ const schema = new Schema(
 
 schema.virtual("label").get(function () {
   return `${this.nome} - ${this.documento}`;
+});
+
+schema.pre("save", function (next) {
+  if (this.tipo === "pj" || this.tipo === "ext") {
+    this.pessoaFisica = {
+      apelido: null,
+      dataNascimento: null,
+      rg: null,
+    };
+  }
+
+  if (this.tipo === "pf" || this.tipo === "ext") {
+    this.pessoaJuridica = {
+      nomeFantasia: null,
+      regimeTributario: null,
+    };
+  }
+
+  if (this?.endereco?.pais?.codigo) {
+    const paisOmie = LISTA_PAISES_OMIE.find(
+      (e) => e?.cCodigo === this.endereco.pais.codigo
+    );
+
+    if (paisOmie) {
+      this.endereco.pais = {
+        nome: paisOmie.cDescricao,
+        codigo: paisOmie.cCodigo,
+        sigla: paisOmie.cCodigoISO,
+      };
+    }
+  }
+
+  next();
 });
 
 module.exports = mongoose.model("Pessoa", schema);
