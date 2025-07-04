@@ -106,7 +106,7 @@ const consultar = async (appKey, appSecret, codCliente) => {
   } catch (error) {
     if (
       error.response?.data?.faultstring?.includes(
-        "Consumo redundante detectado",
+        "Consumo redundante detectado"
       )
     )
       await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
@@ -138,7 +138,7 @@ const incluir = async (appKey, appSecret, cliente, maxTentativas = 3) => {
       tentativas++;
       if (
         error.response?.data?.faultstring?.includes(
-          "Consumo redundante detectado",
+          "Consumo redundante detectado"
         )
       ) {
         await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
@@ -174,7 +174,7 @@ const update = async (appKey, appSecret, cliente, maxTentativas = 3) => {
       tentativas++;
       if (
         error.response?.data?.faultstring?.includes(
-          "Consumo redundante detectado",
+          "Consumo redundante detectado"
         )
       ) {
         await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
@@ -234,7 +234,7 @@ const pesquisarPorCNPJ = async (appKey, appSecret, cnpj, maxTentativas = 3) => {
     } catch (error) {
       if (
         error.response?.data?.faultstring?.includes(
-          "ERROR: Não existem registros para a página [1]!",
+          "ERROR: Não existem registros para a página [1]!"
         )
       ) {
         return null;
@@ -243,7 +243,7 @@ const pesquisarPorCNPJ = async (appKey, appSecret, cnpj, maxTentativas = 3) => {
       tentativas++;
       if (
         error.response?.data?.faultstring?.includes(
-          "API bloqueada por consumo indevido.",
+          "API bloqueada por consumo indevido."
         )
       ) {
         await new Promise((resolve) => setTimeout(resolve, 60 * 1000 * 5));
@@ -251,7 +251,7 @@ const pesquisarPorCNPJ = async (appKey, appSecret, cnpj, maxTentativas = 3) => {
 
       if (
         error.response?.data?.faultstring?.includes(
-          "Consumo redundante detectado",
+          "Consumo redundante detectado"
         )
       ) {
         await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
@@ -267,7 +267,7 @@ const pesquisarCodIntegracao = async (
   appKey,
   appSecret,
   codigo_cliente_integracao,
-  maxTentativas = 3,
+  maxTentativas = 3
 ) => {
   const cacheKey = `codigo_cliente_integracao_${codigo_cliente_integracao}`;
   const now = Date.now();
@@ -311,7 +311,7 @@ const pesquisarCodIntegracao = async (
     } catch (error) {
       if (
         error.response?.data?.faultstring?.includes(
-          "ERROR: Não existem registros para a página [1]!",
+          "ERROR: Não existem registros para a página [1]!"
         )
       ) {
         return null;
@@ -320,7 +320,7 @@ const pesquisarCodIntegracao = async (
       tentativas++;
       if (
         error.response?.data?.faultstring?.includes(
-          "API bloqueada por consumo indevido.",
+          "API bloqueada por consumo indevido."
         )
       ) {
         await new Promise((resolve) => setTimeout(resolve, 60 * 1000 * 5));
@@ -328,7 +328,7 @@ const pesquisarCodIntegracao = async (
 
       if (
         error.response?.data?.faultstring?.includes(
-          "Consumo redundante detectado",
+          "Consumo redundante detectado"
         )
       ) {
         await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
@@ -339,11 +339,33 @@ const pesquisarCodIntegracao = async (
   throw `Falha ao buscar prestador após ${maxTentativas} tentativas.`;
 };
 
+const consultarCaracteristicas = async ({
+  appKey,
+  appSecret,
+  codigo_cliente_omie,
+}) => {
+  try {
+    const body = {
+      call: "ConsultarCaractCliente",
+      app_key: appKey,
+      app_secret: appSecret,
+      param: [{ codigo_cliente_omie }],
+    };
+
+    const response = await apiOmie.post("geral/clientescaract/", body);
+    return response?.data?.caracteristicas;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+
 module.exports = {
   criarFornecedor,
   incluir,
   pesquisarPorCNPJ,
   consultar,
   pesquisarCodIntegracao,
+  consultarCaracteristicas,
   update,
 };

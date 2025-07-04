@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 app.use("/", require("./routers/statusRouter"));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", require("./routers/authRouter"));
-// app.use("/webhooks/", require("./routers/webhookRouter"));
+app.use("/webhooks/", require("./routers/webhookRouter"));
 app.use("/ativacao", require("./routers/seedRouter"));
 
 app.get("/image/:filename", (req, res) => {

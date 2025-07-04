@@ -16,17 +16,27 @@ const schema = new Schema(
       type: String,
       maxlength: 100,
     },
-    pessoaFisica: pessoaFisica,
-    pessoaJuridica: pessoaJuridica,
+    endereco: {
+      pais: {
+        nome: String,
+        sigla: String,
+        codigo: String,
+      },
+    },
     documento: {
       type: String,
       maxlength: 20,
     },
+
     status: {
       type: String,
       enum: ["ativo", "inativo", "arquivado"],
       default: "ativo",
     },
+
+    codigo_cliente_omie: String,
+    pessoaFisica: pessoaFisica,
+    pessoaJuridica: pessoaJuridica,
   },
   {
     toJSON: { virtuals: true },
