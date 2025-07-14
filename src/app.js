@@ -29,6 +29,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", require("./routers/authRouter"));
 app.use("/webhooks/", require("./routers/webhookRouter"));
 app.use("/ativacao", require("./routers/seedRouter"));
+app.use("/tipo-acesso", require("./routers/tipoAcessoRouter"));
 
 app.get("/image/:filename", (req, res) => {
   const filename = req.params.filename;
