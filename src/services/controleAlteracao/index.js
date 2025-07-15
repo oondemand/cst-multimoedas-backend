@@ -58,8 +58,7 @@ const listarComPaginacao = async ({
       .skip(skip)
       .limit(limite)
       .sort({ dataHora: -1 })
-      .select("-__v")
-      .populate("usuario", "-__v -senha -permissoes"),
+      .select("-__v"),
     ControleAlteracao.countDocuments(queryCombinada),
   ]);
 

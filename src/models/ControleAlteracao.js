@@ -8,8 +8,8 @@ const controleAlteracaoSchema = new mongoose.Schema({
     required: true,
   },
   usuario: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Usuario",
+    nome: String,
+    email: String,
   },
   entidade: {
     type: String,

@@ -17,12 +17,17 @@ function registrarAcaoMiddleware({ entidade, acao }) {
       const { message, ...rest } = responseBody || {};
       const registradoAlterado = rest[Object.keys(rest)?.[0]];
 
+      console.log("REQ.usuario", req.usuario.nome);
+
       if (res.statusCode < 400) {
         registrarAcao({
           entidade,
           acao,
           origem,
-          usuario: req?.usuario?.id,
+          usuario: {
+            nome: req?.usuario?.nome,
+            email: req?.usuario?.email,
+          },
           idRegistro: registradoAlterado?._id,
           dadosAtualizados: registradoAlterado,
         });
