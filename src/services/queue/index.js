@@ -20,6 +20,7 @@ const queue = ({ handler, limit = 1, next, onError }) => {
       await handler(item);
     } catch (error) {
       onError?.(error);
+      console.error("🔴 [QUEUE ERROR]", error);
     } finally {
       activeTasks--;
       runNext();

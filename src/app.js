@@ -74,6 +74,7 @@ app.use("/importacoes", require("./routers/importacaoRouter"));
 app.use("/sistema", require("./routers/sistemaRouter"));
 app.use("/lista-omie", require("./routers/listasOmieRouter"));
 app.use("/assistentes", require("./routers/assistenteRouter"));
+app.use("/integracao", require("./routers/integracaoRouter"));
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 app.use(errorMiddleware);
