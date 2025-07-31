@@ -36,3 +36,12 @@ exports.asyncHandler = (callback) => {
     });
   };
 };
+
+exports.attempt = async (callback) => {
+  try {
+    const result = await callback();
+    return [result, null];
+  } catch (err) {
+    return [null, err];
+  }
+};
