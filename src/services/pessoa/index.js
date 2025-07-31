@@ -10,9 +10,11 @@ const criar = async ({ pessoa }) => {
 };
 
 const atualizar = async ({ id, pessoa }) => {
-  const pessoaAtualizada = await Pessoa.findByIdAndUpdate(id, pessoa, {
-    new: true,
-  });
+  const pessoaAtualizada = await Pessoa.findByIdAndUpdate(
+    id,
+    { ...pessoa, status_sincronizacao_omie: "pendente" },
+    { new: true }
+  );
 
   await pessoaAtualizada.save();
   if (!pessoaAtualizada) return new PessoaNaoEncontradaError();

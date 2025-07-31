@@ -6,38 +6,36 @@ const { Schema } = mongoose;
 
 const schema = new Schema(
   {
-    grupo: {
+    grupo: { type: String },
+    email: {
       type: String,
-    },
-    tipo: {
-      type: String,
-      enum: ["pf", "pj", "ext"],
-    },
-    nome: {
-      type: String,
-      maxlength: 100,
-    },
-    endereco: {
-      pais: {
-        nome: String,
-        sigla: String,
-        codigo: String,
+      lowercase: true,
+      validate: {
+        validator: function (v) {
+          return v === null ? true : /\S+@\S+\.\S+/.test(v);
+        },
+        message: (props) => `${props.value} não é um e-mail válido!`,
       },
-    },
-    documento: {
-      type: String,
-      maxlength: 20,
-    },
 
+      required: false,
+    },
+    tipo: { type: String, enum: ["pf", "pj", "ext"] },
+    nome: { type: String, maxlength: 100 },
+    endereco: { pais: { nome: String, sigla: String, codigo: String } },
+    documento: { type: String, maxlength: 20 },
     status: {
       type: String,
       enum: ["ativo", "inativo", "arquivado"],
       default: "ativo",
     },
-
     codigo_cliente_omie: String,
     pessoaFisica: pessoaFisica,
     pessoaJuridica: pessoaJuridica,
+    status_sincronizacao_omie: {
+      type: String,
+      enum: ["sucesso", "pendente", "erro"],
+      default: "pendente",
+    },
   },
   {
     toJSON: { virtuals: true },

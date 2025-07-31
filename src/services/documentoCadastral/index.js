@@ -105,6 +105,14 @@ const removerArquivo = async ({ id, arquivoId }) => {
   return arquivo;
 };
 
+const listarPorPessoa = async ({ pessoaId }) => {
+  const documentosCadastrais = await DocumentoCadastral.find({
+    pessoa: pessoaId,
+  }).populate("arquivo");
+
+  return documentosCadastrais;
+};
+
 module.exports = {
   criar,
   excluir,
@@ -112,5 +120,6 @@ module.exports = {
   buscarPorId,
   anexarArquivo,
   removerArquivo,
+  listarPorPessoa,
   listarComPaginacao,
 };

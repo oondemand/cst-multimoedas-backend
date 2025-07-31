@@ -129,29 +129,19 @@ const listar = async (req, res) => {
   });
 };
 
-// const listarDocumentoCadastralPorPrestador = async (req, res) => {
-//   try {
-//     const { prestadorId } = req.params;
+const listarPorPessoa = async (req, res) => {
+  const { pessoaId } = req.params;
 
-//     const documentosCadastrais = await DocumentoCadastral.find({
-//       prestador: prestadorId,
-//       statusValidacao: "aprovado",
-//     }).populate("arquivo");
+  const documentosCadastrais = await DocumentoCadastralService.listarPorPessoa({
+    pessoaId,
+  });
 
-//     return sendResponse({
-//       res,
-//       statusCode: 200,
-//       documentosCadastrais,
-//     });
-//   } catch (error) {
-//     return sendErrorResponse({
-//       res,
-//       statusCode: 400,
-//       message: "Erro ao buscar documentos cadastrais",
-//       error: error.message,
-//     });
-//   }
-// };
+  return sendResponse({
+    res,
+    statusCode: 200,
+    documentosCadastrais,
+  });
+};
 
 // const listarDocumentoCadastralPorUsuarioPrestador = async (req, res) => {
 //   try {
@@ -298,6 +288,7 @@ module.exports = {
   atualizar,
   anexarArquivo,
   removerArquivo,
+  listarPorPessoa,
   aprovarDocumento,
   reprovarDocumento,
 };
