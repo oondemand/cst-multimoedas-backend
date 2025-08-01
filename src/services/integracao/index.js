@@ -1,4 +1,6 @@
 const Integracao = require("../../models/Integracao");
+const FiltersUtils = require("../../utils/pagination/filter");
+const PaginationUtils = require("../../utils/pagination");
 
 const listarTodos = async ({ tipo, direcao, arquivado = false, time }) => {
   const umDiaEmMilissegundos = 1000 * 60 * 60 * 24;
@@ -13,6 +15,42 @@ const listarTodos = async ({ tipo, direcao, arquivado = false, time }) => {
   return results;
 };
 
+const listarComPaginacao = async ({
+  pageIndex,
+  pageSize,
+  searchTerm,
+  filtros,
+  direcao,
+  tipo,
+  ...rest
+}) => {
+  const camposBusca = ["titulo", "status", "motivoArquivamento"];
+
+  const query = FiltersUtils.buildQuery({
+    filtros,
+    schema: Integracao.schema,
+    searchTerm,
+    camposBusca,
+  });
+
+  const { page, limite, skip } = PaginationUtils.buildPaginationQuery({
+    pageIndex,
+    pageSize,
+  });
+
+  const [integracoes, totalDeIntegracoes] = await Promise.all([
+    Integracao.find({
+      $and: [...query, { direcao: direcao, tipo: tipo }],
+    })
+      .skip(skip)
+      .limit(limite),
+    Integracao.countDocuments({
+      $and: [...query, { direcao: direcao, tipo: tipo }],
+    }),
+  ]);
+
+  return { integracoes, totalDeIntegracoes, page, limite };
+};
 const buscarTaskAtiva = async ({ tipo, direcao }) => {
   const minExecutionTime = new Date(Date.now() - 1000 * 60); // 1min
 
@@ -53,4 +91,4 @@ const buscarTaskAtiva = async ({ tipo, direcao }) => {
   return integracao;
 };
 
-module.exports = { listarTodos, buscarTaskAtiva };
+module.exports = { listarTodos, buscarTaskAtiva, listarComPaginacao };

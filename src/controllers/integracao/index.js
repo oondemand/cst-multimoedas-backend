@@ -1,6 +1,6 @@
 const IntegracaoService = require("../../services/integracao");
 const Helpers = require("../../utils/helpers");
-const PessoaQueue = require("../../services/pessoa/omie");
+const PessoaSync = require("../../services/pessoa/omie");
 
 const listar = async (req, res) => {
   const results = await IntegracaoService.listarTodos({
@@ -17,7 +17,7 @@ const listar = async (req, res) => {
 };
 
 const processar = async (req, res) => {
-  PessoaQueue.queue.centralOmie.start();
+  PessoaSync.centralOmie.queue.start();
 
   Helpers.sendResponse({
     res,
@@ -25,7 +25,34 @@ const processar = async (req, res) => {
   });
 };
 
+const listaComPaginacao = async (req, res) => {
+  const { direcao, tipo, pageIndex, pageSize, searchTerm, ...rest } = req.query;
+
+  const { integracoes, limite, page, totalDeIntegracoes } =
+    await IntegracaoService.listarComPaginacao({
+      direcao,
+      tipo,
+      pageSize,
+      pageIndex,
+      searchTerm,
+      filtros: rest,
+    });
+
+  Helpers.sendPaginatedResponse({
+    res,
+    results: integracoes,
+    statusCode: 200,
+    pagination: {
+      currentPage: page,
+      itemsPerPage: limite,
+      totalItems: totalDeIntegracoes,
+      totalPages: totalDeIntegracoes / limite,
+    },
+  });
+};
+
 module.exports = {
   listar,
   processar,
+  listaComPaginacao,
 };

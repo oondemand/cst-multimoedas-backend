@@ -18,7 +18,7 @@ const atualizar = async ({ id, pessoa }) => {
     { new: true }
   );
 
-  sync.omie({
+  sync.centralOmie.addTask({
     pessoa: pessoaAtualizada,
   });
 

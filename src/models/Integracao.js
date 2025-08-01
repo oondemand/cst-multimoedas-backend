@@ -15,7 +15,7 @@ const integracaoSchema = new mongoose.Schema(
     parentId: { type: mongoose.Schema.Types.ObjectId, required: true },
     requisicao: { type: { url: String, body: mongoose.Schema.Types.Mixed } },
     resposta: mongoose.Schema.Types.Mixed,
-    erros: mongoose.Schema.Types.Mixed,
+    erros: { type: [mongoose.Schema.Types.Mixed], default: [] },
     tentativas: { type: Number, default: 0 },
     payload: mongoose.Schema.Types.Mixed,
     arquivado: { type: Boolean, default: false },
