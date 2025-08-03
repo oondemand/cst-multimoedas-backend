@@ -12,7 +12,7 @@ const integracaoSchema = new mongoose.Schema(
     },
     etapa: { type: String, required: true },
     // etapas: [{ nome: String, codigo: String }],
-    parentId: { type: mongoose.Schema.Types.ObjectId, required: true },
+    parentId: { type: mongoose.Schema.Types.ObjectId },
     requisicao: { type: { url: String, body: mongoose.Schema.Types.Mixed } },
     resposta: mongoose.Schema.Types.Mixed,
     erros: { type: [mongoose.Schema.Types.Mixed], default: [] },

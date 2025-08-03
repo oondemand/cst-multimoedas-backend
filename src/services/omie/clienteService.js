@@ -15,6 +15,7 @@ const consultar = async (appKey, appSecret, codCliente) => {
       call: "ConsultarCliente",
       app_key: appKey,
       app_secret: appSecret,
+       exibir_caracteristicas: "S",
       param: [
         {
           codigo_cliente_omie: codCliente,
@@ -96,6 +97,7 @@ const pesquisarPorCNPJ = async (appKey, appSecret, cnpj, maxTentativas = 3) => {
           {
             pagina: 1,
             registros_por_pagina: 50,
+             exibir_caracteristicas: "S",
             clientesFiltro: {
               cnpj_cpf: cnpj,
             },
