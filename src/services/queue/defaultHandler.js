@@ -19,7 +19,10 @@ const processarIntegracao = async ({
     );
 
     if (error) {
-      integracao.erros = [...integracao.erros, error?.response?.data];
+      integracao.erros = [
+        ...integracao.erros,
+        error?.response?.data ?? error?.message,
+      ];
       integracao.tentativas > 3
         ? (integracao.etapa = ETAPAS_DEFAULT.erro.codigo)
         : (integracao.etapa = ETAPAS_DEFAULT.reprocessar.codigo);
@@ -32,8 +35,11 @@ const processarIntegracao = async ({
       await onSuccess?.(integracao, result);
     }
 
+    console.log(error);
+
     await integracao.save();
   } catch (error) {
+    console.log("Erro", error);
     integracao.etapa = ETAPAS_DEFAULT.erro.codigo;
     integracao.erros = [...integracao.erros, error?.message];
     onError?.(integracao, error);
