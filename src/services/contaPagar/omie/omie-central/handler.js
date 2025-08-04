@@ -18,7 +18,11 @@ const handler = async (integracao) => {
       if (topic === "Financas.ContaPagar.Alterado") {
         const contaPagar = await ContaPagar.findOneAndUpdate(
           { codigo_lancamento_omie: integracao.externalId },
-          { ...integracao.requisicao.body.event }
+          {
+            ...integracao.requisicao.body.event,
+            status_titulo:
+              integracao.requisicao.body.event?.situacao?.toUpperCase(),
+          }
         );
 
         if (!contaPagar) throw new ContaPagarNaoEncontradoError();
@@ -100,7 +104,7 @@ const handler = async (integracao) => {
 
         const ticket = await ServicoTomadoTicket.findOneAndUpdate(
           { contaPagarOmie: contaPagar._id },
-          { etapa: "conta-pagar-omie-central", status: "trabalhando" }
+          { status: "concluido", etapa: "concluido" }
         );
 
         integracao.parentId = contaPagar;

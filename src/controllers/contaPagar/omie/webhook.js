@@ -26,14 +26,27 @@ const SyncContaPagar = async (req, res) => {
 
   if (
     [
-      "Financas.ContaPagar.Alterado",
-      "Financas.ContaPagar.BaixaRealizada",
-      "Financas.ContaPagar.BaixaCancelada",
-      "Financas.ContaPagar.Excluido",
+      "Financas.ContaPagar.Alterado", 
+      "Financas.ContaPagar.Excluido"
     ].includes(topic)
   ) {
     ContaPagarSync.omieCentral.addTask({
       contaPagarOmie: event,
+      requisicao: {
+        url: `${req.protocol}://${req.get("host")}${req.originalUrl}`,
+        body: req.body,
+      },
+    });
+  }
+
+  if (
+    [
+      "Financas.ContaPagar.BaixaRealizada",
+      "Financas.ContaPagar.BaixaCancelada",
+    ].includes(topic)
+  ) {
+    ContaPagarSync.omieCentral.addTask({
+      contaPagarOmie: event[0]?.conta_a_pagar[0],
       requisicao: {
         url: `${req.protocol}://${req.get("host")}${req.originalUrl}`,
         body: req.body,
