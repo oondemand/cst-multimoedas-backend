@@ -35,11 +35,8 @@ const processarIntegracao = async ({
       await onSuccess?.(integracao, result);
     }
 
-    console.log(error);
-
     await integracao.save();
   } catch (error) {
-    console.log("Erro", error);
     integracao.etapa = ETAPAS_DEFAULT.erro.codigo;
     integracao.erros = [...integracao.erros, error?.message];
     onError?.(integracao, error);

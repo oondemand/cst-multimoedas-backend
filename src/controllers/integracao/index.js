@@ -18,8 +18,10 @@ const listar = async (req, res) => {
 };
 
 const processar = async (req, res) => {
-  PessoaSync.centralOmie.queue.start();
-  ContaPagarSync.centralOmie.queue.start();
+  // PessoaSync.centralOmie.queue.start();
+  PessoaSync.omieCentral.queue.start();
+
+  // ContaPagarSync.centralOmie.queue.start();
 
   Helpers.sendResponse({
     res,

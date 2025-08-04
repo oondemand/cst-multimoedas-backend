@@ -4,7 +4,11 @@ const integracaoSchema = new mongoose.Schema(
   {
     executadoEm: Date,
     titulo: { type: String, required: true },
-    tipo: { type: String, required: true, enum: ["pessoa", "conta_pagar"] },
+    tipo: {
+      type: String,
+      required: true,
+      enum: ["pessoa", "conta_pagar", "anexos"],
+    },
     direcao: {
       type: String,
       required: true,
@@ -13,6 +17,7 @@ const integracaoSchema = new mongoose.Schema(
     etapa: { type: String, required: true },
     // etapas: [{ nome: String, codigo: String }],
     parentId: { type: mongoose.Schema.Types.ObjectId },
+    externalId: String,
     requisicao: { type: { url: String, body: mongoose.Schema.Types.Mixed } },
     resposta: mongoose.Schema.Types.Mixed,
     erros: { type: [mongoose.Schema.Types.Mixed], default: [] },

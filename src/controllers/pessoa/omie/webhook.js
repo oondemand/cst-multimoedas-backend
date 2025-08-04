@@ -1,25 +1,40 @@
-const { sendResponse } = require("../../../utils/helpers");
-const PessoaService = require("../../../services/pessoa/omie");
+const Helpers = require("../../../utils/helpers");
+const PessoaSync = require("../../../services/pessoa/omie");
+const BaseOmie = require("../../../models/BaseOmie");
 
 const SyncPessoa = async (req, res) => {
   const { event, ping, topic, appKey } = req.body;
 
   if (ping === "omie") {
-    return sendResponse({
+    return Helpers.sendResponse({
       res,
       statusCode: 200,
       message: "pong",
     });
   }
 
-  if (topic === "ClienteFornecedor.Alterado") {
-    // await PessoaService.importarDoOmie({
-    //   event,
-    //   appKey,
-    // });
+  const baseOmie = BaseOmie.findOne({ appKey });
+
+  if (!baseOmie) {
+    return Helpers.sendErrorResponse({
+      res,
+      statusCode: 400,
+      message: "Base omie não encontrada",
+      error: "Base omie não encontrada",
+    });
   }
 
-  return sendResponse({
+  if (topic === "ClienteFornecedor.Alterado") {
+    PessoaSync.omieCentral.addTask({
+      clienteOmie: event,
+      requisicao: {
+        url: `${req.protocol}://${req.get("host")}${req.originalUrl}`,
+        body: req.body,
+      },
+    });
+  }
+
+  return Helpers.sendResponse({
     res,
     statusCode: 200,
     message: "Webhook recebido, cliente/prestador sendo sincronizado.",
