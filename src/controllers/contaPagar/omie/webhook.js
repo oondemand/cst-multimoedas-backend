@@ -1,8 +1,8 @@
 const Helpers = require("../../../utils/helpers");
-const PessoaSync = require("../../../services/pessoa/omie");
 const BaseOmie = require("../../../models/BaseOmie");
+const ContaPagarSync = require("../../../services/contaPagar/omie");
 
-const SyncPessoa = async (req, res) => {
+const SyncContaPagar = async (req, res) => {
   const { event, ping, topic, appKey } = req.body;
 
   if (ping === "omie") {
@@ -25,12 +25,15 @@ const SyncPessoa = async (req, res) => {
   }
 
   if (
-    ["ClienteFornecedor.Alterado", "ClienteFornecedor.Adicionado"].includes(
-      topic
-    )
+    [
+      "Financas.ContaPagar.Alterado",
+      "Financas.ContaPagar.BaixaRealizada",
+      "Financas.ContaPagar.BaixaCancelada",
+      "Financas.ContaPagar.Excluido",
+    ].includes(topic)
   ) {
-    PessoaSync.omieCentral.addTask({
-      clienteOmie: event,
+    ContaPagarSync.omieCentral.addTask({
+      contaPagarOmie: event,
       requisicao: {
         url: `${req.protocol}://${req.get("host")}${req.originalUrl}`,
         body: req.body,
@@ -46,5 +49,5 @@ const SyncPessoa = async (req, res) => {
 };
 
 module.exports = {
-  SyncPessoa,
+  SyncContaPagar,
 };

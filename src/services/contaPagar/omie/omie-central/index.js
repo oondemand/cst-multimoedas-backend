@@ -7,24 +7,27 @@ const queue = Queue({
   handler,
   next: () =>
     IntegracaoService.buscarTaskAtiva({
-      direcao: "central_omie",
+      direcao: "omie_central",
       tipo: "conta_pagar",
     }),
 });
 
-const addTask = async ({ ticket, contaPagar }) => {
+const addTask = async ({ contaPagarOmie, requisicao }) => {
   await Integracao.updateMany(
-    { parentId: contaPagar._id, etapa: { $nin: ["sucesso", "processando"] } },
+    {
+      externalId: contaPagarOmie.codigo_lancamento_omie,
+      etapa: { $nin: ["sucesso", "processando"] },
+    },
     { arquivado: true, motivoArquivamento: "Duplicidade" }
   );
 
   await Integracao.create({
-    titulo: `Central -> Omie: ${ticket?.titulo}`,
+    titulo: `Central <- Omie`,
     tipo: "conta_pagar",
-    direcao: "central_omie",
-    parentId: contaPagar._id,
-    payload: contaPagar,
+    direcao: "omie_central",
+    externalId: contaPagarOmie.codigo_lancamento_omie,
     etapa: "requisicao",
+    requisicao,
   });
 };
 

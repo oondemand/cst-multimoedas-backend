@@ -13,9 +13,9 @@ const handler = async (integracao) => {
     executor: async (integracao) => {
       const { appKey, appSecret } = await BaseOmie.findOne({ status: "ativo" });
 
-      const ticket = await ServicoTomadoTicket.findById(
-        integracao.parentId
-      ).populate("servicos pessoa");
+      const ticket = await ServicoTomadoTicket.findOne({
+        contaPagarOmie: integracao.parentId,
+      }).populate("servicos pessoa");
 
       const clienteOmie = await ClienteService.buscarClienteOmie({
         appKey,
@@ -61,12 +61,17 @@ const handler = async (integracao) => {
         { new: true }
       );
 
+      // if (ticket.arquivos && ticket.arquivos.length > 0) {
+      // }
+
       // Criar integracao de anexos
 
       return contaPagarOmie;
     },
     onSuccess: async (integracao, resultado) => {
-      const ticket = await ServicoTomadoTicket.findById(integracao.parentId);
+      const ticket = await ServicoTomadoTicket.findOne({
+        contaPagarOmie: integracao.parentId,
+      });
       if (ticket.arquivos && ticket.arquivos.length > 0) {
         integracao.etapa = "anexos";
         await integracao.save();

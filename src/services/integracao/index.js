@@ -1,6 +1,7 @@
 const Integracao = require("../../models/Integracao");
 const FiltersUtils = require("../../utils/pagination/filter");
 const PaginationUtils = require("../../utils/pagination");
+const IntegracaoNaoEncontradoError = require("../errors/integracao/integracaoNaoEncontrado");
 
 const listarTodos = async ({ tipo, direcao, arquivado = false, time }) => {
   const umDiaEmMilissegundos = 1000 * 60 * 60 * 24;
@@ -13,6 +14,25 @@ const listarTodos = async ({ tipo, direcao, arquivado = false, time }) => {
   }).sort({ executadoEm: -1 });
 
   return results;
+};
+
+const arquivar = async ({ id, integracao }) => {
+  const integracaoAtualizada = await Integracao.findByIdAndUpdate(id, {
+    arquivado: true,
+    motivoArquivamento: "Solicitado pelo usuário",
+  });
+
+  if (!integracaoAtualizada) throw new IntegracaoNaoEncontradoError();
+  return integracaoAtualizada;
+};
+
+const reprocessar = async ({ id, integracao }) => {
+  const integracaoAtualizada = await Integracao.findByIdAndUpdate(id, {
+    etapa: "reprocessar",
+  });
+
+  if (!integracaoAtualizada) throw new IntegracaoNaoEncontradoError();
+  return integracaoAtualizada;
 };
 
 const listarComPaginacao = async ({
@@ -51,6 +71,7 @@ const listarComPaginacao = async ({
 
   return { integracoes, totalDeIntegracoes, page, limite };
 };
+
 const buscarTaskAtiva = async ({ tipo, direcao }) => {
   const minExecutionTime = new Date(Date.now() - 1000 * 60); // 1min
 
@@ -91,4 +112,10 @@ const buscarTaskAtiva = async ({ tipo, direcao }) => {
   return integracao;
 };
 
-module.exports = { listarTodos, buscarTaskAtiva, listarComPaginacao };
+module.exports = {
+  arquivar,
+  reprocessar,
+  listarTodos,
+  buscarTaskAtiva,
+  listarComPaginacao,
+};

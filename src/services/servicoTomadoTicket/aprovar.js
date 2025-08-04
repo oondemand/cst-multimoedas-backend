@@ -55,6 +55,9 @@ const aprovar = async ({ id }) => {
         ticket,
         contaPagar: conta,
       });
+
+      ticket.contaPagarOmie = conta._id;
+      await ticket.save();
     }
   }
 
