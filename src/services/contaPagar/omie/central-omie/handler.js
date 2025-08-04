@@ -6,6 +6,7 @@ const ServicoTomadoTicket = require("../../../../models/ServicoTomadoTicket.js")
 const PessoaSync = require("../../../pessoa/omie");
 const ContaPagarService = require("../../../omie/contaPagarService.js");
 const ContaPagar = require("../../../../models/ContaPagar.js");
+const ArquivoSync = require("../../../arquivo/omie");
 
 const handler = async (integracao) => {
   return processarIntegracao({
@@ -15,7 +16,7 @@ const handler = async (integracao) => {
 
       const ticket = await ServicoTomadoTicket.findOne({
         contaPagarOmie: integracao.parentId,
-      }).populate("servicos pessoa");
+      }).populate("servicos pessoa arquivos");
 
       const clienteOmie = await ClienteService.buscarClienteOmie({
         appKey,
@@ -55,16 +56,20 @@ const handler = async (integracao) => {
       integracao.contaPagar = { ...integracao.contaPagar, ...contaPagarOmie };
       await integracao.save();
 
-      const contaPagarCentral = await ContaPagar.findByIdAndUpdate(
+      const contaPagar = await ContaPagar.findByIdAndUpdate(
         integracao.parentId,
         { ...contaPagarOmie },
         { new: true }
       );
 
-      // if (ticket.arquivos && ticket.arquivos.length > 0) {
-      // }
-
-      // Criar integracao de anexos
+      if (ticket.arquivos && ticket.arquivos.length > 0) {
+        ticket.arquivos.forEach((arquivo) => {
+          ArquivoSync.centralOmie.addTask({
+            arquivo: arquivo.toObject(),
+            contaPagar,
+          });
+        });
+      }
 
       return contaPagarOmie;
     },
@@ -72,6 +77,7 @@ const handler = async (integracao) => {
       const ticket = await ServicoTomadoTicket.findOne({
         contaPagarOmie: integracao.parentId,
       });
+
       if (ticket.arquivos && ticket.arquivos.length > 0) {
         integracao.etapa = "anexos";
         await integracao.save();

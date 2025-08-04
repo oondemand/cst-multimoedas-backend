@@ -2,6 +2,7 @@ const IntegracaoService = require("../../services/integracao");
 const Helpers = require("../../utils/helpers");
 const PessoaSync = require("../../services/pessoa/omie");
 const ContaPagarSync = require("../../services/contaPagar/omie");
+const ArquivosSync = require("../../services/arquivo/omie");
 
 const listar = async (req, res) => {
   const results = await IntegracaoService.listarTodos({
@@ -22,7 +23,9 @@ const processar = async (req, res) => {
   // PessoaSync.omieCentral.queue.start();
 
   ContaPagarSync.centralOmie.queue.start();
-  ContaPagarSync.omieCentral.queue.start();
+  // ContaPagarSync.omieCentral.queue.start();
+
+  ArquivosSync.centralOmie.queue.start();
 
   Helpers.sendResponse({
     res,
