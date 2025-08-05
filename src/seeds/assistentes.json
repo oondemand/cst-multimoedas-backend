@@ -1,0 +1,80 @@
+[{
+  "modulo": "servicos-tomados.requisicao",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "servicos-tomados.geral",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "servico",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "documento-cadastral.analise",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "pessoa",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.conta_pagar.central_omie.requisicao",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.conta_pagar.central_omie.geral",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.conta_pagar.omie_central.requisicao",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.conta_pagar.omie_central.geral",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.pessoa.central_omie.requisicao",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.conta_pagar.central_omie.geral",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.conta_pagar.omie_central.requisicao",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.conta_pagar.omie_central.geral",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.anexos.omie_central.requisicao",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "integracao.anexos.omie_central.geral",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
+  "modulo": "documento-cadastral",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+}]

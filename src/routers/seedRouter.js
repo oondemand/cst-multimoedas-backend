@@ -9,6 +9,7 @@ const Usuario = require("../models/Usuario");
 const Etapa = require("../models/Etapa");
 const Sistema = require("../models/Sistema");
 const ListaOmie = require("../models/ListaOmie");
+const Assistente = require("../models/Assistente");
 
 // const bancos = require("../seeds/bancos.json");
 // const estados = require("../seeds/estados.json");
@@ -16,6 +17,7 @@ const ListaOmie = require("../models/ListaOmie");
 const listaomies = require("../seeds/listaomies.json");
 const sistemas = require("../seeds/sistemas.json");
 const etapas = require("../seeds/etapas.json");
+const assistentes = require("../seeds/assistentes.json");
 
 const {
   sendErrorResponse,
@@ -24,12 +26,10 @@ const {
 } = require("../utils/helpers");
 
 const seed = async (req, res) => {
-  const { baseOmie, usuario } = req.body;
+  const { baseOmie, appKey } = req.body;
 
-  const usuarioExistente = await Usuario.findOne();
   const baseOmieExistente = await BaseOmie.findOne();
-
-  if (usuarioExistente || baseOmieExistente) {
+  if (baseOmieExistente) {
     return sendErrorResponse({
       res,
       statusCode: 400,
@@ -37,24 +37,13 @@ const seed = async (req, res) => {
     });
   }
 
-  if (!baseOmie || !usuario) {
+  if (!baseOmie || !appKey) {
     return sendErrorResponse({
       res,
       statusCode: 400,
       message: "Dados incompletos",
     });
   }
-
-  const novaBaseOmie = new BaseOmie(baseOmie);
-  await novaBaseOmie.save();
-
-  const novoUsuario = new Usuario(usuario);
-  await novoUsuario.save();
-
-  // for (const lista of listas) {
-  //   const novaLista = new Lista(lista);
-  //   await novaLista.save();
-  // }
 
   // for (const banco of bancos) {
   //   const novoBanco = new Banco(banco);
@@ -66,13 +55,18 @@ const seed = async (req, res) => {
   //   await novoEstado.save();
   // }
 
+  for (const assistente of assistentes) {
+    const novoAssistente = new Assistente(assistente);
+    await novoAssistente.save();
+  }
+
   for (const etapa of etapas) {
     const novaEtapa = new Etapa(etapa);
     await novaEtapa.save();
   }
 
   for (const sistema of sistemas) {
-    const novoSistema = new Sistema(sistema);
+    const novoSistema = new Sistema({ ...sistema, appKey });
     await novoSistema.save();
   }
 

@@ -26,5 +26,26 @@
     "codigo": "aprovacao-fiscal",
     "posicao": 40,
     "status": "ativo"
+  },
+    {
+    "esteira": "servicos-tomados",
+    "nome": "Conta pagar central -> omie",
+    "codigo": "conta-pagar-central-omie",
+    "posicao": 50,
+    "status": "ativo"
+  },
+   {
+    "esteira": "servicos-tomados",
+    "nome": "Conta pagar central <- omie",
+    "codigo": "conta-pagar-omie-central",
+    "posicao": 60,
+    "status": "ativo"
+  },
+   {
+    "esteira": "servicos-tomados",
+    "nome": "Concluido",
+    "codigo": "concluido",
+    "posicao": 70,
+    "status": "ativo"
   }
 ]
