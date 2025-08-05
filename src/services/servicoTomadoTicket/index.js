@@ -187,6 +187,25 @@ const removerArquivo = async ({ ticketId, arquivoId }) => {
   return arquivo;
 };
 
+const listarTicketsPorEtapa = async () => {
+  const pipeline = [
+    { $match: { status: { $ne: "arquivado" } } },
+    { $group: { _id: "$etapa", count: { $sum: 1 } } },
+    { $project: { _id: 0, etapa: "$_id", count: 1 } },
+  ];
+
+  return await ServicoTomadoTicket.aggregate(pipeline);
+};
+
+const listarTicketsPorStatus = async () => {
+  const pipeline = [
+    { $group: { _id: "$status", count: { $sum: 1 } } },
+    { $project: { _id: 0, status: "$_id", count: 1 } },
+  ];
+
+  return await ServicoTomadoTicket.aggregate(pipeline);
+};
+
 module.exports = {
   criar,
   listar,
@@ -194,10 +213,12 @@ module.exports = {
   excluir,
   reprovar,
   atualizar,
-  listarComPaginacao,
-  adicionarServico,
-  removerServico,
   obterPorId,
-  adicionarArquivo,
   removerArquivo,
+  removerServico,
+  adicionarArquivo,
+  adicionarServico,
+  listarComPaginacao,
+  listarTicketsPorEtapa,
+  listarTicketsPorStatus,
 };

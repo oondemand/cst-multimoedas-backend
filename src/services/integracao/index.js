@@ -112,10 +112,39 @@ const buscarTaskAtiva = async ({ tipo, direcao }) => {
   return integracao;
 };
 
+const listarIntegracoesAgrupadasPorDirecaoTipo = async () => {
+  const result = await Integracao.aggregate([
+    { $match: { arquivado: false } },
+    {
+      $group: {
+        _id: { tipo: "$tipo", direcao: "$direcao", etapa: "$etapa" },
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $group: {
+        _id: { tipo: "$_id.tipo", direcao: "$_id.direcao" },
+        etapas: { $push: { etapa: "$_id.etapa", count: "$count" } },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        tipo: "$_id.tipo",
+        direcao: "$_id.direcao",
+        etapas: 1,
+      },
+    },
+  ]);
+
+  return result;
+};
+
 module.exports = {
   arquivar,
   reprocessar,
   listarTodos,
   buscarTaskAtiva,
   listarComPaginacao,
+  listarIntegracoesAgrupadasPorDirecaoTipo,
 };

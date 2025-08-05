@@ -104,11 +104,27 @@ const listarTodosPorPessoa = async ({ pessoaId }) => {
   return servicos;
 };
 
+const valoresPorStatus = async () => {
+  const aggregationPipeline = [
+    {
+      $group: {
+        _id: "$status",
+        total: { $sum: { $ifNull: ["$valor", 0] } },
+        count: { $sum: 1 },
+      },
+    },
+    { $project: { _id: 0, status: "$_id", total: 1, count: 1 } },
+  ];
+
+  return await Servico.aggregate(aggregationPipeline);
+};
+
 module.exports = {
   criar,
-  atualizar,
   excluir,
+  atualizar,
   buscarPorId,
+  valoresPorStatus,
   listarComPaginacao,
   listarTodosPorPessoa,
 };
