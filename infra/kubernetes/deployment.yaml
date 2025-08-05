@@ -56,3 +56,5 @@ spec:
               value: "${BASE_URL_CST}"
             - name: BASE_URL_APP_PUBLISHER
               value: "${BASE_URL_APP_PUBLISHER}"
+            - name: MEUS_APPS_BACKEND_URL
+              value: "${MEUS_APPS_BACKEND_URL}"
