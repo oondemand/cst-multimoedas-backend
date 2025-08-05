@@ -32,44 +32,46 @@ const criarConta = ({
 };
 
 const incluir = async (appKey, appSecret, conta, maxTentativas = 3) => {
-  let tentativas = 0;
-  let erroEncontrado;
+  console.log("---->", conta);
 
-  while (tentativas < maxTentativas) {
-    try {
-      const body = {
-        call: "IncluirContaPagar",
-        app_key: appKey,
-        app_secret: appSecret,
-        param: [conta],
-      };
+  // let tentativas = 0;
+  // let erroEncontrado;
 
-      const response = await apiOmie.post("financas/contapagar/", body);
-      return response.data;
-    } catch (error) {
-      tentativas++;
-      if (
-        error.response?.data?.faultstring?.includes(
-          "Consumo redundante detectado",
-        )
-      ) {
-        await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
-      }
+  // while (tentativas < maxTentativas) {
+  // try {
+  const body = {
+    call: "IncluirContaPagar",
+    app_key: appKey,
+    app_secret: appSecret,
+    param: [conta],
+  };
 
-      erroEncontrado =
-        error.response?.data?.faultstring ||
-        error.response?.data ||
-        error.response ||
-        error;
-    }
-  }
+  const response = await apiOmie.post("financas/contapagar/", body);
+  return response.data;
+  //   } catch (error) {
+  //     tentativas++;
+  //     if (
+  //       error.response?.data?.faultstring?.includes(
+  //         "Consumo redundante detectado",
+  //       )
+  //     ) {
+  //       await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
+  //     }
 
-  throw `Falha ao criar conta a pagar após ${maxTentativas} tentativas. ${erroEncontrado}`;
+  //     erroEncontrado =
+  //       error.response?.data?.faultstring ||
+  //       error.response?.data ||
+  //       error.response ||
+  //       error;
+  //   }
+  // }
+
+  // throw `Falha ao criar conta a pagar após ${maxTentativas} tentativas. ${erroEncontrado}`;
 };
 
 const remover = async (
   { appKey, appSecret, codigo_lancamento_omie, codigo_lancamento_integracao },
-  maxTentativas = 5,
+  maxTentativas = 5
 ) => {
   let tentativas = 0;
   let erroEncontrado;
@@ -88,7 +90,7 @@ const remover = async (
       tentativas++;
       if (
         error.response?.data?.faultstring?.includes(
-          "Consumo redundante detectado",
+          "Consumo redundante detectado"
         )
       ) {
         await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
@@ -175,7 +177,7 @@ const consultarInterno = async (appKey, appSecret, codigoLancamento) => {
   } catch (error) {
     if (
       error?.response?.data?.faultstring.includes(
-        "Lançamento não cadastrado para o Código",
+        "Lançamento não cadastrado para o Código"
       )
     ) {
       return null;
@@ -183,7 +185,7 @@ const consultarInterno = async (appKey, appSecret, codigoLancamento) => {
 
     if (
       error.response?.data?.faultstring?.includes(
-        "Consumo redundante detectado",
+        "Consumo redundante detectado"
       )
     )
       await new Promise((resolve) => setTimeout(resolve, 60 * 1000));

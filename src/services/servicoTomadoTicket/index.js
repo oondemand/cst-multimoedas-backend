@@ -28,9 +28,7 @@ const criar = async ({ ticket }) => {
 const listar = async () => {
   const tickets = await ServicoTomadoTicket.find({
     status: { $nin: ["arquivado"] },
-  })
-    .populate("servicos")
-    .populate("pessoa");
+  }).populate("servicos pessoa contaPagarOmie");
 
   return tickets;
 };
@@ -97,7 +95,8 @@ const listarComPaginacao = async ({
       .skip(skip)
       .limit(limite)
       .populate("servicos")
-      .populate("pessoa"),
+      .populate("pessoa")
+      .populate("contaPagarOmie"),
     ServicoTomadoTicket.countDocuments(queryCombinada),
   ]);
 

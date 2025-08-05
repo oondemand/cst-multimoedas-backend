@@ -1,28 +1,10 @@
 const express = require("express");
-const {
-  listarSistemaConfig,
-  atualizarSistemaConfig,
-  testeEmail,
-  listarCategoriasOmie,
-  listarContaCorrente,
-} = require("../controllers/sistemaController");
+const SistemaService = require("../controllers/sistema");
+const { asyncHandler } = require("../utils/helpers");
 const router = express.Router();
-const {
-  registrarAcaoMiddleware,
-} = require("../middlewares/registrarAcaoMiddleware");
-const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 
-router.get("/", listarSistemaConfig);
-router.put(
-  "/:id",
-  registrarAcaoMiddleware({
-    acao: ACOES.ALTERADO,
-    entidade: ENTIDADES.CONFIGURACAO_SISTEMA,
-  }),
-  atualizarSistemaConfig,
-);
-router.post("/teste-email", testeEmail);
-router.get("/listar-categorias", listarCategoriasOmie);
-router.get("/listar-conta-corrente", listarContaCorrente);
+router.get("/", asyncHandler(SistemaService.listarSistemaConfig));
+router.put("/:id", asyncHandler(SistemaService.atualizarSistemaConfig));
+router.post("/teste-email", asyncHandler(SistemaService.testeEmail));
 
 module.exports = router;

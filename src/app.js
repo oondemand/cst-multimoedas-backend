@@ -27,8 +27,9 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 app.use("/", require("./routers/statusRouter"));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", require("./routers/authRouter"));
-// app.use("/webhooks/", require("./routers/webhookRouter"));
+app.use("/webhooks/", require("./routers/webhookRouter"));
 app.use("/ativacao", require("./routers/seedRouter"));
+app.use("/tipo-acesso", require("./routers/tipoAcessoRouter"));
 
 app.get("/image/:filename", (req, res) => {
   const filename = req.params.filename;
@@ -70,9 +71,10 @@ app.use("/listas", require("./routers/listaRouter"));
 app.use("/planejamento", require("./routers/planejamentoRouter"));
 app.use("/importacoes", require("./routers/importacaoRouter"));
 // app.use("/dashboard", require("./routers/dashoboardRouter"));
-// app.use("/sistema", require("./routers/sistemaRouter"));
+app.use("/sistema", require("./routers/sistemaRouter"));
 app.use("/lista-omie", require("./routers/listasOmieRouter"));
 app.use("/assistentes", require("./routers/assistenteRouter"));
+app.use("/integracao", require("./routers/integracaoRouter"));
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 app.use(errorMiddleware);
