@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.19 (2025-08-05)
+
+### 🐛 Bug Fixes
+
+* update infra files ([0070b51](https://github.com/oondemand/central-oondemand-backend/commit/0070b51d0e274358ee9feb1e186d610ce27bf912))
+
 ## 0.3.18 (2025-08-05)
 
 ## 0.3.17 (2025-08-05)
