@@ -14,6 +14,11 @@
   "status": "ativo"
 },
 {
+  "modulo": "documento-cadastral",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
   "modulo": "documento-cadastral.analise",
   "assistente": "681a3c1883482bea0680959c",
   "status": "ativo"
@@ -49,17 +54,17 @@
   "status": "ativo"
 },
 {
-  "modulo": "integracao.conta_pagar.central_omie.geral",
+  "modulo": "integracao.pessoa.central_omie.geral",
   "assistente": "681a3c1883482bea0680959c",
   "status": "ativo"
 },
 {
-  "modulo": "integracao.conta_pagar.omie_central.requisicao",
+  "modulo": "integracao.pessoa.omie_central.requisicao",
   "assistente": "681a3c1883482bea0680959c",
   "status": "ativo"
 },
 {
-  "modulo": "integracao.conta_pagar.omie_central.geral",
+  "modulo": "integracao.pessoa.omie_central.geral",
   "assistente": "681a3c1883482bea0680959c",
   "status": "ativo"
 },
@@ -70,11 +75,6 @@
 },
 {
   "modulo": "integracao.anexos.omie_central.geral",
-  "assistente": "681a3c1883482bea0680959c",
-  "status": "ativo"
-},
-{
-  "modulo": "documento-cadastral",
   "assistente": "681a3c1883482bea0680959c",
   "status": "ativo"
 }]
