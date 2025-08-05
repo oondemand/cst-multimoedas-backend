@@ -12,10 +12,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - api.app1.central.oondemand.online
+        - api.central.oondemand.online
       secretName: app-tls
   rules:
-    - host: api.app1.central.oondemand.online
+    - host: api.central.oondemand.online
       http:
         paths:
           - path: /
