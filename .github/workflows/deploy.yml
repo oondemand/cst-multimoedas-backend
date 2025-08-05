@@ -70,3 +70,4 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           BASE_URL_CST: ${{ secrets.BASE_URL_CST }}
           BASE_URL_APP_PUBLISHER: ${{ secrets.BASE_URL_APP_PUBLISHER }}
+          MEUS_APPS_BACKEND_URL: ${{secrets.MEUS_APPS_BACKEND_URL}}
