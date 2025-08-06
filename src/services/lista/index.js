@@ -2,6 +2,7 @@ const { LISTAS } = require("../../constants/listas");
 const Lista = require("../../models/Lista");
 const GenericError = require("../errors/generic");
 const ListaNaoEncontradaError = require("../errors/lista/listaNaoEncontrada");
+const { validarMoedaExistente } = require("./validations");
 
 const create = async ({ codigo }) => {
   const novaLista = new Lista({ codigo, data: [] });
@@ -47,14 +48,19 @@ const atualizarItem = async ({ codigo, itemId, valor }) => {
   const lista = await Lista.findOne({ codigo }).populate("data");
   if (!lista) throw new ListaNaoEncontradaError();
 
+  if (codigo === "moeda") {
+    const moedaValida = await validarMoedaExistente({ moeda: valor });
+    if (!moedaValida) throw new GenericError("Moeda não listada no BACEN", 404);
+  }
+
   const index = lista.data.findIndex((item) => item._id == itemId);
-  if (index === -1) return new GenericError("Item não encontrado", 404);
+  if (index === -1) throw new GenericError("Item não encontrado", 404);
 
   const trimmedValor = valor.trim();
 
   const valorExistente = lista.data.some((item) => item.valor === trimmedValor);
 
-  if (valorExistente) return new GenericError("Valor já existe na lista", 409);
+  if (valorExistente) throw new GenericError("Valor já existe na lista", 409);
 
   if (valor) lista.data[index].valor = valor;
   await lista.save();
