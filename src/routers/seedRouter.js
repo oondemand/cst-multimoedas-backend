@@ -45,6 +45,8 @@ const seed = async (req, res) => {
     });
   }
 
+  await BaseOmie.create(baseOmie);
+
   // for (const banco of bancos) {
   //   const novoBanco = new Banco(banco);
   //   await novoBanco.save();
