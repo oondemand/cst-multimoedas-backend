@@ -37,10 +37,14 @@ const listar = async (req, res) => {
       searchTerm,
     });
 
+  const servicosComCotacao = await ServicoService.adicionarCotacao({
+    servicos,
+  });
+
   sendPaginatedResponse({
     res,
     statusCode: 200,
-    results: servicos,
+    results: servicosComCotacao,
     pagination: {
       currentPage: page,
       itemsPerPage: limite,

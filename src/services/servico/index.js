@@ -2,6 +2,7 @@ const Servico = require("../../models/Servico");
 const FiltersUtils = require("../../utils/pagination/filter");
 const PaginationUtils = require("../../utils/pagination");
 const PessoaService = require("../pessoa");
+const MoedaService = require("../moeda");
 
 const criar = async ({ servico }) => {
   const novoServico = new Servico(servico);
@@ -108,15 +109,74 @@ const valoresPorStatus = async () => {
   const aggregationPipeline = [
     {
       $group: {
-        _id: "$status",
-        total: { $sum: { $ifNull: ["$valor", 0] } },
+        _id: { status: "$status", moeda: "$moeda", cotacao: "$cotacao" },
+        totalMoeda: { $sum: "$valorMoeda" },
         count: { $sum: 1 },
       },
     },
-    { $project: { _id: 0, status: "$_id", total: 1, count: 1 } },
   ];
 
-  return await Servico.aggregate(aggregationPipeline);
+  const parciais = await Servico.aggregate(aggregationPipeline);
+
+  const resultadosPorStatus = {};
+
+  for (const item of parciais) {
+    let { status, moeda, cotacao } = item._id;
+    const totalMoeda = item.totalMoeda;
+    const count = item.count;
+
+    if (!cotacao && moeda !== "BRL") {
+      cotacao = (await MoedaService.cotacao.consultar({ sigla: moeda })) || 1;
+    }
+
+    if (!cotacao && moeda === "BRL") {
+      cotacao = 1;
+    }
+
+    const totalConvertido = Number((totalMoeda * cotacao).toFixed(2));
+
+    if (!resultadosPorStatus[status]) {
+      resultadosPorStatus[status] = { total: 0, count: 0 };
+    }
+
+    resultadosPorStatus[status].total += totalConvertido;
+    resultadosPorStatus[status].count += count;
+  }
+
+  const resultadoFinal = Object.entries(resultadosPorStatus).map(
+    ([status, { total, count }]) => ({ status, total, count })
+  );
+
+  return resultadoFinal;
+};
+
+const adicionarCotacao = async ({ servicos }) => {
+  return await Promise.all(
+    servicos.map(async (item) => {
+      const servico = item.toObject();
+
+      if (servico.cotacao)
+        return {
+          ...servico,
+          valor: servico.cotacao * servico?.valorMoeda ?? 0,
+        };
+
+      if (servico.moeda === "BRL")
+        return { ...servico, valor: servico.valorMoeda };
+
+      const cotacao = await MoedaService.cotacao.consultar({
+        sigla: servico.moeda,
+      });
+
+      if (cotacao)
+        return {
+          ...servico,
+          valor: Number((cotacao * servico?.valorMoeda ?? 0).toFixed(2)),
+        };
+
+      return servico;
+    })
+  );
 };
 
 module.exports = {
@@ -125,6 +185,7 @@ module.exports = {
   atualizar,
   buscarPorId,
   valoresPorStatus,
+  adicionarCotacao,
   listarComPaginacao,
   listarTodosPorPessoa,
 };

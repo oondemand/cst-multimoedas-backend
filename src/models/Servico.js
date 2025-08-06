@@ -4,8 +4,8 @@ const servicoSchema = new mongoose.Schema(
   {
     tipoServicoTomado: String,
     descricao: String,
-    valor: Number,
     valorMoeda: Number,
+    cotacao: Number,
     moeda: String,
     pessoa: {
       type: mongoose.Schema.Types.ObjectId,
@@ -26,12 +26,18 @@ const servicoSchema = new mongoose.Schema(
     },
   },
   {
-    virtuals: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
-servicoSchema.virtual("valorTotal").get(function () {
-  return this.valor * (this?.valorMoeda ?? 1);
-});
+// Não suporta async
+// servicoSchema.virtual("valor").get(async function () {
+//   if (this.cotacao) return this.valorMoeda * cotacao;
+//   if (this.sigla === "BRL") return this.valorMoeda * 1;
+
+//   const cotacao = await MoedaService.cotacao().consultar({ sigla: this.moeda });
+//   return Number(this.valorMoeda * cotacao);
+// });
 
 module.exports = mongoose.model("Servico", servicoSchema);

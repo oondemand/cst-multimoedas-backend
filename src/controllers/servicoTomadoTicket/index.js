@@ -5,6 +5,7 @@ const {
 } = require("../../utils/helpers");
 
 const ServicoTomadoTicketService = require("../../services/servicoTomadoTicket");
+const ServicoService = require("../../services/servico");
 
 const aprovar = async (req, res) => {
   const ticket = await ServicoTomadoTicketService.aprovar({
@@ -54,12 +55,24 @@ const updateTicket = async (req, res) => {
 };
 
 const getAllTickets = async (req, res) => {
-  const tickets = await ServicoTomadoTicketService.listar();
+  const { time } = req.query;
+  const tickets = await ServicoTomadoTicketService.listar({ time });
+
+  const ticketsComServicosComCotacao = await Promise.all(
+    tickets.map(async (ticket) => {
+      return {
+        ...ticket.toObject(),
+        servicos: await ServicoService.adicionarCotacao({
+          servicos: ticket.servicos,
+        }),
+      };
+    })
+  );
 
   sendResponse({
     res,
     statusCode: 200,
-    tickets,
+    tickets: ticketsComServicosComCotacao,
   });
 };
 

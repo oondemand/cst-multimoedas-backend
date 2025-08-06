@@ -25,9 +25,14 @@ const criar = async ({ ticket }) => {
   return novoTicket;
 };
 
-const listar = async () => {
+const listar = async ({ time = 1 }) => {
+  const umDiaEmMilissegundos = 1000 * 60 * 60 * 24;
+
   const tickets = await ServicoTomadoTicket.find({
     status: { $nin: ["arquivado"] },
+    updatedAt: {
+      $gte: new Date(Date.now() - Number(time) * umDiaEmMilissegundos),
+    },
   }).populate("servicos pessoa contaPagarOmie");
 
   return tickets;
