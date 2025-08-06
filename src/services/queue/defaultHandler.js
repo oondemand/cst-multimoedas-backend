@@ -26,21 +26,22 @@ const processarIntegracao = async ({
       integracao.tentativas > 3
         ? (integracao.etapa = ETAPAS_DEFAULT.erro.codigo)
         : (integracao.etapa = ETAPAS_DEFAULT.reprocessar.codigo);
+      await integracao.save();
       await onError?.(integracao, error);
     }
 
     if (result) {
       integracao.etapa = ETAPAS_DEFAULT.sucesso.codigo;
       integracao.resposta = result;
+      await integracao.save();
       await onSuccess?.(integracao, result);
     }
-
-    await integracao.save();
   } catch (error) {
+    console.log("Erro ao fazer integracao", error);
     integracao.etapa = ETAPAS_DEFAULT.erro.codigo;
-    integracao.erros = [...integracao.erros, error?.message];
-    onError?.(integracao, error);
+    integracao.erros = [...integracao.erros, error?.message ?? error];
     await integracao.save();
+    onError?.(integracao, error);
   }
 };
 

@@ -1,8 +1,6 @@
-const { mapExporter } = require("../mapExporter.js");
 const AnexoService = require("../../../omie/anexosService.js");
 const ContaPagar = require("../../../../models/ContaPagar.js");
 const BaseOmie = require("../../../../models/BaseOmie.js");
-const { randomUUID } = require("crypto");
 const { processarIntegracao } = require("../../../queue/defaultHandler.js");
 const { compactFile } = require("../../../../utils/fileHandler.js");
 const Integracao = require("../../../../models/Integracao.js");
@@ -49,7 +47,7 @@ const handler = async (integracao) => {
       return response;
     },
     onSuccess: async (integracao, resultado) => {
-      const iAnexoPendente = await Integracao.findOne({
+      const isAnexoPendente = await Integracao.findOne({
         parentId: integracao.parentId,
         tipo: "anexos",
         direcao: "central_omie",
@@ -57,7 +55,9 @@ const handler = async (integracao) => {
         etapa: { $nin: ["sucesso"] },
       });
 
-      if (!iAnexoPendente) {
+      console.log("Há um anexo pendente", isAnexoPendente);
+
+      if (!isAnexoPendente) {
         await Integracao.findOneAndUpdate(
           {
             parentId: integracao.parentId,

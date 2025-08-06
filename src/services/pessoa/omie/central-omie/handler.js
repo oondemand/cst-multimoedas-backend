@@ -27,6 +27,9 @@ const handler = async (integracao) => {
           param: [cliente],
         },
       };
+
+      integracao.save();
+
       if (clienteOmieExistente) {
         cliente.codigo_cliente_omie = clienteOmieExistente.codigo_cliente_omie;
         return await ClienteService.update(appKey, appSecret, cliente);
