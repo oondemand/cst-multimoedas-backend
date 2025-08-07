@@ -5,6 +5,7 @@ const servicoSchema = new mongoose.Schema(
     tipoServicoTomado: String,
     descricao: String,
     valorMoeda: Number,
+    cotacao: Number,
     moeda: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Moeda",

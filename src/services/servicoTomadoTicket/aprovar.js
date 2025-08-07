@@ -31,7 +31,7 @@ const aprovar = async ({ id }) => {
   }
 
   if (ticket.etapa === "aprovacao-fiscal" && ticket?.servicos?.length > 0) {
-    const servicosComCotacao = await ServicoService.adicionarCotacao({
+    const servicosComCotacao = await ServicoService.fixarCotacao({
       servicos: ticket.servicos,
     });
 

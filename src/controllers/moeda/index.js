@@ -57,12 +57,22 @@ const listarAtivas = async (req, res) => {
   });
 };
 
+const atualizarCotacao = async (req, res) => {
+  await MoedaService.atualizarCotacao();
+
+  return Helpers.sendResponse({
+    res,
+    statusCode: 200,
+  });
+};
+
 module.exports = {
   // criar,
   // atualizar,
   // excluir,
-  listarComPaginacao,
   listarAtivas,
+  atualizarCotacao,
+  listarComPaginacao,
   // obterPorId,
   // importarPessoa,
   // exportar,

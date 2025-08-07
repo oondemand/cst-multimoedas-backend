@@ -79,6 +79,7 @@ const listarComPaginacao = async ({
       .skip(skip)
       .limit(limite)
       .populate("pessoa moeda"),
+
     Servico.countDocuments({
       $and: [
         filters,
@@ -169,9 +170,25 @@ const adicionarCotacao = async ({ servicos }) => {
   return servicos.map((servico) => {
     return {
       ...servico.toObject(),
-      valor: servico.valorMoeda * (servico?.moeda?.cotacao ?? 1),
+      valor:
+        servico.valorMoeda *
+        (servico.cotacao ? servico.cotacao : servico?.moeda?.cotacao ?? 1),
     };
   });
+};
+
+const fixarCotacao = async ({ servicos }) => {
+  return await Promise.all(
+    servicos.map(async (servico) => {
+      servico.cotacao = servico?.moeda?.cotacao;
+      await servico.save();
+
+      return {
+        ...servico.toObject(),
+        valor: servico.valorMoeda * servico.cotacao,
+      };
+    })
+  );
 };
 
 module.exports = {
@@ -179,6 +196,7 @@ module.exports = {
   excluir,
   atualizar,
   buscarPorId,
+  fixarCotacao,
   valoresPorStatus,
   adicionarCotacao,
   listarComPaginacao,
