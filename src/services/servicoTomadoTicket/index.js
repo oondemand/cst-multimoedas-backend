@@ -33,7 +33,13 @@ const listar = async ({ time = 1 }) => {
     updatedAt: {
       $gte: new Date(Date.now() - Number(time) * umDiaEmMilissegundos),
     },
-  }).populate("servicos pessoa contaPagarOmie");
+  })
+    .populate({
+      path: "servicos",
+      populate: { path: "moeda" },
+    })
+    .populate("pessoa")
+    .populate("contaPagarOmie");
 
   return tickets;
 };

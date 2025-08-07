@@ -9,7 +9,12 @@ const { randomUUID } = require("crypto");
 const ServicoService = require("../servico");
 
 const aprovar = async ({ id }) => {
-  const ticket = await Ticket.findById(id).populate("pessoa servicos");
+  const ticket = await Ticket.findById(id)
+    .populate({
+      path: "servicos",
+      populate: { path: "moeda" },
+    })
+    .populate("pessoa");
 
   const etapas = await EtapaService.listarEtapasAtivasPorEsteira({
     esteira: "servicos-tomados",

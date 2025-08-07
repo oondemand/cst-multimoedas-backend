@@ -2,7 +2,7 @@ const Servico = require("../../models/Servico");
 const FiltersUtils = require("../../utils/pagination/filter");
 const PaginationUtils = require("../../utils/pagination");
 const PessoaService = require("../pessoa");
-const MoedaService = require("../moeda");
+const MoedaService = require("../moeda/bacen");
 
 const criar = async ({ servico }) => {
   const novoServico = new Servico(servico);
@@ -78,7 +78,7 @@ const listarComPaginacao = async ({
     })
       .skip(skip)
       .limit(limite)
-      .populate("pessoa"),
+      .populate("pessoa moeda"),
     Servico.countDocuments({
       $and: [
         filters,
@@ -93,7 +93,12 @@ const listarComPaginacao = async ({
     }),
   ]);
 
-  return { servicos, totalDeServicos, page, limite };
+  return {
+    servicos,
+    totalDeServicos,
+    page,
+    limite,
+  };
 };
 
 const listarTodosPorPessoa = async ({ pessoaId }) => {
@@ -107,76 +112,66 @@ const listarTodosPorPessoa = async ({ pessoaId }) => {
 
 const valoresPorStatus = async () => {
   const aggregationPipeline = [
+    // 1. Join com a coleção de moedas
+    {
+      $lookup: {
+        from: "moedas", // nome da collection no MongoDB (sempre no plural por padrão)
+        localField: "moeda",
+        foreignField: "_id",
+        as: "moedaInfo",
+      },
+    },
+
+    // 2. Desestrutura o array moedaInfo (porque $lookup retorna array)
+    {
+      $unwind: {
+        path: "$moedaInfo",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+
+    // 3. Calcula o valor real (valorMoeda * moeda.cotacao)
+    {
+      $addFields: {
+        valorCalculado: {
+          $multiply: [
+            { $ifNull: ["$valorMoeda", 0] },
+            { $ifNull: ["$moedaInfo.cotacao", 1] },
+          ],
+        },
+      },
+    },
+
+    // 4. Agrupa por status
     {
       $group: {
-        _id: { status: "$status", moeda: "$moeda", cotacao: "$cotacao" },
-        totalMoeda: { $sum: "$valorMoeda" },
+        _id: "$status",
+        total: { $sum: "$valorCalculado" },
         count: { $sum: 1 },
+      },
+    },
+
+    // 5. Projeta resultado final
+    {
+      $project: {
+        _id: 0,
+        status: "$_id",
+        total: 1,
+        count: 1,
       },
     },
   ];
 
-  const parciais = await Servico.aggregate(aggregationPipeline);
-
-  const resultadosPorStatus = {};
-
-  for (const item of parciais) {
-    let { status, moeda, cotacao } = item._id;
-    const totalMoeda = item.totalMoeda;
-    const count = item.count;
-
-    if (!cotacao && moeda !== "BRL") {
-      cotacao = (await MoedaService.cotacao.consultar({ sigla: moeda })) || 1;
-    }
-
-    if (!cotacao && moeda === "BRL") {
-      cotacao = 1;
-    }
-
-    const totalConvertido = Number((totalMoeda * cotacao).toFixed(2));
-
-    if (!resultadosPorStatus[status]) {
-      resultadosPorStatus[status] = { total: 0, count: 0 };
-    }
-
-    resultadosPorStatus[status].total += totalConvertido;
-    resultadosPorStatus[status].count += count;
-  }
-
-  const resultadoFinal = Object.entries(resultadosPorStatus).map(
-    ([status, { total, count }]) => ({ status, total, count })
-  );
-
-  return resultadoFinal;
+  return await Servico.aggregate(aggregationPipeline);
 };
 
 const adicionarCotacao = async ({ servicos }) => {
-  return await Promise.all(
-    servicos.map(async (item) => {
-      const servico = item.toObject();
-
-      if (servico.cotacao)
-        return {
-          ...servico,
-          valor: servico.cotacao * servico?.valorMoeda ?? 0,
-        };
-
-      if (servico.moeda === "BRL")
-        return { ...servico, valor: servico.valorMoeda };
-
-      const cotacao = await MoedaService.cotacao.consultar({
-        sigla: servico.moeda,
-      });
-
-      if (cotacao)
-        return {
-          ...servico,
-          valor: Number((cotacao * servico?.valorMoeda ?? 0).toFixed(2)),
-        };
-
-      return servico;
-    })
-  );
+  return servicos.map((servico) => {
+    return {
+      ...servico.toObject(),
+      valor: servico.valorMoeda * (servico?.moeda?.cotacao ?? 1),
+    };
+  });
 };
 
 module.exports = {
