@@ -116,14 +116,14 @@ const valoresPorStatus = async () => {
     // 1. Join com a coleção de moedas
     {
       $lookup: {
-        from: "moedas", // nome da collection no MongoDB (sempre no plural por padrão)
+        from: "moedas", // nome da collection no MongoDB
         localField: "moeda",
         foreignField: "_id",
         as: "moedaInfo",
       },
     },
 
-    // 2. Desestrutura o array moedaInfo (porque $lookup retorna array)
+    // 2. Desestrutura o array moedaInfo
     {
       $unwind: {
         path: "$moedaInfo",
@@ -131,7 +131,14 @@ const valoresPorStatus = async () => {
       },
     },
 
-    // 3. Calcula o valor real (valorMoeda * moeda.cotacao)
+    // ✅ 3. Ignora serviços arquivados
+    {
+      $match: {
+        status: { $ne: "arquivado" },
+      },
+    },
+
+    // 4. Calcula o valor real (valorMoeda * moeda.cotacao)
     {
       $addFields: {
         valorCalculado: {
@@ -143,7 +150,7 @@ const valoresPorStatus = async () => {
       },
     },
 
-    // 4. Agrupa por status
+    // 5. Agrupa por status
     {
       $group: {
         _id: "$status",
@@ -152,7 +159,7 @@ const valoresPorStatus = async () => {
       },
     },
 
-    // 5. Projeta resultado final
+    // 6. Projeta resultado final
     {
       $project: {
         _id: 0,

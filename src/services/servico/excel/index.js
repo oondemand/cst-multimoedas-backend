@@ -189,7 +189,11 @@ const exportarServico = async ({
     searchTerm,
   });
 
-  const json = servicos.map((servico) => {
+  const servicosComCotacao = await ServicoService.adicionarCotacao({
+    servicos,
+  });
+
+  const json = servicosComCotacao.map((servico) => {
     const newRow = {};
 
     Object.entries(mapExporter()).forEach(([header, key]) => {

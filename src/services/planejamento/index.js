@@ -45,6 +45,7 @@ const listarServicosComPaginacao = async ({
     })
       .skip(skip)
       .limit(limite)
+      .populate("moeda")
       .populate("pessoa", "nome documento tipo"),
     Servico.countDocuments({
       $and: [...query, { status: { $ne: "arquivado" } }],
@@ -54,20 +55,72 @@ const listarServicosComPaginacao = async ({
   return { servicos, totalDeServicos, page, limite };
 };
 
+// const estatisticas = async () => {
+//   const aggregationPipeline = [
+//     {
+//       $group: {
+//         _id: "$statusProcessamento",
+//         total: {
+//           $sum: {
+//             $ifNull: ["$valor", 0],
+//           },
+//         },
+//         count: { $sum: 1 },
+//         pessoasUnicas: { $addToSet: "$pessoa" },
+//       },
+//     },
+//     {
+//       $project: {
+//         _id: 0,
+//         statusProcessamento: "$_id",
+//         total: 1,
+//         count: 1,
+//         pessoasCount: { $size: "$pessoasUnicas" },
+//       },
+//     },
+//   ];
+
+//   return await Servico.aggregate(aggregationPipeline);
+// };
+
 const estatisticas = async () => {
   const aggregationPipeline = [
+    // 1. Join com a moeda para acessar a cotação da moeda
+    {
+      $lookup: {
+        from: "moedas",
+        localField: "moeda",
+        foreignField: "_id",
+        as: "moedaData",
+      },
+    },
+    {
+      $unwind: "$moedaData",
+    },
+    // 2. Criar campo `cotacaoEfetiva`: se não houver no serviço, usa da moeda
+    {
+      $addFields: {
+        cotacaoEfetiva: {
+          $ifNull: ["$cotacao", "$moedaData.cotacao"],
+        },
+        valorCalculado: {
+          $multiply: [
+            { $ifNull: ["$cotacao", "$moedaData.cotacao"] },
+            { $ifNull: ["$valorMoeda", 0] },
+          ],
+        },
+      },
+    },
+    // 3. Agrupar por statusProcessamento
     {
       $group: {
         _id: "$statusProcessamento",
-        total: {
-          $sum: {
-            $ifNull: ["$valor", 0],
-          },
-        },
+        total: { $sum: "$valorCalculado" },
         count: { $sum: 1 },
         pessoasUnicas: { $addToSet: "$pessoa" },
       },
     },
+    // 4. Projetar o resultado final
     {
       $project: {
         _id: 0,
