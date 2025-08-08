@@ -1,0 +1,17 @@
+[
+  {
+    "sigla": "BRL",
+    "cotacao": 1,
+    "status": "ativo"
+  },
+  {
+    "sigla": "USD",
+    "cotacao": 5.2,
+    "status": "ativo"
+  },
+  {
+    "sigla": "EUR",
+    "cotacao": 5.6,
+    "status": "ativo"
+  }
+]

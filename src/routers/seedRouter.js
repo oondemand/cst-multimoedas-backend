@@ -10,14 +10,15 @@ const Etapa = require("../models/Etapa");
 const Sistema = require("../models/Sistema");
 const ListaOmie = require("../models/ListaOmie");
 const Assistente = require("../models/Assistente");
+const Moeda = require("../models/Moeda");
 
 // const bancos = require("../seeds/bancos.json");
 // const estados = require("../seeds/estados.json");
-const listas = require("../seeds/listas.json");
 const listaomies = require("../seeds/listaomies.json");
 const sistemas = require("../seeds/sistemas.json");
 const etapas = require("../seeds/etapas.json");
 const assistentes = require("../seeds/assistentes.json");
+const moedas = require("../seeds/moedas.json");
 
 const {
   sendErrorResponse,
@@ -63,8 +64,8 @@ const seed = async (req, res) => {
     await ListaOmie.create(listaomie);
   }
 
-  for (const lista of listas) {
-    await Lista.create(lista);
+  for (const moeda of moedas) {
+    await Moeda.create(moeda);
   }
 
   return sendResponse({
