@@ -13,6 +13,9 @@ dotenv.config();
 const authMiddleware = require("./middlewares/authMiddleware");
 const logMiddleware = require("./middlewares/logMiddleware");
 const errorMiddleware = require("./middlewares/errorMiddleware");
+const { asyncHandler } = require("./utils/helpers");
+const IntegracaoController = require("./controllers/integracao");
+const MoedaController = require("./controllers/moeda");
 
 const app = express();
 
@@ -30,6 +33,11 @@ app.use("/auth", require("./routers/authRouter"));
 app.use("/webhooks/", require("./routers/webhookRouter"));
 app.use("/ativacao", require("./routers/seedRouter"));
 app.use("/tipo-acesso", require("./routers/tipoAcessoRouter"));
+app.use("/integracao/processar", asyncHandler(IntegracaoController.processar));
+app.use(
+  "/moedas/atualizar-cotacao",
+  asyncHandler(MoedaController.atualizarCotacao)
+);
 
 app.get("/image/:filename", (req, res) => {
   const filename = req.params.filename;

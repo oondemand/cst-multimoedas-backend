@@ -10,7 +10,7 @@ const { uploadExcel } = require("../config/multer");
 
 router.get("/", asyncHandler(MoedaController.listarComPaginacao));
 router.get("/ativas", asyncHandler(MoedaController.listarAtivas));
-router.post("/atualizar-cotacao", asyncHandler(MoedaController.atualizarCotacao));
+// router.post("/atualizar-cotacao", asyncHandler(MoedaController.atualizarCotacao));
 
 // router.post(
 //   "/",
