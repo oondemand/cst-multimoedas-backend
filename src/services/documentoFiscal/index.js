@@ -104,11 +104,13 @@ const removerArquivo = async ({ id, arquivoId }) => {
 };
 
 const listarPorPessoa = async ({ pessoaId }) => {
-  const documentosFiscais = await DocumentoFiscal.find({
+  const servicos = await DocumentoFiscal.find({
+    statusValidacao: "aprovado",
+    statusPagamento: "aberto",
     pessoa: pessoaId,
-  }).populate("arquivo");
+  }).populate("pessoa", "nome documento");
 
-  return documentosFiscais;
+  return servicos;
 };
 
 module.exports = {

@@ -5,6 +5,7 @@ const mapExporter = () => {
     "Tipo de cliente/prestador": "pessoa.tipo",
     "Tipo de documento fiscal": "tipoDocumentoFiscal",
     Numero: "numero",
+    Competência: "competencia",
     Valor: "valor",
     Imposto: "imposto",
     "Classificacao fiscal": "classificacaoFiscal",

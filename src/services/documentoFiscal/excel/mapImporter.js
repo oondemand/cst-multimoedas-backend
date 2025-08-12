@@ -1,4 +1,13 @@
 const mapImporter = async ({ row }) => {
+  const getCompetencia = (props) => {
+    const regex = /^\d{2}\/\d{4}$/; // Verifica se esta no formato MM/YYYY
+
+    if (typeof props === "string" && regex.test(props)) {
+      const [mes, ano] = props.split("/");
+      return { mes, ano };
+    }
+  };
+
   const documentoFiscal = {
     pessoa: {
       nome: row[0],
@@ -7,13 +16,14 @@ const mapImporter = async ({ row }) => {
     },
     tipoDocumentoFiscal: row[3],
     numero: row[4],
-    valor: row[5],
-    imposto: row[6],
-    classificacaoFiscal: row[7],
-    descricao: row[8],
-    observacao: row[9],
-    motivoRecusa: row[10],
-    statusValidacao: row[11],
+    competencia: getCompetencia(row[5]),
+    valor: row[6],
+    imposto: row[7],
+    classificacaoFiscal: row[8],
+    descricao: row[9],
+    observacao: row[10],
+    motivoRecusa: row[11],
+    statusValidacao: row[12],
   };
 
   return documentoFiscal;

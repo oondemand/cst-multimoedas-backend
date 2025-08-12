@@ -11,6 +11,8 @@ const ServicoNaoEncontradoError = require("../errors/servico/servicoNaoEncontrad
 const { criarNomePersonalizado } = require("../../utils/formatters");
 const ArquivoNaoEncontradoError = require("../errors/arquivo/arquivoNaoEncontradoError");
 const EtapaService = require("../etapa");
+const DocumentoFiscal = require("../../models/DocumentoFiscal");
+const DocumentoFiscalNaoEncontradoError = require("../errors/documentoFiscal/documentoFiscalNaoEncontradaError");
 
 const criar = async ({ ticket }) => {
   const etapas = await EtapaService.listarEtapasAtivasPorEsteira({
@@ -38,6 +40,7 @@ const listar = async ({ time = 1 }) => {
       path: "servicos",
       populate: { path: "moeda" },
     })
+    .populate("documentosFiscais")
     .populate("pessoa")
     .populate("contaPagarOmie")
     .populate("arquivos");
@@ -218,6 +221,50 @@ const listarTicketsPorStatus = async () => {
   return await ServicoTomadoTicket.aggregate(pipeline);
 };
 
+const adicionarDocumentoFiscal = async ({ ticketId, documentoFiscalId }) => {
+  const documentoFiscal = await DocumentoFiscal.findById(documentoFiscalId);
+  const ticket = await ServicoTomadoTicket.findById(ticketId);
+
+  if (!documentoFiscal) throw new DocumentoFiscalNaoEncontradoError();
+  if (!ticket) throw new TicketNaoEncontradoError();
+
+  documentoFiscal.statusPagamento = "processando";
+  await documentoFiscal.save();
+
+  ticket.documentosFiscais = [
+    ...ticket?.documentosFiscais,
+    documentoFiscal?._id,
+  ];
+
+  await ticket.save();
+
+  const ticketPopulado = await ServicoTomadoTicket.findById(
+    ticket._id
+  ).populate("documentosFiscais");
+
+  return ticketPopulado;
+};
+
+const removerDocumentoFiscal = async ({ documentoFiscalId }) => {
+  const documentoFiscal = await DocumentoFiscal.findByIdAndUpdate(
+    documentoFiscalId,
+    { statusPagamento: "aberto" },
+    { new: true }
+  );
+
+  if (!documentoFiscal) throw new DocumentoFiscalNaoEncontradoError();
+
+  const ticket = await ServicoTomadoTicket.findOneAndUpdate(
+    { documentosFiscais: documentoFiscalId }, // Busca o ticket que contém este documento fiscal
+    { $pull: { documentosFiscais: documentoFiscalId } }, // Remove o documento fiscal do array
+    { new: true }
+  ).populate("documentosFiscais");
+
+  if (!ticket) throw new TicketNaoEncontradoError();
+
+  return ticket;
+};
+
 module.exports = {
   criar,
   listar,
@@ -233,4 +280,6 @@ module.exports = {
   listarComPaginacao,
   listarTicketsPorEtapa,
   listarTicketsPorStatus,
+  removerDocumentoFiscal,
+  adicionarDocumentoFiscal,
 };

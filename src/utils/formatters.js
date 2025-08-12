@@ -10,3 +10,8 @@ exports.criarNomePersonalizado = ({ nomeOriginal }) => {
     return "";
   }
 };
+
+exports.formatarCompetencia = (competencia) => {
+  if (!competencia || competencia === "") return "";
+  return `${competencia?.mes?.padStart(2)}/${competencia?.ano}`;
+};

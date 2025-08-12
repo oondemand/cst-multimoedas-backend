@@ -118,23 +118,23 @@ router.post(
   asyncHandler(ServicoTomadoTicketController.removerServico)
 );
 
-// router.post(
-//   "/adicionar-documento-fiscal/:ticketId/:documentoFiscalId/",
-//   registrarAcaoMiddleware({
-//     acao: ACOES.ALTERADO,
-//     entidade: ENTIDADES.SERVICO_TOMADO_TICKET,
-//   }),
-//   ServicoTomadoTicketController.addDocumentoFiscal
-// );
+router.post(
+  "/adicionar-documento-fiscal/:ticketId/:documentoFiscalId/",
+  registrarAcaoMiddleware({
+    acao: ACOES.ALTERADO,
+    entidade: ENTIDADES.SERVICO_TOMADO_TICKET,
+  }),
+  asyncHandler(ServicoTomadoTicketController.addDocumentoFiscal)
+);
 
-// router.post(
-//   "/remover-documento-fiscal/:documentoFiscalId",
-//   registrarAcaoMiddleware({
-//     acao: ACOES.ALTERADO,
-//     entidade: ENTIDADES.SERVICO_TOMADO_TICKET,
-//   }),
-//   ServicoTomadoTicketController.removeDocumentoFiscal
-// );
+router.post(
+  "/remover-documento-fiscal/:documentoFiscalId",
+  registrarAcaoMiddleware({
+    acao: ACOES.ALTERADO,
+    entidade: ENTIDADES.SERVICO_TOMADO_TICKET,
+  }),
+  asyncHandler(ServicoTomadoTicketController.removeDocumentoFiscal)
+);
 
 router.get("/:id", asyncHandler(ServicoTomadoTicketController.obterTicket));
 

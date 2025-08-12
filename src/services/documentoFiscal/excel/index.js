@@ -13,6 +13,7 @@ const Pessoa = require("../../../models/Pessoa");
 const PessoaService = require("../../pessoa");
 const DocumentoFiscalService = require("../../documentoFiscal");
 const DocumentoFiscal = require("../../../models/DocumentoFiscal.js");
+const { formatarCompetencia } = require("../../../utils/formatters.js");
 
 const criarNovoDocumentoFiscal = async ({ documentoFiscal, usuario }) => {
   const novoDocumentoFiscal = new DocumentoFiscal(documentoFiscal);
@@ -131,11 +132,17 @@ const exportar = async ({ filtros, pageIndex, pageSize, searchTerm }) => {
     const newRow = {};
 
     Object.entries(mapExporter()).forEach(([header, key]) => {
+      if (key === "competencia") {
+        newRow[header] = formatarCompetencia(documentoFiscal?.competencia);
+        return;
+      }
+
       const accessor = key?.split(".") || [];
       const value = accessor.reduce(
         (acc, curr) => acc?.[curr],
         documentoFiscal
       );
+
       newRow[header] = value ?? "";
     });
 

@@ -10,6 +10,9 @@ const ServicoTomadoTicketSchema = new mongoose.Schema(
     pessoa: { type: mongoose.Schema.Types.ObjectId, ref: "Pessoa" },
     arquivos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Arquivo" }],
     servicos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Servico" }],
+    documentosFiscais: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "DocumentoFiscal" },
+    ],
     contaPagarOmie: { type: Schema.Types.ObjectId, ref: "ContaPagar" },
     conta_corrente: { type: String },
     codigo_categoria: { type: String },

@@ -1,5 +1,23 @@
 const mongoose = require("mongoose");
 
+class CompetenciaType extends mongoose.SchemaType {
+  constructor(path, options) {
+    super(path, options, "CompetenciaType");
+  }
+
+  cast(val) {
+    if (val.mes < 1 || val.mes > 12) {
+      throw new Error("Mês inválido (1-12).");
+    }
+    if (val.ano < 2000) {
+      throw new Error("Ano mínimo é 2000.");
+    }
+    return val;
+  }
+}
+
+mongoose.Schema.Types.CompetenciaType = CompetenciaType;
+
 const documentoFiscalSchema = new mongoose.Schema(
   {
     pessoa: {
@@ -9,6 +27,9 @@ const documentoFiscalSchema = new mongoose.Schema(
     },
     tipoDocumentoFiscal: {
       type: String,
+    },
+    competencia: {
+      type: CompetenciaType,
     },
     numero: {
       type: String,
