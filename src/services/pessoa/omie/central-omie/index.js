@@ -13,6 +13,8 @@ const queue = Queue({
 });
 
 const addTask = async ({ pessoa }) => {
+  console.log("Running");
+
   await Integracao.updateMany(
     { parentId: pessoa._id, etapa: { $nin: ["sucesso", "processando"] } },
     { arquivado: true, motivoArquivamento: "Duplicidade" }

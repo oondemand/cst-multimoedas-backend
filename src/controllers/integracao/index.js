@@ -31,8 +31,8 @@ const processar = async (req, res) => {
 
   const integracao = {
     pessoa: {
-      omie_central: PessoaSync.centralOmie.queue.start,
-      central_omie: PessoaSync.omieCentral.queue.start,
+      omie_central: PessoaSync.omieCentral.queue.start,
+      central_omie: PessoaSync.centralOmie.queue.start,
     },
     conta_pagar: {
       omie_central: ContaPagarSync.omieCentral.queue.start,

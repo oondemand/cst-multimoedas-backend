@@ -3,7 +3,7 @@ const { LISTAS } = require("../constants/listas");
 
 const VALIDACAO = [
   {
-    validator: (data) => data.length <= 3,
+    validator: (data) => data.length <= 500,
     message: "A lista de valores excedeu o limite de 500 elementos.",
   },
 ];

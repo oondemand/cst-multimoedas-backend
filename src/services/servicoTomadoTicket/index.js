@@ -39,7 +39,8 @@ const listar = async ({ time = 1 }) => {
       populate: { path: "moeda" },
     })
     .populate("pessoa")
-    .populate("contaPagarOmie");
+    .populate("contaPagarOmie")
+    .populate("arquivos");
 
   return tickets;
 };
