@@ -64,8 +64,17 @@ const atualizar = async ({ id, ticket }) => {
 
 const obterPorId = async ({ id }) => {
   const ticket = await ServicoTomadoTicket.findById(id)
-    .populate("servicos")
-    .populate("pessoa");
+    .populate({
+      path: "servicos",
+      populate: { path: "moeda" },
+    })
+    .populate({
+      path: "documentosFiscais",
+      populate: "arquivo",
+    })
+    .populate("pessoa")
+    .populate("contaPagarOmie")
+    .populate("arquivos");
 
   if (!ticket || !id) throw new TicketNaoEncontradoError();
 
