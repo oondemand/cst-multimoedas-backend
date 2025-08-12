@@ -88,5 +88,4 @@ router.post(
   asyncHandler(DocumentoCadastralController.reprovarDocumento)
 );
 
-// router.post("/importar", uploadExcel.array("file"), importarDocumentoCadastral);
 module.exports = router;

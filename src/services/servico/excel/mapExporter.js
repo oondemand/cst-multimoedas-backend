@@ -4,8 +4,10 @@ const mapExporter = () => {
     Tipo: "pessoa.tipo",
     Documento: "pessoa.documento",
     "Tipo serviço tomado": "tipoServicoTomado",
-    Descrição: "descricao",
+    Moeda: "moeda.sigla",
+    "Valor (na moeda)": "valorMoeda",
     Valor: "valor",
+    Descrição: "descricao",
     "Data contratação": "dataContratacao",
     "Data conclusão": "dataConclusao",
   };

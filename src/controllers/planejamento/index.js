@@ -1,5 +1,6 @@
 const PlanejamentoService = require("../../services/planejamento");
 const { sendPaginatedResponse, sendResponse } = require("../../utils/helpers");
+const ServicoService = require("../../services/servico");
 
 const listar = async (req, res) => {
   const {
@@ -20,9 +21,13 @@ const listar = async (req, res) => {
       searchTerm,
     });
 
+  const servicosComCotacao = await ServicoService.adicionarCotacao({
+    servicos,
+  });
+
   sendPaginatedResponse({
     res,
-    results: servicos,
+    results: servicosComCotacao,
     statusCode: 200,
     pagination: {
       currentPage: page,

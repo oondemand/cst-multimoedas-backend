@@ -13,6 +13,9 @@ dotenv.config();
 const authMiddleware = require("./middlewares/authMiddleware");
 const logMiddleware = require("./middlewares/logMiddleware");
 const errorMiddleware = require("./middlewares/errorMiddleware");
+const { asyncHandler } = require("./utils/helpers");
+const IntegracaoController = require("./controllers/integracao");
+const MoedaController = require("./controllers/moeda");
 
 const app = express();
 
@@ -30,6 +33,11 @@ app.use("/auth", require("./routers/authRouter"));
 app.use("/webhooks/", require("./routers/webhookRouter"));
 app.use("/ativacao", require("./routers/seedRouter"));
 app.use("/tipo-acesso", require("./routers/tipoAcessoRouter"));
+app.use("/integracao/processar", asyncHandler(IntegracaoController.processar));
+app.use(
+  "/moedas/atualizar-cotacao",
+  asyncHandler(MoedaController.atualizarCotacao)
+);
 
 app.get("/image/:filename", (req, res) => {
   const filename = req.params.filename;
@@ -59,7 +67,7 @@ app.use("/etapas", require("./routers/etapaRouter"));
 
 // app.use("/logs", require("./routers/logRouter"));
 app.use("/servicos", require("./routers/servicoRouter"));
-// app.use("/documentos-fiscais", require("./routers/documentoFiscalRouter"));
+app.use("/documentos-fiscais", require("./routers/documentoFiscalRouter"));
 app.use(
   "/documentos-cadastrais",
   require("./routers/documentoCadastralRouter")
@@ -75,6 +83,7 @@ app.use("/sistema", require("./routers/sistemaRouter"));
 app.use("/lista-omie", require("./routers/listasOmieRouter"));
 app.use("/assistentes", require("./routers/assistenteRouter"));
 app.use("/integracao", require("./routers/integracaoRouter"));
+app.use("/moedas", require("./routers/moedaRouter"));
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 app.use(errorMiddleware);

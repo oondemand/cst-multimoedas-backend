@@ -6,9 +6,15 @@ const Sistema = require("../../models/Sistema");
 const ContaPagarSync = require("../contaPagar/omie");
 const { add } = require("date-fns");
 const { randomUUID } = require("crypto");
+const ServicoService = require("../servico");
 
 const aprovar = async ({ id }) => {
-  const ticket = await Ticket.findById(id).populate("pessoa servicos");
+  const ticket = await Ticket.findById(id)
+    .populate({
+      path: "servicos",
+      populate: { path: "moeda" },
+    })
+    .populate("pessoa");
 
   const etapas = await EtapaService.listarEtapasAtivasPorEsteira({
     esteira: "servicos-tomados",
@@ -25,8 +31,12 @@ const aprovar = async ({ id }) => {
   }
 
   if (ticket.etapa === "aprovacao-fiscal" && ticket?.servicos?.length > 0) {
+    const servicosComCotacao = await ServicoService.fixarCotacao({
+      servicos: ticket.servicos,
+    });
+
     const valorTotalDosServicos =
-      ticket?.servicos?.reduce((total, servico) => {
+      servicosComCotacao.reduce((total, servico) => {
         return total + (servico?.valor || 0);
       }, 0) ?? 0;
 

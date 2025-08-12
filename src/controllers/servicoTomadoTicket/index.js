@@ -5,6 +5,7 @@ const {
 } = require("../../utils/helpers");
 
 const ServicoTomadoTicketService = require("../../services/servicoTomadoTicket");
+const ServicoService = require("../../services/servico");
 
 const aprovar = async (req, res) => {
   const ticket = await ServicoTomadoTicketService.aprovar({
@@ -54,12 +55,24 @@ const updateTicket = async (req, res) => {
 };
 
 const getAllTickets = async (req, res) => {
-  const tickets = await ServicoTomadoTicketService.listar();
+  const { time } = req.query;
+  const tickets = await ServicoTomadoTicketService.listar({ time });
+
+  const ticketsComServicosComCotacao = await Promise.all(
+    tickets.map(async (ticket) => {
+      return {
+        ...ticket.toObject(),
+        servicos: await ServicoService.adicionarCotacao({
+          servicos: ticket.servicos,
+        }),
+      };
+    })
+  );
 
   sendResponse({
     res,
     statusCode: 200,
-    tickets,
+    tickets: ticketsComServicosComCotacao,
   });
 };
 
@@ -461,52 +474,30 @@ const removerServico = async (req, res) => {
   });
 };
 
-// const addDocumentoFiscal = async (req, res) => {
-//   const { ticketId, documentoFiscalId } = req.params;
-//   const documentoFiscal = await DocumentoFiscal.findById(documentoFiscalId);
-//   const ticket = await Ticket.findById(ticketId);
+const addDocumentoFiscal = async (req, res) => {
+  const ticket = await ServicoTomadoTicketService.adicionarDocumentoFiscal({
+    documentoFiscalId: req.params.documentoFiscalId,
+    ticketId: req.params.ticketId,
+  });
 
-//   ticket.documentosFiscais = [
-//     ...ticket?.documentosFiscais,
-//     documentoFiscal?._id,
-//   ];
+  return sendResponse({
+    res,
+    statusCode: 200,
+    ticket,
+  });
+};
 
-//   await ticket.save();
+const removeDocumentoFiscal = async (req, res) => {
+  const ticket = await ServicoTomadoTicketService.removerDocumentoFiscal({
+    documentoFiscalId: req?.params?.documentoFiscalId,
+  });
 
-//   documentoFiscal.status = "processando";
-//   await documentoFiscal.save();
-
-//   const populatedTicket = await Ticket.findById(ticket._id).populate(
-//     "documentosFiscais"
-//   );
-
-//   return sendResponse({
-//     res,
-//     statusCode: 200,
-//     ticket: populatedTicket,
-//   });
-// };
-
-// const removeDocumentoFiscal = async (req, res) => {
-//   const { documentoFiscalId } = req.params;
-//   await DocumentoFiscal.findByIdAndUpdate(
-//     documentoFiscalId,
-//     { statusValidacao: "pendente", status: "aberto" },
-//     { new: true }
-//   );
-
-//   const ticket = await Ticket.findOneAndUpdate(
-//     { documentosFiscais: documentoFiscalId }, // Busca o ticket que contém este serviço
-//     { $pull: { documentosFiscais: documentoFiscalId } }, // Remove o serviço do array
-//     { new: true }
-//   ).populate("documentosFiscais");
-
-//   return sendResponse({
-//     res,
-//     statusCode: 200,
-//     ticket,
-//   });
-// };
+  return sendResponse({
+    res,
+    statusCode: 200,
+    ticket,
+  });
+};
 
 const excluir = async (req, res) => {
   const ticket = await ServicoTomadoTicketService.excluir({
@@ -533,4 +524,6 @@ module.exports = {
   removerServico,
   anexarArquivos,
   removerArquivo,
+  addDocumentoFiscal,
+  removeDocumentoFiscal,
 };

@@ -50,7 +50,18 @@ const listarComPaginacao = async ({
   filtros,
   ...rest
 }) => {
-  const camposBusca = ["status", "nome", "email", "tipo"];
+  const camposBusca = [
+    "status",
+    "nome",
+    "email",
+    "tipo",
+    "documento",
+    "endereco.pais.nome",
+    "pessoaFisica.apelido",
+    "pessoaFisica.dataNascimento",
+    "pessoaFisica.rg",
+    "pessoaJuridica.nomeFantasia",
+  ];
 
   const query = FiltersUtils.buildQuery({
     filtros,

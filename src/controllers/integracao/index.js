@@ -19,13 +19,32 @@ const listar = async (req, res) => {
 };
 
 const processar = async (req, res) => {
-  PessoaSync.centralOmie.queue.start();
-  PessoaSync.omieCentral.queue.start();
+  const { tipo, direcao } = req.body;
 
-  ContaPagarSync.centralOmie.queue.start();
-  ContaPagarSync.omieCentral.queue.start();
+  if (!tipo || !direcao) {
+    return Helpers.sendErrorResponse({
+      res,
+      statusCode: 404,
+      message: "Parâmetros obrigatórios [tipo, direcao]",
+    });
+  }
 
-  ArquivosSync.centralOmie.queue.start();
+  const integracao = {
+    pessoa: {
+      omie_central: PessoaSync.omieCentral.queue.start,
+      central_omie: PessoaSync.centralOmie.queue.start,
+    },
+    conta_pagar: {
+      omie_central: ContaPagarSync.omieCentral.queue.start,
+      central_omie: ContaPagarSync.centralOmie.queue.start,
+    },
+    arquivo: {
+      central_omie: ArquivosSync.centralOmie.queue.start,
+    },
+  };
+
+  integracao[tipo][direcao]();
+  console.log(`🚀 [INTEGRAÇÃO] [TIPO: ${tipo}] [DIREÇÃO: ${direcao}]`);
 
   Helpers.sendResponse({
     res,

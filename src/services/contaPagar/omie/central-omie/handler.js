@@ -33,7 +33,7 @@ const handler = async (integracao) => {
       const conta = mapExporter({
         contaPagar: {
           ...integracao.payload,
-          codigo_cliente_fornecedor: clienteOmie.codigo_cliente_omie,
+          codigo_cliente_fornecedor: clienteOmie?.codigo_cliente_omie,
         },
       });
 

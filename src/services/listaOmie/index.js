@@ -12,7 +12,7 @@ const atualizar = async ({ id, lista }) => {
 };
 
 const listAll = async () => {
-  return await ListaOmie.find().select("-__v -data -fields -select");
+  return await ListaOmie.find().select("-__v -fields -select");
 };
 
 const obterListaPorCodigo = async ({ codigo }) => {

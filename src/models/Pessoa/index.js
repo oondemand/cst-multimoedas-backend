@@ -50,16 +50,16 @@ schema.virtual("label").get(function () {
 schema.pre("save", function (next) {
   if (this.tipo === "pj" || this.tipo === "ext") {
     this.pessoaFisica = {
-      apelido: null,
-      dataNascimento: null,
-      rg: null,
+      apelido: "",
+      dataNascimento: "",
+      rg: "",
     };
   }
 
   if (this.tipo === "pf" || this.tipo === "ext") {
     this.pessoaJuridica = {
-      nomeFantasia: null,
-      regimeTributario: null,
+      nomeFantasia: "",
+      regimeTributario: "",
     };
   }
 

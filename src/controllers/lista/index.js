@@ -63,7 +63,7 @@ const updateItem = async (req, res) => {
   const { codigo } = req.params;
   const { itemId, valor } = req.body;
 
-  const lista = ListaService.atualizarItem({ codigo, itemId, valor });
+  const lista = await ListaService.atualizarItem({ codigo, itemId, valor });
   const entidade = Object.entries(ENTIDADES).find(([key, value]) =>
     value.includes(lista.codigo)
   )?.[1];
