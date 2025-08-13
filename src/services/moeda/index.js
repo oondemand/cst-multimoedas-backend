@@ -45,28 +45,33 @@ const listarAtivas = async () => {
 
 const atualizarCotacao = async () => {
   const moedas = await Moeda.find({ status: "ativo" });
-  const dezMinutos = 10 * 60 * 1000;
+  const dezMinutos = 0 * 30 * 1000;
 
   await Promise.all(
-    moedas.map(async (moeda) => {
+    moedas.map(async (item) => {
       try {
-        if (moeda.sigla === "BRL") return;
+        if (item.sigla === "BRL") return;
 
         const agora = Date.now();
-        const atualizadoEm = new Date(moeda.updatedAt).getTime();
+        const atualizadoEm = new Date(item.updatedAt).getTime();
         const diferenca = agora - atualizadoEm;
 
         if (diferenca < dezMinutos) return;
 
-        const cotacao = await CotacaoService.consultar({
-          sigla: moeda.sigla,
+        const { cotacao, response, url } = await CotacaoService.consultar({
+          sigla: item.sigla,
         });
 
+        const moeda = await Moeda.findById(item._id);
+
+        moeda.requisicao = { url };
+        moeda.resposta = response;
+
         if (cotacao) {
-          await Moeda.findByIdAndUpdate(moeda._id, {
-            cotacao,
-          });
+          moeda.cotacao = cotacao;
         }
+
+        await moeda.save();
       } catch (error) {
         console.log("ERROR", error);
       }

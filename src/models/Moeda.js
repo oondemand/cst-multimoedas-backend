@@ -4,6 +4,13 @@ const moedaSchema = new mongoose.Schema(
   {
     sigla: { type: String, require: true },
     cotacao: { type: Number, default: 1 },
+    requisicao: {
+      type: {
+        url: { type: String, default: "" },
+        body: { type: mongoose.Schema.Types.Mixed, default: {} },
+      },
+    },
+    resposta: Object,
     status: {
       type: String,
       enum: ["ativo", "inativo", "arquivado"],
