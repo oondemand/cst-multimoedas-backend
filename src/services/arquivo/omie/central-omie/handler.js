@@ -55,8 +55,6 @@ const handler = async (integracao) => {
         etapa: { $nin: ["sucesso"] },
       });
 
-      console.log("Há um anexo pendente", isAnexoPendente);
-
       if (!isAnexoPendente) {
         await Integracao.findOneAndUpdate(
           {

@@ -38,7 +38,7 @@ const processar = async (req, res) => {
       omie_central: ContaPagarSync.omieCentral.queue.start,
       central_omie: ContaPagarSync.centralOmie.queue.start,
     },
-    arquivo: {
+    anexos: {
       central_omie: ArquivosSync.centralOmie.queue.start,
     },
   };
