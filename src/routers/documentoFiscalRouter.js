@@ -19,7 +19,10 @@ router.post(
   asyncHandler(DocumentoFiscalController.importar)
 );
 
-router.get("/pessoa/:pessoaId", DocumentoFiscalController.listarPorPessoa);
+router.get(
+  "/pessoa/:pessoaId",
+  asyncHandler(DocumentoFiscalController.listarPorPessoa)
+);
 
 // router.get(
 //   "/prestador",

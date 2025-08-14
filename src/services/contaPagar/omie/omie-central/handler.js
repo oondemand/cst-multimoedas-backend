@@ -122,6 +122,12 @@ const handler = async (integracao) => {
 
       return { message: "Conta pagar sincronizada com sucesso!" };
     },
+    onError: async (integracao, resultado) => {
+      await ServicoTomadoTicket.findOneAndUpdate(
+        { contaPagarOmie: integracao.parentId },
+        { status: "revisao" }
+      );
+    },
   });
 };
 

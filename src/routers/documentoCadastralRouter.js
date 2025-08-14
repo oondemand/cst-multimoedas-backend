@@ -19,7 +19,10 @@ router.post(
   asyncHandler(DocumentoCadastralController.importar)
 );
 
-router.get("/pessoa/:pessoaId", DocumentoCadastralController.listarPorPessoa);
+router.get(
+  "/pessoa/:pessoaId",
+  asyncHandler(DocumentoCadastralController.listarPorPessoa)
+);
 
 // router.get(
 //   "/prestador",

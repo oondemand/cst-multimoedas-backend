@@ -9,4 +9,12 @@ router.get("/todos", asyncHandler(IntegracaoController.listaComPaginacao));
 router.post("/reprocessar/:id", asyncHandler(IntegracaoController.reprocessar));
 router.post("/arquivar/:id", asyncHandler(IntegracaoController.arquivar));
 
+// router.post(
+//   "/processar/ativas",
+//   asyncHandler(IntegracaoController.processarAtivas)
+// );
+
+router.get("/config", asyncHandler(IntegracaoController.listarConfigs));
+router.put("/config/:id", asyncHandler(IntegracaoController.atualizarConfig));
+
 module.exports = router;

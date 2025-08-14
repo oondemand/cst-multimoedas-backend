@@ -83,6 +83,13 @@ const handler = async (integracao) => {
         await integracao.save();
       }
     },
+
+    onError: async (integracao, resultado) => {
+      await ServicoTomadoTicket.findOneAndUpdate(
+        { contaPagarOmie: integracao.parentId },
+        { status: "revisao" }
+      );
+    },
   });
 };
 

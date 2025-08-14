@@ -33,7 +33,14 @@ app.use("/auth", require("./routers/authRouter"));
 app.use("/webhooks/", require("./routers/webhookRouter"));
 app.use("/ativacao", require("./routers/seedRouter"));
 app.use("/tipo-acesso", require("./routers/tipoAcessoRouter"));
+
+app.use(
+  "/integracao/processar/ativas",
+  asyncHandler(IntegracaoController.processarAtivas)
+);
+
 app.use("/integracao/processar", asyncHandler(IntegracaoController.processar));
+
 app.use(
   "/moedas/atualizar-cotacao",
   asyncHandler(MoedaController.atualizarCotacao)

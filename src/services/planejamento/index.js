@@ -85,6 +85,13 @@ const listarServicosComPaginacao = async ({
 
 const estatisticas = async () => {
   const aggregationPipeline = [
+    // 0. Filtrar serviços que não estão arquivados
+    {
+      $match: {
+        status: { $ne: "arquivado" }, // ou o nome exato do campo de status
+      },
+    },
+
     // 1. Join com a moeda para acessar a cotação da moeda
     {
       $lookup: {
@@ -97,7 +104,7 @@ const estatisticas = async () => {
     {
       $unwind: "$moedaData",
     },
-    // 2. Criar campo `cotacaoEfetiva`: se não houver no serviço, usa da moeda
+    // 2. Criar campo `cotacaoEfetiva`
     {
       $addFields: {
         cotacaoEfetiva: {
@@ -189,6 +196,13 @@ const sincronizarEsteira = async ({ usuario }) => {
       {
         pessoa: servico.pessoa._id,
         status: { $ne: "arquivado" },
+        etapa: {
+          $nin: [
+            "conta-pagar-central-omie",
+            "conta-pagar-omie-central",
+            "concluido",
+          ],
+        },
       },
       { $push: { servicos: servico._id } },
       { new: true }
@@ -196,7 +210,7 @@ const sincronizarEsteira = async ({ usuario }) => {
 
     if (ticket) {
       registrarAcao({
-        entidade: ENTIDADES.TICKET,
+        entidade: ENTIDADES.SERVICO_TOMADO_TICKET,
         acao: ACOES.ALTERADO,
         origem: ORIGENS.PLANEJAMENTO,
         dadosAtualizados: ticket,
@@ -219,7 +233,7 @@ const sincronizarEsteira = async ({ usuario }) => {
       });
 
       registrarAcao({
-        entidade: ENTIDADES.TICKET,
+        entidade: ENTIDADES.SERVICO_TOMADO_TICKET,
         acao: ACOES.ADICIONADO,
         origem: ORIGENS.PLANEJAMENTO,
         dadosAtualizados: ticket,

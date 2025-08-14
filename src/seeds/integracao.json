@@ -1,0 +1,7 @@
+[
+  { "tipo": "pessoa", "direcao": "central_omie" },
+  { "tipo": "pessoa", "direcao": "omie_central" },
+  { "tipo": "conta_pagar", "direcao": "central_omie" },
+  { "tipo": "conta_pagar", "direcao": "omie_central" },
+  { "tipo": "anexos", "direcao": "central_omie" }
+]
