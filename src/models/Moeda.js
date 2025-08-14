@@ -11,6 +11,7 @@ const moedaSchema = new mongoose.Schema(
       },
     },
     resposta: Object,
+    atualizadoEm: { type: Date, default: new Date() },
     status: {
       type: String,
       enum: ["ativo", "inativo", "arquivado"],

@@ -196,6 +196,13 @@ const sincronizarEsteira = async ({ usuario }) => {
       {
         pessoa: servico.pessoa._id,
         status: { $ne: "arquivado" },
+        etapa: {
+          $nin: [
+            "conta-pagar-central-omie",
+            "conta-pagar-omie-central",
+            "concluido",
+          ],
+        },
       },
       { $push: { servicos: servico._id } },
       { new: true }
@@ -203,7 +210,7 @@ const sincronizarEsteira = async ({ usuario }) => {
 
     if (ticket) {
       registrarAcao({
-        entidade: ENTIDADES.TICKET,
+        entidade: ENTIDADES.SERVICO_TOMADO_TICKET,
         acao: ACOES.ALTERADO,
         origem: ORIGENS.PLANEJAMENTO,
         dadosAtualizados: ticket,
@@ -226,7 +233,7 @@ const sincronizarEsteira = async ({ usuario }) => {
       });
 
       registrarAcao({
-        entidade: ENTIDADES.TICKET,
+        entidade: ENTIDADES.SERVICO_TOMADO_TICKET,
         acao: ACOES.ADICIONADO,
         origem: ORIGENS.PLANEJAMENTO,
         dadosAtualizados: ticket,

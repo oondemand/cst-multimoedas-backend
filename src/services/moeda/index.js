@@ -53,7 +53,7 @@ const atualizarCotacao = async () => {
         if (item.sigla === "BRL") return;
 
         const agora = Date.now();
-        const atualizadoEm = new Date(item.updatedAt).getTime();
+        const atualizadoEm = new Date(item.atualizadoEm).getTime();
         const diferenca = agora - atualizadoEm;
 
         if (diferenca < dezMinutos) return;
@@ -69,6 +69,7 @@ const atualizarCotacao = async () => {
 
         if (cotacao) {
           moeda.cotacao = cotacao;
+          moeda.atualizadoEm = atualizadoEm;
         }
 
         await moeda.save();
