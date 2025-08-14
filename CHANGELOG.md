@@ -1,5 +1,7 @@
 # Changelog
 
+## 0.3.28 (2025-08-12)
+
 ## [0.3.27](https://github.com/oondemand/central-oondemand-backend/compare/0.3.26...0.3.27) (2025-08-12)
 
 ## 0.3.26 (2025-08-12)
