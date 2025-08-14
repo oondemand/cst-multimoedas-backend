@@ -108,6 +108,7 @@ const removerArquivo = async ({ id, arquivoId }) => {
 const listarPorPessoa = async ({ pessoaId }) => {
   const documentosCadastrais = await DocumentoCadastral.find({
     pessoa: pessoaId,
+    status: { $ne: "arquivado" },
   }).populate("arquivo");
 
   return documentosCadastrais;
