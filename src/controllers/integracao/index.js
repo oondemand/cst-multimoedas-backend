@@ -3,6 +3,7 @@ const Helpers = require("../../utils/helpers");
 const PessoaSync = require("../../services/pessoa/omie");
 const ContaPagarSync = require("../../services/contaPagar/omie");
 const ArquivosSync = require("../../services/arquivo/omie");
+const IntegracaoConfigService = require("../../services/integracao/config");
 
 const listar = async (req, res) => {
   const results = await IntegracaoService.listarTodos({
@@ -100,10 +101,60 @@ const reprocessar = async (req, res) => {
   });
 };
 
+const processarAtivas = async (req, res) => {
+  const integracoesConfigs = await IntegracaoConfigService.listar();
+
+  const integracao = {
+    pessoa: {
+      omie_central: PessoaSync.omieCentral.queue.start,
+      central_omie: PessoaSync.centralOmie.queue.start,
+    },
+    conta_pagar: {
+      omie_central: ContaPagarSync.omieCentral.queue.start,
+      central_omie: ContaPagarSync.centralOmie.queue.start,
+    },
+    anexos: {
+      central_omie: ArquivosSync.centralOmie.queue.start,
+    },
+  };
+
+  for (const config of integracoesConfigs) {
+    if (config.ativa) {
+      console.log(
+        `🚀 [PROCESSANDO INTEGRAÇÃO] [TIPO: ${config.tipo}] [DIREÇÃO: ${config.direcao}] [ATIVA: ${config.ativa}]`
+      );
+      integracao[config.tipo][config.direcao]();
+    }
+  }
+
+  Helpers.sendResponse({
+    res,
+    statusCode: 200,
+    message: "Processando integrações ativas.",
+  });
+};
+
+const atualizarConfig = async (req, res) => {
+  const config = await IntegracaoConfigService.atualizar({
+    id: req.params.id,
+    config: req.body,
+  });
+
+  Helpers.sendResponse({ res, statusCode: 200, config });
+};
+
+const listarConfigs = async (req, res) => {
+  const configs = await IntegracaoConfigService.listar();
+  Helpers.sendResponse({ res, statusCode: 200, configs });
+};
+
 module.exports = {
   listar,
   arquivar,
   processar,
   reprocessar,
+  listarConfigs,
+  processarAtivas,
+  atualizarConfig,
   listaComPaginacao,
 };

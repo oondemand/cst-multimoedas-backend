@@ -11,6 +11,7 @@ const Sistema = require("../models/Sistema");
 const ListaOmie = require("../models/ListaOmie");
 const Assistente = require("../models/Assistente");
 const Moeda = require("../models/Moeda");
+const IntegracaoConfig = require("../models/IntegracaoConfig");
 
 // const bancos = require("../seeds/bancos.json");
 // const estados = require("../seeds/estados.json");
@@ -19,6 +20,7 @@ const sistemas = require("../seeds/sistemas.json");
 const etapas = require("../seeds/etapas.json");
 const assistentes = require("../seeds/assistentes.json");
 const moedas = require("../seeds/moedas.json");
+const integracoes = require("../seeds/integracao.json");
 
 const {
   sendErrorResponse,
@@ -66,6 +68,10 @@ const seed = async (req, res) => {
 
   for (const moeda of moedas) {
     await Moeda.create(moeda);
+  }
+
+  for (const integracao of integracoes) {
+    await IntegracaoConfig.create(integracao);
   }
 
   return sendResponse({

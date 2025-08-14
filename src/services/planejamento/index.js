@@ -85,6 +85,13 @@ const listarServicosComPaginacao = async ({
 
 const estatisticas = async () => {
   const aggregationPipeline = [
+    // 0. Filtrar serviços que não estão arquivados
+    {
+      $match: {
+        status: { $ne: "arquivado" }, // ou o nome exato do campo de status
+      },
+    },
+
     // 1. Join com a moeda para acessar a cotação da moeda
     {
       $lookup: {
@@ -97,7 +104,7 @@ const estatisticas = async () => {
     {
       $unwind: "$moedaData",
     },
-    // 2. Criar campo `cotacaoEfetiva`: se não houver no serviço, usa da moeda
+    // 2. Criar campo `cotacaoEfetiva`
     {
       $addFields: {
         cotacaoEfetiva: {

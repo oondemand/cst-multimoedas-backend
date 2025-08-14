@@ -1,4 +1,8 @@
 const mongoose = require("mongoose");
+const {
+  INTEGRACAO_TIPO,
+  INTEGRACAO_DIRECAO,
+} = require("../constants/integracao");
 
 const integracaoSchema = new mongoose.Schema(
   {
@@ -7,15 +11,14 @@ const integracaoSchema = new mongoose.Schema(
     tipo: {
       type: String,
       required: true,
-      enum: ["pessoa", "conta_pagar", "anexos"],
+      enum: Object.entries(INTEGRACAO_TIPO).map(([key, value]) => value),
     },
     direcao: {
       type: String,
       required: true,
-      enum: ["central_omie", "omie_central"],
+      enum: Object.entries(INTEGRACAO_DIRECAO).map(([key, value]) => value),
     },
     etapa: { type: String, required: true },
-    // etapas: [{ nome: String, codigo: String }],
     parentId: { type: mongoose.Schema.Types.ObjectId },
     externalId: String,
     requisicao: {
