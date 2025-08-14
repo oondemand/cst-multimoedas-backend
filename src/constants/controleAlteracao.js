@@ -1,6 +1,7 @@
 const ENTIDADES = {
   PESSOA: "pessoa",
   SERVICO: "servico",
+  INTEGRACAO: "integracao",
   DOCUMENTO_FISCAL: "documento-fiscal",
   DOCUMENTO_CADASTRAL: "documento-cadastral",
   SERVICO_TOMADO_TICKET: "servico-tomado.ticket",

@@ -1,13 +1,25 @@
 const express = require("express");
 const IntegracaoController = require("../controllers/integracao");
 const { asyncHandler } = require("../utils/helpers");
+const {
+  registrarAcaoMiddleware,
+} = require("../middlewares/registrarAcaoMiddleware");
+const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 
 const router = express.Router();
 router.get("/", asyncHandler(IntegracaoController.listar));
 router.get("/todos", asyncHandler(IntegracaoController.listaComPaginacao));
 // router.post("/processar", asyncHandler(IntegracaoController.processar));
 router.post("/reprocessar/:id", asyncHandler(IntegracaoController.reprocessar));
-router.post("/arquivar/:id", asyncHandler(IntegracaoController.arquivar));
+
+router.post(
+  "/arquivar/:id",
+  registrarAcaoMiddleware({
+    acao: ACOES.ARQUIVADO,
+    entidade: ENTIDADES.INTEGRACAO,
+  }),
+  asyncHandler(IntegracaoController.arquivar)
+);
 
 // router.post(
 //   "/processar/ativas",
