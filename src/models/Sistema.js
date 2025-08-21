@@ -11,6 +11,7 @@ const omieSchema = new mongoose.Schema(
 const sistemaSchema = new mongoose.Schema(
   {
     omie: omieSchema,
+    openIaKey: String,
     appKey: String,
     sendgrid_api_key: { type: String },
     remetente: { type: { nome: String, email: String } },
