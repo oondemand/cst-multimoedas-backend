@@ -14,6 +14,11 @@
   "status": "ativo"
 },
 {
+  "modulo": "documento-fiscal",
+  "assistente": "681a3c1883482bea0680959c",
+  "status": "ativo"
+},
+{
   "modulo": "documento-cadastral",
   "assistente": "681a3c1883482bea0680959c",
   "status": "ativo"
