@@ -29,7 +29,7 @@ const {
 } = require("../utils/helpers");
 
 const seed = async (req, res) => {
-  const { baseOmie, appKey } = req.body;
+  const { baseOmie, appKey, openIaKey } = req.body;
 
   const baseOmieExistente = await BaseOmie.findOne();
   if (baseOmieExistente) {
@@ -59,7 +59,7 @@ const seed = async (req, res) => {
   }
 
   for (const sistema of sistemas) {
-    await Sistema.create({ ...sistema, appKey });
+    await Sistema.create({ ...sistema, appKey, openIaKey });
   }
 
   for (const listaomie of listaomies) {

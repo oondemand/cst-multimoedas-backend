@@ -63,7 +63,7 @@ const listarComPaginacao = async ({
       .skip(skip)
       .limit(limite)
       .populate("pessoa")
-      .populate("arquivo", "nomeOriginal mimetype size"),
+      .populate("arquivo"),
     DocumentoFiscal.countDocuments({
       $and: [...query, { status: { $ne: "arquivado" } }],
     }),
