@@ -23,7 +23,7 @@ const mapImporter = async ({ row }) => {
     descricao: row[9],
     observacao: row[10],
     motivoRecusa: row[11],
-    statusValidacao: row[12],
+    ...(row[12] !== "" ? { statusValidacao: row[12] } : {}),
   };
 
   return documentoFiscal;

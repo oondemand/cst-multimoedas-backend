@@ -19,7 +19,7 @@ const mapImporter = async ({ row }) => {
     pessoa: {
       nome: row[0],
       tipo: row[1],
-      documento: row[2]?.toLowerCase(),
+      documento: row[2],
     },
     tipoServicoTomado: row[3],
     moeda,
