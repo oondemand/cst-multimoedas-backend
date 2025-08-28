@@ -17,7 +17,10 @@ const ENTIDADES = {
     "configuracao.lista.tipo-documento-cadastral",
   CONFIGURACAO_LISTA_TIPO_DOCUMENTO_FISCAL:
     "configuracao.lista.tipo-documento-fiscal",
-  CONFIGURACAO_LISTA_MOTIVO_RECUSA: "configuracao.lista.motivo-recusa",
+  CONFIGURACAO_LISTA_MOTIVO_RECUSA_DOCUMENTO_FISCAL:
+    "configuracao.lista.motivo-recusa-documento-fiscal",
+  CONFIGURACAO_LISTA_MOTIVO_RECUSA_DOCUMENTO_CADASTRAL:
+    "configuracao.lista.motivo-recusa-documento-cadastral",
   CONFIGURACAO_LISTA_OMIE: "configuracao.lista.omie",
   CONFIGURACAO_LISTA_TIPO_SERVICO_TOMADO:
     "configuracao.lista.tipo-servico-tomado",
