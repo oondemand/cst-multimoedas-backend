@@ -13,7 +13,8 @@ const ENTIDADES = {
   CONFIGURACAO_LISTA: "configuracao.lista",
   CONFIGURACAO_LISTA_CAMPANHA: "configuracao.lista.campanha",
   CONFIGURACAO_LISTA_GRUPO: "configuracao.lista.grupo",
-  CONFIGURACAO_LISTA_TIPO_DOCUMENTO: "configuracao.lista.tipo-documento",
+  CONFIGURACAO_LISTA_TIPO_DOCUMENTO_CADASTRAL:
+    "configuracao.lista.tipo-documento-cadastral",
   CONFIGURACAO_LISTA_TIPO_DOCUMENTO_FISCAL:
     "configuracao.lista.tipo-documento-fiscal",
   CONFIGURACAO_LISTA_MOTIVO_RECUSA: "configuracao.lista.motivo-recusa",
