@@ -1,7 +1,7 @@
 {
-  "name": "central-oondemand-backend",
-  "version": "0.3.33",
-  "description": "Backend para central oondemand",
+  "name": "cst-multimoedas-backend",
+  "version": "0.0.0",
+  "description": "Backend para cst-multimoedas",
   "main": "src/server.js",
   "scripts": {
     "release": "release-it",

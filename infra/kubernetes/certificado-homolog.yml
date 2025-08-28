@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: app-tls
-  namespace: central-oondemand-homolog
+  namespace: cst-multimoedas-homolog
 spec:
   secretName: app-tls
   issuerRef:
