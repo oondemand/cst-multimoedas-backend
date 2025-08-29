@@ -106,10 +106,14 @@ const listarServicoPorPessoa = async (req, res) => {
     pessoaId: req.params.pessoaId,
   });
 
+  const servicosComCotacao = await ServicoService.adicionarCotacao({
+    servicos,
+  });
+
   sendResponse({
     res,
     statusCode: 200,
-    servicos,
+    servicos: servicosComCotacao,
   });
 };
 

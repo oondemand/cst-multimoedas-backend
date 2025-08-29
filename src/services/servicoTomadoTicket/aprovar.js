@@ -8,6 +8,12 @@ const { add } = require("date-fns");
 const { randomUUID } = require("crypto");
 const ServicoService = require("../servico");
 
+const alterarEtapa = async ({ ticket, etapa }) => {
+  ticket.etapa = etapa;
+  ticket.status = "aguardando-inicio";
+  return await ticket.save();
+};
+
 const aprovar = async ({ id }) => {
   const ticket = await Ticket.findById(id)
     .populate({
@@ -30,7 +36,44 @@ const aprovar = async ({ id }) => {
     return ticket;
   }
 
-  if (ticket.etapa === "aprovacao-fiscal" && ticket?.servicos?.length > 0) {
+  if (etapaAtualIndex > ultimaEtapa || etapaAtualIndex < 0) {
+    throw new GenericError("Não foi possível aprovar ticket, etapa inválida");
+  }
+
+  const { tipo, cadastro_aprovado } = ticket.pessoa;
+  const { etapa } = ticket;
+
+  if (ticket.etapa === "aprovacao-cadastro") {
+    if (!cadastro_aprovado) {
+      ticket.pessoa.cadastro_aprovado = true;
+      await ticket.pessoa.save();
+    }
+  }
+
+  if (tipo === "pj") {
+    if (etapa === "aprovacao-cadastro") {
+      return await alterarEtapa({
+        ticket,
+        etapa: etapas[etapaAtualIndex + 2].codigo,
+      });
+    }
+
+    if (cadastro_aprovado && etapa === "requisicao") {
+      return await alterarEtapa({
+        ticket,
+        etapa: etapas[etapaAtualIndex + 3].codigo,
+      });
+    }
+  }
+
+  if (etapa === "requisicao" && cadastro_aprovado) {
+    return await alterarEtapa({
+      etapa: etapas[etapaAtualIndex + 2].codigo,
+      ticket,
+    });
+  }
+
+  if (etapa === "aprovacao-fiscal" && ticket?.servicos?.length > 0) {
     const servicosComCotacao = await ServicoService.fixarCotacao({
       servicos: ticket.servicos,
     });
@@ -69,32 +112,17 @@ const aprovar = async ({ id }) => {
       ticket.contaPagarOmie = conta._id;
       await ticket.save();
     }
+
+    return await alterarEtapa({
+      etapa: etapas[etapaAtualIndex + 1].codigo,
+      ticket,
+    });
   }
 
-  if (etapaAtualIndex > ultimaEtapa || etapaAtualIndex < 0) {
-    throw new GenericError("Não foi possível aprovar ticket, etapa inválida");
-  }
-
-  if (ticket.etapa === "aprovacao-cadastro") {
-    if (!ticket?.pessoa?.cadastro_aprovado) {
-      ticket.pessoa.cadastro_aprovado = true;
-      await ticket.pessoa.save();
-    }
-  }
-
-  if (ticket.etapa === "requisicao" && ticket.pessoa.cadastro_aprovado) {
-    ticket.etapa = etapas[etapaAtualIndex + 2].codigo;
-    ticket.status = "aguardando-inicio";
-    await ticket.save();
-
-    return ticket;
-  }
-
-  ticket.etapa = etapas[etapaAtualIndex + 1].codigo;
-  ticket.status = "aguardando-inicio";
-  await ticket.save();
-
-  return ticket;
+  return await alterarEtapa({
+    etapa: etapas[etapaAtualIndex + 1].codigo,
+    ticket,
+  });
 };
 
 module.exports = {
