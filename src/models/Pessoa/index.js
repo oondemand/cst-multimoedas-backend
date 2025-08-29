@@ -28,6 +28,7 @@ const schema = new Schema(
       enum: ["ativo", "inativo", "arquivado"],
       default: "ativo",
     },
+    cadastro_aprovado: { type: Boolean, default: false },
     codigo_cliente_omie: String,
     pessoaFisica: pessoaFisica,
     pessoaJuridica: pessoaJuridica,

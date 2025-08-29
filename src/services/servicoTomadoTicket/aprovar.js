@@ -75,6 +75,21 @@ const aprovar = async ({ id }) => {
     throw new GenericError("Não foi possível aprovar ticket, etapa inválida");
   }
 
+  if (ticket.etapa === "aprovacao-cadastro") {
+    if (!ticket?.pessoa?.cadastro_aprovado) {
+      ticket.pessoa.cadastro_aprovado = true;
+      await ticket.pessoa.save();
+    }
+  }
+
+  if (ticket.etapa === "requisicao" && ticket.pessoa.cadastro_aprovado) {
+    ticket.etapa = etapas[etapaAtualIndex + 2].codigo;
+    ticket.status = "aguardando-inicio";
+    await ticket.save();
+
+    return ticket;
+  }
+
   ticket.etapa = etapas[etapaAtualIndex + 1].codigo;
   ticket.status = "aguardando-inicio";
   await ticket.save();
