@@ -1,6 +1,6 @@
 {
   "name": "cst-multimoedas-backend",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Backend para cst-multimoedas",
   "main": "src/server.js",
   "scripts": {
