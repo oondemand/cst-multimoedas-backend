@@ -8,7 +8,13 @@ const { LISTA_PAISES_OMIE } = require("../../constants/omie/paises");
 const sync = require("./omie");
 
 const criar = async ({ pessoa }) => {
-  return await PessoaBusiness.criar({ pessoa });
+  const pessoa = await PessoaBusiness.criar({ pessoa });
+
+  sync.centralOmie.addTask({
+    pessoa,
+  });
+
+  return pessoa;
 };
 
 const atualizar = async ({ id, pessoa }) => {
