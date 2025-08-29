@@ -6,6 +6,8 @@
 // const Etapa = require("../../models/Etapa");
 
 const DocumentoFiscalService = require("../../services/documentoFiscal");
+const EtapaService = require("../../services/etapa");
+
 const DocumentoFiscalExcel = require("../../services/documentoFiscal/excel");
 const { arrayToExcelBuffer } = require("../../utils/excel");
 const ImportacaoService = require("../../services/importacao");
@@ -27,6 +29,7 @@ const {
   sendResponse,
   // sendErrorResponse,
 } = require("../../utils/helpers");
+const ServicoTomadoTicket = require("../../models/ServicoTomadoTicket");
 
 const criar = async (req, res) => {
   const documentoFiscal = await DocumentoFiscalService.criar({
@@ -207,31 +210,51 @@ const removerArquivo = async (req, res) => {
   });
 };
 
-// const aprovarDocumento = async (req, res) => {
-//   const documentoFiscal = await DocumentoFiscalService.atualizar({
-//     id: req.params.id,
-//     documentoFiscal: { statusValidacao: "aprovado" },
-//   });
+const aprovarDocumento = async (req, res) => {
+  const documentoFiscal = await DocumentoFiscalService.aprovar({
+    id: req.params.id,
+    servicos: req.body?.servicos ?? [],
+    criarTicket: req.body?.ticket,
+  });
 
-//   return sendResponse({
-//     res,
-//     statusCode: 200,
-//     data: documentoFiscal,
-//   });
-// };
+  // const documentoFiscal = await DocumentoFiscalService.atualizar({
+  //   id: req.params.id,
+  //   documentoFiscal: { statusValidacao: "aprovado" },
+  // });
 
-// const reprovarDocumento = async (req, res) => {
-//   const documentoFiscal = await DocumentoFiscalService.atualizar({
-//     id: req.params.id,
-//     documentoFiscal: { ...req.body, statusValidacao: "recusado" },
-//   });
+  // const etapas = await EtapaService.listarEtapasAtivasPorEsteira({
+  //   esteira: "servicos-tomados",
+  // });
 
-//   return sendResponse({
-//     res,
-//     statusCode: 200,
-//     data: documentoFiscal,
-//   });
-// };
+  // if (req.body.ticket) {
+  //   await ServicoTomadoTicket.create({
+  //     titulo: `Comissão ${documentoFiscal.pessoa.nome} - ${documentoFiscal.pessoa?.documento}`,
+  //     servicos: req.body?.servicos ?? [],
+  //     documentosFiscais: [documentoFiscal._id],
+  //     pessoa: documentoFiscal.pessoa._id,
+  //     etapa: etapas[0].codigo,
+  //   });
+  // }
+
+  return sendResponse({
+    res,
+    statusCode: 200,
+    data: documentoFiscal,
+  });
+};
+
+const reprovarDocumento = async (req, res) => {
+  const documentoFiscal = await DocumentoFiscalService.atualizar({
+    id: req.params.id,
+    documentoFiscal: { ...req.body, statusValidacao: "recusado" },
+  });
+
+  return sendResponse({
+    res,
+    statusCode: 200,
+    data: documentoFiscal,
+  });
+};
 
 const exportar = async (req, res) => {
   const { pageIndex, pageSize, searchTerm, ...rest } = req.query;
@@ -290,6 +313,6 @@ module.exports = {
   anexarArquivo,
   removerArquivo,
   listarPorPessoa,
-  // aprovarDocumento,
-  // reprovarDocumento,
+  aprovarDocumento,
+  reprovarDocumento,
 };

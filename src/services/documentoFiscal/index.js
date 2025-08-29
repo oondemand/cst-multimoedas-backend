@@ -5,6 +5,10 @@ const Arquivo = require("../../models/Arquivo");
 const { criarNomePersonalizado } = require("../../utils/formatters");
 const ArquivoNaoEncontradoError = require("../errors/arquivo/arquivoNaoEncontradoError");
 const DocumentoFiscalNaoEncontradaError = require("../errors/documentoFiscal/documentoFiscalNaoEncontradaError");
+const EtapaService = require("../etapa");
+const ServicoTomadoTicket = require("../../models/ServicoTomadoTicket");
+const Servico = require("../../models/Servico");
+const { default: mongoose } = require("mongoose");
 
 const criar = async ({ documentoFiscal }) => {
   const novoDocumentoFiscal = new DocumentoFiscal(documentoFiscal);
@@ -17,7 +21,7 @@ const atualizar = async ({ id, documentoFiscal }) => {
     id,
     documentoFiscal,
     { new: true }
-  );
+  ).populate("pessoa");
   if (!documentoFiscalAtualizada)
     return new DocumentoFiscalNaoEncontradaError();
   return documentoFiscalAtualizada;
@@ -113,8 +117,37 @@ const listarPorPessoa = async ({ pessoaId }) => {
   return servicos;
 };
 
+const aprovar = async ({ id, servicos, criarTicket }) => {
+  const documentoFiscal = await atualizar({
+    documentoFiscal: { statusValidacao: "aprovado" },
+    id,
+  });
+
+  const etapas = await EtapaService.listarEtapasAtivasPorEsteira({
+    esteira: "servicos-tomados",
+  });
+
+  if (criarTicket) {
+    await Servico.updateMany(
+      { _id: { $in: servicos.map((e) => new mongoose.Types.ObjectId(e)) } },
+      { statusProcessamento: "processando" }
+    );
+
+    await ServicoTomadoTicket.create({
+      titulo: `Comissão ${documentoFiscal.pessoa.nome} - ${documentoFiscal.pessoa?.documento}`,
+      servicos,
+      documentosFiscais: [documentoFiscal._id],
+      pessoa: documentoFiscal.pessoa._id,
+      etapa: etapas[0].codigo,
+    });
+  }
+
+  return documentoFiscal;
+};
+
 module.exports = {
   criar,
+  aprovar,
   excluir,
   atualizar,
   buscarPorId,
