@@ -13,12 +13,16 @@ const queue = Queue({
 });
 
 const addTask = async ({ pessoa }) => {
-  console.log("Running");
+  try {
+    const s = await Integracao.updateMany(
+      { parentId: pessoa._id, etapa: { $nin: ["sucesso", "processando"] } },
+      { arquivado: true, motivoArquivamento: "Duplicidade" }
+    );
 
-  await Integracao.updateMany(
-    { parentId: pessoa._id, etapa: { $nin: ["sucesso", "processando"] } },
-    { arquivado: true, motivoArquivamento: "Duplicidade" }
-  );
+    console.log(s);
+  } catch (error) {
+    console.log(error);
+  }
 
   await Integracao.create({
     titulo: `Central -> Omie: ${pessoa?.nome}`,

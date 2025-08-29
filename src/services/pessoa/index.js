@@ -11,7 +11,7 @@ const criar = async ({ pessoa }) => {
   const pessoaNova = await PessoaBusiness.criar({ pessoa });
 
   sync.centralOmie.addTask({
-    pessoa,
+    pessoa: pessoaNova,
   });
 
   return pessoaNova;
