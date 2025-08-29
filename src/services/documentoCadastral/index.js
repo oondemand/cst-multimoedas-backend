@@ -4,6 +4,7 @@ const PaginationUtils = require("../../utils/pagination");
 const Arquivo = require("../../models/Arquivo");
 const { criarNomePersonalizado } = require("../../utils/formatters");
 const ArquivoNaoEncontradoError = require("../errors/arquivo/arquivoNaoEncontradoError");
+const GenericError = require("../errors/generic");
 
 const criar = async ({ documentoCadastral }) => {
   const novoDocumentoCadastral = new DocumentoCadastral(documentoCadastral);
@@ -12,13 +13,22 @@ const criar = async ({ documentoCadastral }) => {
 };
 
 const atualizar = async ({ id, documentoCadastral }) => {
-  const documentoCadastralAtualizada =
-    await DocumentoCadastral.findByIdAndUpdate(id, documentoCadastral, {
-      new: true,
-    });
-  if (!documentoCadastralAtualizada)
-    return new DocumentoCadastralNaoEncontradaError();
-  return documentoCadastralAtualizada;
+  const documentoCadastralExistente = await DocumentoCadastral.findById(id);
+
+  console.log("LOG", documentoCadastralExistente);
+
+  if (documentoCadastralExistente.statusValidacao === "aprovado")
+    throw new GenericError(
+      "Não é possivel atualizar documento cadastral aprovado!",
+      400
+    );
+
+  Object.assign(documentoCadastralExistente, documentoCadastral);
+
+  if (!documentoCadastralExistente)
+    throw new DocumentoCadastralNaoEncontradaError();
+
+  return documentoCadastralExistente.save();
 };
 
 const buscarPorId = async ({ id }) => {
