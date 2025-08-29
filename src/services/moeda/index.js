@@ -45,7 +45,7 @@ const listarAtivas = async () => {
 
 const atualizarCotacao = async () => {
   const moedas = await Moeda.find({ status: "ativo" });
-  const dezMinutos = 0 * 30 * 1000;
+  const dezMinutos = 1000 * 60 * 10;
 
   await Promise.all(
     moedas.map(async (item) => {
