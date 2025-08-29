@@ -15,11 +15,9 @@ const criar = async ({ documentoCadastral }) => {
 const atualizar = async ({ id, documentoCadastral }) => {
   const documentoCadastralExistente = await DocumentoCadastral.findById(id);
 
-  console.log("LOG", documentoCadastralExistente);
-
-  if (documentoCadastralExistente.statusValidacao === "aprovado")
+  if (documentoCadastralExistente.statusValidacao !== "pendente")
     throw new GenericError(
-      "Não é possivel atualizar documento cadastral aprovado!",
+      "Não é possivel atualizar documento cadastral aprovado ou recusado!",
       400
     );
 
