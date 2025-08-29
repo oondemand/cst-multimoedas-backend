@@ -69,7 +69,7 @@ const atualizarCotacao = async () => {
 
         if (cotacao) {
           moeda.cotacao = cotacao;
-          moeda.atualizadoEm = atualizadoEm;
+          moeda.atualizadoEm = agora;
         }
 
         await moeda.save();
