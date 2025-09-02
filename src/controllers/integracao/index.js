@@ -118,14 +118,18 @@ const processarAtivas = async (req, res) => {
     },
   };
 
+  const promises = [];
+
   for (const config of integracoesConfigs) {
     if (config.ativa) {
       console.log(
         `🚀 [PROCESSANDO INTEGRAÇÃO] [TIPO: ${config.tipo}] [DIREÇÃO: ${config.direcao}] [ATIVA: ${config.ativa}]`
       );
-      integracao[config.tipo][config.direcao]();
+      promises.push(integracao[config.tipo][config.direcao]());
     }
   }
+
+  await Promise.all(promises);
 
   Helpers.sendResponse({
     res,

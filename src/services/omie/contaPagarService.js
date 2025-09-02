@@ -32,7 +32,7 @@ const criarConta = ({
 };
 
 const incluir = async (appKey, appSecret, conta, maxTentativas = 3) => {
-  console.log("---->", conta);
+  // console.log("---->", conta);
 
   // let tentativas = 0;
   // let erroEncontrado;

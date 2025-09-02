@@ -29,7 +29,7 @@ const addTask = async ({ pessoa }) => {
     tipo: "pessoa",
     direcao: "central_omie",
     parentId: pessoa._id,
-    payload: pessoa,
+    payload: pessoa?.toObject(),
     etapa: "requisicao",
   });
 };

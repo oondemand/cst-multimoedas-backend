@@ -12,6 +12,8 @@ const handler = async (integracao) => {
   return processarIntegracao({
     integracao,
     executor: async (integracao) => {
+      console.log("Running conta-pagar");
+
       const { appKey, appSecret } = await BaseOmie.findOne({ status: "ativo" });
 
       const ticket = await ServicoTomadoTicket.findOne({
@@ -24,10 +26,16 @@ const handler = async (integracao) => {
         pessoa: ticket.pessoa,
       });
 
+      console.log("Pessoa", ticket.pessoa);
+
       if (!clienteOmie) {
         PessoaSync.centralOmie.addTask({
           pessoa: ticket.pessoa,
         });
+
+        throw new Error(
+          "Prestador não sincronizado com o omie! Criando ticket de sincronização!"
+        );
       }
 
       const conta = mapExporter({
