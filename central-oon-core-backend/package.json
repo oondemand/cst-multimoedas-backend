@@ -1,0 +1,6 @@
+{
+  "name": "central-oon-core-backend",
+  "version": "0.0.1",
+  "main": "src/index.js",
+  "license": "ISC"
+}
