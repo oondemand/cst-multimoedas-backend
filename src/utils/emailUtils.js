@@ -5,14 +5,14 @@ const { conviteTemplate } = require("../constants/template");
 
 const enviarEmail = async (emailTo, assunto, corpo, anexos = []) => {
   const config = await Sistema.findOne();
-  const currentApiKey = config?.appKey_sendgrid;
-
-  sgMail.setApiKey(currentApiKey);
+  sgMail.setApiKey(config?.appKey_sendgrid);
+  const remetenteEmail = config?.remetente?.email;
+  const remetenteNome = config?.remetente?.nome ?? remetenteEmail;
 
   const message = {
     from: {
-      email: config?.remetente?.email,
-      name: config?.remetente?.nome ?? config?.remetente?.email,
+      email: remetenteEmail,
+      name: remetenteNome,
     },
     personalizations: [
       {
