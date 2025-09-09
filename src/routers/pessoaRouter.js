@@ -6,7 +6,7 @@ const {
 const router = express.Router();
 const { asyncHandler } = require("../utils/helpers");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { uploadExcel } = require("../config/multer");
+const { uploadExcel } = require("../../packages/core");
 
 router.get("/", asyncHandler(PessoaController.listar));
 

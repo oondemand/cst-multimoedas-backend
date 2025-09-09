@@ -1,5 +1,5 @@
 const app = require("./app");
-const connectDB = require("./config/db");
+const { connectDB } = require("../packages/core");
 
 const PORT = process.env.PORT || 4000;
 const SERVICE_NAME = process.env.SERVICE_NAME;
