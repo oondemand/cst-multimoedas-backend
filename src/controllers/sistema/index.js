@@ -1,9 +1,9 @@
-const TemplateConfig = require("../../models/TemplateConfig");
+const { Sistema } = require("central-oon-core-backend");
 const { emailTeste } = require("../../utils/emailUtils");
 const Helpers = require("../../utils/helpers");
 
 listarSistemaConfig = async (req, res) => {
-  const sistema = await TemplateConfig.findOne();
+  const sistema = await Sistema.findOne();
 
   if (!sistema) {
     return res
@@ -17,7 +17,7 @@ listarSistemaConfig = async (req, res) => {
 atualizarSistemaConfig = async (req, res) => {
   const id = req.params.id;
 
-  const sistemaAtualizado = await TemplateConfig.findByIdAndUpdate(
+  const sistemaAtualizado = await Sistema.findByIdAndUpdate(
     id,
     { $set: req.body },
     { new: true, runValidators: true }

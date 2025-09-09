@@ -7,7 +7,7 @@ const Lista = require("../models/Lista");
 // const Banco = require("../models/Banco");
 // const Estado = require("../models/Estado");
 const Etapa = require("../models/Etapa");
-const TemplateConfig = require("../models/TemplateConfig");
+const { Sistema } = require("central-oon-core-backend");
 const ListaOmie = require("../models/ListaOmie");
 const Assistente = require("../models/Assistente");
 const Moeda = require("../models/Moeda");
@@ -59,7 +59,7 @@ const seed = async (req, res) => {
   }
 
   for (const sistema of sistemas) {
-    await TemplateConfig.create({
+    await Sistema.create({
       ...sistema,
       appKey_central_oon,
       appKey_openIa,
