@@ -6,6 +6,7 @@ const ContaPagarSync = require("../contaPagar/omie");
 const { add } = require("date-fns");
 const { randomUUID } = require("crypto");
 const ServicoService = require("../servico");
+const { Sistema } = require("central-oon-core-backend");
 
 const alterarEtapa = async ({ ticket, etapa }) => {
   ticket.etapa = etapa;
