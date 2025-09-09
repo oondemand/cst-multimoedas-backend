@@ -1,7 +1,9 @@
 const crypto = require("crypto");
-const apiOmie = require("../../config/apiOmie");
+const { createHttpClient } = require("central-oon-core-backend");
 
 const { formatarDataOmie } = require("../../utils/dateUtils");
+
+const apiOmie = createHttpClient({ baseURL: process.env.API_OMIE });
 
 const criarConta = ({
   numeroDocumento,
