@@ -29,7 +29,7 @@ const {
 } = require("../utils/helpers");
 
 const seed = async (req, res) => {
-  const { baseOmie, appKey_central_oon, appKey_openIa, appKey_sendgrid } = req.body;
+  const { baseOmie, appKey_central_oon, appKey_openIa } = req.body;
 
   const baseOmieExistente = await BaseOmie.findOne();
   if (baseOmieExistente) {
@@ -63,7 +63,6 @@ const seed = async (req, res) => {
       ...sistema,
       appKey_central_oon,
       appKey_openIa,
-      appKey_sendgrid,
     });
   }
 
