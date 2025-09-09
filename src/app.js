@@ -4,9 +4,8 @@ const path = require("node:path");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./docs/swagger");
 
-const { createApp } = require("central-oon-core-backend");
+const { createApp, authMiddleware } = require("central-oon-core-backend");
 
-const authMiddleware = require("./middlewares/authMiddleware");
 const logMiddleware = require("./middlewares/logMiddleware");
 const errorMiddleware = require("./middlewares/errorMiddleware");
 const { asyncHandler } = require("./utils/helpers");
