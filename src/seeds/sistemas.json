@@ -1,5 +1,12 @@
 [
   {
+    "templateConfig": {
+      "omie": {
+        "id_conta_corrente": 4814121437,
+        "codigo_categoria": "2.06.99"
+      },
+      "data_corte_app_publisher": "2020-01-01T03:00:00.000Z"
+    },
     "remetente": {
       "nome": "oondemand",
       "email": "suporte@oondemand.com.br"

@@ -64,7 +64,6 @@ const seed = async (req, res) => {
       ...sistema,
       appKey_central_oon,
       appKey_openIa,
-      appKey_sendgrid,
     });
   }
 
