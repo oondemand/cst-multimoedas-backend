@@ -12,6 +12,8 @@ const {
 } = require("central-oon-core-backend");
 
 const authMiddleware = require("./middlewares/authMiddleware");
+const Sistema = require("./models/Sistema");
+const getOrigin = async () => (await Sistema.findOne())?.appKey;
 const { asyncHandler } = require("./utils/helpers");
 const IntegracaoController = require("./controllers/integracao");
 const MoedaController = require("./controllers/moeda");
@@ -50,7 +52,7 @@ app.get("/image/:filename", (req, res) => {
   }
 });
 
-app.use(authMiddleware);
+app.use(authMiddleware({ getOrigin }));
 app.use(logMiddleware);
 
 app.use("/usuarios", require("./routers/usuarioRouter"));
