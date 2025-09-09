@@ -1,4 +1,7 @@
-const axios = require("axios");
+const createHttpClient = require("../../central-oon-core-backend/src/config/httpClient");
+const apiMeusApps = createHttpClient({
+  baseURL: process.env.MEUS_APPS_BACKEND_URL,
+});
 const Helpers = require("../utils/helpers");
 
 function authMiddleware({ getOrigin }) {
@@ -15,8 +18,8 @@ function authMiddleware({ getOrigin }) {
 
     try {
       const origin = await getOrigin();
-      const response = await axios.get(
-        `${process.env.MEUS_APPS_BACKEND_URL}/auth/autenticar-aplicativo/`,
+      const response = await apiMeusApps.get(
+        "/auth/autenticar-aplicativo/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
