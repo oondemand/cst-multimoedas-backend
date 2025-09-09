@@ -1,4 +1,7 @@
-const axios = require('axios');
+const createHttpClient = require('../config/httpClient');
+const apiMeusApps = createHttpClient({
+  baseURL: process.env.MEUS_APPS_BACKEND_URL,
+});
 const { sendErrorResponse } = require('../utils/response');
 
 const authMiddleware = async (req, res, next) => {
@@ -13,14 +16,11 @@ const authMiddleware = async (req, res, next) => {
   }
 
   try {
-    const response = await axios.get(
-      `${process.env.MEUS_APPS_BACKEND_URL}/auth/autenticar-aplicativo/`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await apiMeusApps.get('/auth/autenticar-aplicativo/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     const usuario = {
       tipo:
