@@ -7,7 +7,7 @@ const logger = require('./config/logger');
 const { uploadExcel, uploadPDF } = require('./config/multer');
 const createHttpClient = require('./config/httpClient');
 const authMiddleware = require('./middlewares/authMiddleware');
-const Sistema = require('./models/Sistema');
+
 
 module.exports = {
   createApp,
@@ -17,5 +17,4 @@ module.exports = {
   uploadPDF,
   createHttpClient,
   authMiddleware,
-  Sistema,
 };
