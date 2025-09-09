@@ -1,4 +1,6 @@
-const apiOmie = require("../../config/apiOmie");
+const { createHttpClient } = require("central-oon-core-backend");
+
+const apiOmie = createHttpClient({ baseURL: process.env.API_OMIE });
 
 const cache = {};
 const consultar = async (appKey, appSecret, codCliente) => {
