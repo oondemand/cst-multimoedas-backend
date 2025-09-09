@@ -29,7 +29,7 @@ const {
 } = require("../utils/helpers");
 
 const seed = async (req, res) => {
-  const { baseOmie, appKey, openIaKey } = req.body;
+  const { baseOmie, appKey_central_oon, appKey_openIa, appKey_sendgrid } = req.body;
 
   const baseOmieExistente = await BaseOmie.findOne();
   if (baseOmieExistente) {
@@ -40,7 +40,7 @@ const seed = async (req, res) => {
     });
   }
 
-  if (!baseOmie || !appKey) {
+  if (!baseOmie || !appKey_central_oon) {
     return sendErrorResponse({
       res,
       statusCode: 400,
@@ -59,7 +59,12 @@ const seed = async (req, res) => {
   }
 
   for (const sistema of sistemas) {
-    await Sistema.create({ ...sistema, appKey, openIaKey });
+    await Sistema.create({
+      ...sistema,
+      appKey_central_oon,
+      appKey_openIa,
+      appKey_sendgrid,
+    });
   }
 
   for (const listaomie of listaomies) {
