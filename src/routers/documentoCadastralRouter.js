@@ -3,7 +3,7 @@ const DocumentoCadastralController = require("../controllers/documentoCadastral"
 
 const router = express.Router();
 
-const { uploadExcel, uploadPDF } = require("../config/multer");
+const { uploadExcel, uploadPDF } = require("central-oon-core-backend");
 const {
   registrarAcaoMiddleware,
 } = require("../middlewares/registrarAcaoMiddleware");
