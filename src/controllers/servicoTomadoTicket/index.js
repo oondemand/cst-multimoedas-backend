@@ -115,27 +115,6 @@ const obterTicket = async (req, res) => {
 //     prestador: prestador._id,
 //     status: { $in: ["aberto", "pendente"] },
 //     $or: [
-//       {
-//         "competencia.ano": {
-//           $gt: config.data_corte_app_publisher.getFullYear(),
-//         },
-//       },
-
-//       {
-//         $and: [
-//           {
-//             "competencia.ano": config.data_corte_app_publisher.getFullYear(),
-//           },
-//           {
-//             "competencia.mes": {
-//               $gte: config.data_corte_app_publisher.getMonth() + 1, // Ajuste para meses 1-12
-//             },
-//           },
-//         ],
-//       },
-//     ],
-//   }).select("-dataRegistro");
-
 //   const servicosPagosExterno = await Servico.aggregate([
 //     {
 //       $match: {
@@ -144,7 +123,6 @@ const obterTicket = async (req, res) => {
 //         dataRegistro: {
 //           $exists: true,
 //           $ne: null,
-//           $gte: config?.data_corte_app_publisher,
 //         },
 //       },
 //     },

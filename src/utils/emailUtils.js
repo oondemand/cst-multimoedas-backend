@@ -1,11 +1,11 @@
 const sgMail = require("@sendgrid/mail");
 const { format } = require("date-fns");
-const Sistema = require("../models/Sistema");
+const { Sistema } = require("central-oon-core-backend");
 const { conviteTemplate } = require("../constants/template");
 
 const enviarEmail = async (emailTo, assunto, corpo, anexos = []) => {
   const config = await Sistema.findOne();
-  const currentApiKey = config?.sendgrid_api_key;
+  const currentApiKey = config?.appKey_sendgrid;
 
   sgMail.setApiKey(currentApiKey);
 

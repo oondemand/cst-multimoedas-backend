@@ -21,7 +21,7 @@ const authMiddleware = async (req, res, next) => {
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          origin: sistema?.appKey,
+          origin: sistema?.appKey_central_oon,
         },
       }
     );

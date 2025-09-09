@@ -1,4 +1,4 @@
-const Sistema = require("../../models/Sistema");
+const { Sistema } = require("central-oon-core-backend");
 const { emailTeste } = require("../../utils/emailUtils");
 const Helpers = require("../../utils/helpers");
 
