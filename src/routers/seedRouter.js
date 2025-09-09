@@ -29,7 +29,8 @@ const {
 } = require("../utils/helpers");
 
 const seed = async (req, res) => {
-  const { baseOmie, appKey_central_oon, appKey_openIa, appKey_sendgrid } = req.body;
+  const { baseOmie, appKey_central_oon, appKey_openIa, appKey_sendgrid } =
+    req.body;
 
   const baseOmieExistente = await BaseOmie.findOne();
   if (baseOmieExistente) {
@@ -40,7 +41,7 @@ const seed = async (req, res) => {
     });
   }
 
-  if (!baseOmie || !appKey_central_oon) {
+  if (!baseOmie || !appKey_central_oon || !appKey_openIa) {
     return sendErrorResponse({
       res,
       statusCode: 400,

@@ -5,6 +5,7 @@
       "email": "suporte@oondemand.com.br"
     },
     "appKey_sendgrid": "SG.",
-    "appKey_central_oon": "oon_"
+    "appKey_central_oon": "oon_",
+    "appKey_openIa": "open_"
   }
 ]
