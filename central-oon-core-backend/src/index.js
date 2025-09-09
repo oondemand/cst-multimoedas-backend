@@ -6,6 +6,9 @@ const createServer = require('./boot/createServer');
 const logger = require('./config/logger');
 const { uploadExcel, uploadPDF } = require('./config/multer');
 const createHttpClient = require('./config/httpClient');
+const GenericError = require('./errors/GenericError');
+const errorMiddleware = require('./middlewares/errorMiddleware');
+const { sendErrorResponse } = require('./utils/response');
 
 module.exports = {
   createApp,
@@ -14,4 +17,7 @@ module.exports = {
   uploadExcel,
   uploadPDF,
   createHttpClient,
+  GenericError,
+  errorMiddleware,
+  sendErrorResponse,
 };
