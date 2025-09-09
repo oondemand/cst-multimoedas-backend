@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const logSchema = new mongoose.Schema(
   {
     usuario: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Usuario",
+      ref: 'Usuario',
       required: false,
     },
     endpoint: {
@@ -34,6 +34,6 @@ const logSchema = new mongoose.Schema(
   },
 );
 
-const Log = mongoose.model("Log", logSchema);
+const Log = mongoose.model('Log', logSchema);
 
 module.exports = Log;
