@@ -2,7 +2,6 @@ const Ticket = require("../../models/ServicoTomadoTicket");
 const GenericError = require("../errors/generic");
 const EtapaService = require("../etapa");
 const ContaPagar = require("../../models/ContaPagar");
-const Sistema = require("../../models/Sistema");
 const ContaPagarSync = require("../contaPagar/omie");
 const { add } = require("date-fns");
 const { randomUUID } = require("crypto");
@@ -83,7 +82,6 @@ const aprovar = async ({ id }) => {
         return total + (servico?.valor || 0);
       }, 0) ?? 0;
 
-    const config = await Sistema.findOne();
 
     const dataAtual = new Date();
     const dataVencimento = add(dataAtual, { hours: 24 });
@@ -98,10 +96,8 @@ const aprovar = async ({ id }) => {
         codigo_lancamento_integracao: randomUUID(),
         numero_documento: `oon-${1}`,
         valor_documento: valorTotalDosServicos,
-        codigo_categoria:
-          ticket?.codigo_categoria ?? config?.omie?.codigo_categoria,
-        id_conta_corrente:
-          ticket?.conta_corrente ?? config?.omie?.id_conta_corrente,
+        codigo_categoria: ticket?.codigo_categoria,
+        id_conta_corrente: ticket?.conta_corrente,
       });
 
       ContaPagarSync.centralOmie.addTask({
