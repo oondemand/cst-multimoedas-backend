@@ -1,7 +1,9 @@
 const Etapa = require("../../models/Etapa");
 const EtapaNaoEncontradaError = require("../errors/etapa/etapaNaoEncontradaError");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const {
+  filters: FiltersUtils,
+  pagination: PaginationUtils,
+} = require("central-oon-core-backend");
 
 const criar = async ({ etapa }) => {
   const etapaNova = new Etapa(etapa);

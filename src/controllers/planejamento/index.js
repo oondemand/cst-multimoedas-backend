@@ -1,5 +1,7 @@
 const PlanejamentoService = require("../../services/planejamento");
-const { sendPaginatedResponse, sendResponse } = require("../../utils/helpers");
+const {
+  helpers: { sendPaginatedResponse, sendResponse },
+} = require("central-oon-core-backend");
 const ServicoService = require("../../services/servico");
 
 const listar = async (req, res) => {

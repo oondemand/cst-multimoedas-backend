@@ -3,7 +3,9 @@ const UsuarioController = require("../controllers/usuario");
 const { registrarAcaoMiddleware } = require("central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 const router = express.Router();
-const { asyncHandler } = require("../utils/helpers");
+const {
+  helpers: { asyncHandler },
+} = require("central-oon-core-backend");
 
 router.get("/", asyncHandler(UsuarioController.listarUsuarios));
 

@@ -14,7 +14,9 @@ const {
 } = require("central-oon-core-backend");
 const Sistema = require("./models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
-const { asyncHandler } = require("./utils/helpers");
+const {
+  helpers: { asyncHandler },
+} = require("central-oon-core-backend");
 const IntegracaoController = require("./controllers/integracao");
 const MoedaController = require("./controllers/moeda");
 

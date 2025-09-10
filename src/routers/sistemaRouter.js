@@ -1,6 +1,8 @@
 const express = require("express");
 const SistemaService = require("../controllers/sistema");
-const { asyncHandler } = require("../utils/helpers");
+const {
+  helpers: { asyncHandler },
+} = require("central-oon-core-backend");
 const router = express.Router();
 
 router.get("/", asyncHandler(SistemaService.listarSistemaConfig));

@@ -6,7 +6,14 @@
 
 const DocumentoCadastralService = require("../../services/documentoCadastral");
 const DocumentoCadastralExcel = require("../../services/documentoCadastral/excel");
-const { arrayToExcelBuffer } = require("../../utils/excel");
+const {
+  excel: { arrayToExcelBuffer },
+  helpers: {
+    sendPaginatedResponse,
+    sendResponse,
+    // sendErrorResponse,
+  },
+} = require("central-oon-core-backend");
 const ImportacaoService = require("../../services/importacao");
 
 // const DocumentoCadastral = require("../../models/DocumentoCadastral");
@@ -21,11 +28,6 @@ const ImportacaoService = require("../../services/importacao");
 //   ORIGENS,
 // } = require("../../constants/controleAlteracao");
 
-const {
-  sendPaginatedResponse,
-  sendResponse,
-  // sendErrorResponse,
-} = require("../../utils/helpers");
 
 const criar = async (req, res) => {
   const documentoCadastral = await DocumentoCadastralService.criar({

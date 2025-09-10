@@ -4,7 +4,9 @@ const ServicoTomadoTicketController = require("../controllers/servicoTomadoTicke
 const multer = require("multer");
 const { registrarAcaoMiddleware } = require("central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const {
+  helpers: { asyncHandler },
+} = require("central-oon-core-backend");
 const storage = multer.memoryStorage({});
 
 const fileFilter = (req, file, cb) => {

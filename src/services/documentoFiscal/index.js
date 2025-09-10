@@ -1,6 +1,8 @@
 const DocumentoFiscal = require("../../models/DocumentoFiscal");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const {
+  filters: FiltersUtils,
+  pagination: PaginationUtils,
+} = require("central-oon-core-backend");
 const Arquivo = require("../../models/Arquivo");
 const { criarNomePersonalizado } = require("../../utils/formatters");
 const ArquivoNaoEncontradoError = require("../errors/arquivo/arquivoNaoEncontradoError");

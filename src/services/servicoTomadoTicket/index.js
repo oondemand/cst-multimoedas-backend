@@ -1,7 +1,9 @@
 const ServicoTomadoTicket = require("../../models/ServicoTomadoTicket");
 const Servico = require("../../models/Servico");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const {
+  filters: FiltersUtils,
+  pagination: PaginationUtils,
+} = require("central-oon-core-backend");
 const { aprovar } = require("./aprovar");
 const { reprovar } = require("./reprovar");
 const TicketNaoEncontradoError = require("../errors/ticket/ticketNaoEncontrado");

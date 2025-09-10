@@ -5,10 +5,8 @@ const emailUtils = require("../../utils/emailUtils");
 const jwt = require("jsonwebtoken");
 
 const {
-  sendErrorResponse,
-  sendPaginatedResponse,
-  sendResponse,
-} = require("../../utils/helpers");
+  helpers: { sendErrorResponse, sendPaginatedResponse, sendResponse },
+} = require("central-oon-core-backend");
 
 const criarUsuario = async (req, res) => {
   const usuario = await UsuarioService.criar({ usuario: req.body });

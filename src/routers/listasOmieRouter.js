@@ -4,7 +4,9 @@ const { ListaOmieController } = require("../controllers/listaOmieController");
 
 const { registrarAcaoMiddleware } = require("central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const {
+  helpers: { asyncHandler },
+} = require("central-oon-core-backend");
 
 router.post("/", asyncHandler(ListaOmieController.create));
 router.get("/", asyncHandler(ListaOmieController.listAll));

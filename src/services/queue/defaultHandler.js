@@ -1,5 +1,5 @@
 const { ETAPAS_DEFAULT } = require("../../constants/integracao");
-const Helpers = require("../../utils/helpers");
+const { helpers: Helpers } = require("central-oon-core-backend");
 
 const processarIntegracao = async ({
   integracao,
