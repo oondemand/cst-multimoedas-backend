@@ -1,0 +1,177 @@
+const {
+  parse,
+  isValid,
+  startOfDay,
+  endOfDay,
+  startOfMonth,
+  endOfMonth,
+} = require("date-fns");
+
+const criarFiltroPorTipoDeCampo = ({ tipo, campo, valor }) => {
+  const FILTRO_NUMERO = () => {
+    const n = Number(
+      valor.replaceAll(".", "-").replaceAll(",", ".").replaceAll("-", "")
+    );
+    return !isNaN(n) ? { [campo]: n } : null;
+  };
+
+  const FILTRO_STRING = () => {
+    const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&");
+
+    const sanitized = valor
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\s]/gi, "");
+
+    const patterns = [escapeRegex(valor), escapeRegex(sanitized)]
+      .filter(Boolean)
+      .join("|");
+
+    return {
+      [campo]: {
+        $regex: `(${patterns})`,
+        $options: "i",
+      },
+    };
+  };
+
+  const FILTRO_DATE = () => {
+    const operadores = [">", "<"];
+    const operador = operadores.find((op) => valor.startsWith(op));
+    const dataStr = operador ? valor.slice(1) : valor;
+
+    const criarFiltro = (campo, valor, operador) => {
+      const operadoresMongo = {
+        ">": "$gte",
+        "<": "$lte",
+        "=": "$eq",
+      };
+      return { [campo]: { [operadoresMongo[operador || "="]]: valor } };
+    };
+
+    const parseDataCompleta = (str) => {
+      const formatos = ["dd/MM/yyyy", "dd-MM-yyyy", "MM/yyyy", "MM-yyyy"];
+      for (const fmt of formatos) {
+        const data = parse(str, fmt, new Date());
+        if (isValid(data)) {
+          return data;
+        }
+      }
+      return null;
+    };
+
+    const data = parseDataCompleta(dataStr);
+    if (!data) return null;
+
+    const isMesAno = /^(\d{2}[\/-]\d{4})$/.test(dataStr);
+
+    if (isMesAno) {
+      const inicioMes = startOfMonth(data);
+      const fimMes = endOfMonth(data);
+
+      if (operador === ">") return criarFiltro(campo, inicioMes, operador);
+      if (operador === "<") return criarFiltro(campo, fimMes, operador);
+      return { [campo]: { $gte: inicioMes, $lte: fimMes } };
+    }
+
+    const inicioDia = startOfDay(data);
+    const fimDia = endOfDay(data);
+
+    if (operador === ">") return criarFiltro(campo, inicioDia, operador);
+    if (operador === "<") return criarFiltro(campo, fimDia, operador);
+    return { [campo]: { $gte: inicioDia, $lte: fimDia } };
+  };
+
+  const DEFAULT = () => {
+    return { [campo]: valor };
+  };
+
+  const FILTRO_COMPETENCIA = () => {
+    const operadores = [">", "<"];
+    const operador = operadores.find((op) => valor.startsWith(op));
+
+    const competencia = operador ? valor.slice(1) : valor;
+
+    const mes = Number(competencia?.split(/[\/-]/)[0]);
+    const ano = Number(competencia?.split(/[\/-]/)[1]);
+
+    const operadoresMongo = {
+      ">": "$gt",
+      "<": "$lt",
+      "=": "$eq",
+    };
+
+    if (operador) {
+      return {
+        $or: [
+          { "competencia.ano": { [operadoresMongo[operador]]: ano } },
+          {
+            $and: [
+              { "competencia.ano": { [`${operadoresMongo[operador]}e`]: ano } },
+              { "competencia.mes": { [`${operadoresMongo[operador]}e`]: mes } },
+            ],
+          },
+        ],
+      };
+    }
+
+    return {
+      "competencia.mes": mes,
+      "competencia.ano": ano,
+    };
+  };
+
+  const tipoFiltroMap = {
+    Number: FILTRO_NUMERO,
+    String: FILTRO_STRING,
+    Date: FILTRO_DATE,
+    CompetenciaType: FILTRO_COMPETENCIA,
+    default: DEFAULT,
+  };
+
+  return tipoFiltroMap[tipo] ? tipoFiltroMap[tipo]() : tipoFiltroMap.default();
+};
+
+const queryFiltros = ({ filtros, schema }) => {
+  const query = {};
+  for (const [campo, valor] of Object.entries(filtros)) {
+    const campoSchema = schema.path(campo);
+    if (!valor || !campoSchema) continue;
+
+    const filtro = criarFiltroPorTipoDeCampo({
+      campo,
+      tipo: campoSchema?.instance,
+      valor,
+    });
+
+    if (filtro) Object.assign(query, filtro);
+  }
+  return query;
+};
+
+const querySearchTerm = ({ searchTerm, schema, camposBusca = [] }) => {
+  if (!searchTerm) return [];
+
+  const orFilters = camposBusca
+    .map((campo) => {
+      const campoSchema = schema.path(campo);
+      if (!campoSchema) return null;
+
+      return criarFiltroPorTipoDeCampo({
+        campo,
+        tipo: campoSchema?.instance,
+        valor: searchTerm,
+      });
+    })
+    .filter(Boolean);
+
+  return orFilters;
+};
+
+const buildQuery = ({ filtros, searchTerm, schema, camposBusca = [] }) => {
+  const specificFilters = queryFiltros({ filtros, schema });
+  const globalFilter = querySearchTerm({ searchTerm, schema, camposBusca });
+  return [specificFilters, { $or: globalFilter }];
+};
+
+module.exports = { queryFiltros, querySearchTerm, buildQuery };

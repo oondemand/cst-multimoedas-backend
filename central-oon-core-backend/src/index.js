@@ -18,6 +18,11 @@ const controleAlteracaoRouter = require('./routers/controleAlteracaoRouter');
 const ControleAlteracaoService = require('./services/controleAlteracao');
 const { registrarAcao } = require('./services/controleService');
 const { sendErrorResponse } = require('./utils/response');
+const helpers = require('./utils/helpers');
+const excel = require('./utils/excel');
+const fileHandler = require('./utils/fileHandler');
+const pagination = require('./utils/pagination');
+const filters = require('./utils/pagination/filter');
 
 module.exports = {
   createApp,
@@ -38,4 +43,9 @@ module.exports = {
     ControleAlteracaoService,
     controleAlteracaoRouter,
     sendErrorResponse,
+    helpers,
+    excel,
+    fileHandler,
+    pagination,
+    filters,
 };
