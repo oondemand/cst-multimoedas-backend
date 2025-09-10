@@ -29,10 +29,12 @@ function createApp({ middlewares = [], routers = [], autoRouters = true } = {}) 
   middlewares.forEach((mw) => app.use(mw));
 
   if (autoRouters) {
-    const controleAlteracaoRouter = require('../routers/controleAlteracaoRouter');
-    const importacaoRouter = require('../routers/importacaoRouter');
-    const listaRouter = require('../routers/listaRouter');
-    const etapaRouter = require('../routers/etapaRouter');
+    const {
+      controleAlteracaoRouter,
+      importacaoRouter,
+      listaRouter,
+      etapaRouter,
+    } = require('../routers');
 
     routers.push(
       { path: '/registros', router: controleAlteracaoRouter },
