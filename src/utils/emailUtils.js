@@ -128,7 +128,7 @@ const emailLinkCadastroUsuarioPrestador = async ({ email, nome, url }) => {
 
     const assunto = "Acesso Liberado";
 
-    const corpo = await conviteTemplate({ url });
+    const corpo = conviteTemplate({ url });
 
     return await enviarEmail(emailTo, assunto, corpo);
   } catch (error) {

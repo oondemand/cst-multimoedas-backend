@@ -1,4 +1,4 @@
-exports.conviteTemplate = async ({ url }) => {
+exports.conviteTemplate = ({ url }) => {
   return `<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
