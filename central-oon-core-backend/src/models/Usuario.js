@@ -7,8 +7,7 @@ const configuracoesSchema = new mongoose.Schema({ idioma: { type: String } });
 const UsuarioSchema = new mongoose.Schema({
   tipo: {
     type: String,
-    enum: ["prestador", "tomador", "admin", "contabilidade"],
-    default: "prestador",
+    default: "admin",
   },
   nome: { type: String, required: true },
   email: {
