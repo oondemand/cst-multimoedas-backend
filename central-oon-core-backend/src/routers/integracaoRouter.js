@@ -8,6 +8,11 @@ const { ACOES, ENTIDADES } = require(path.join(process.cwd(), "src", "constants"
 const router = express.Router();
 router.get("/", asyncHandler(IntegracaoController.listar));
 router.get("/todos", asyncHandler(IntegracaoController.listaComPaginacao));
+router.post("/processar", asyncHandler(IntegracaoController.processar));
+router.post(
+  "/processar/ativas",
+  asyncHandler(IntegracaoController.processarAtivas)
+);
 router.post("/reprocessar/:id", asyncHandler(IntegracaoController.reprocessar));
 
 router.post(
