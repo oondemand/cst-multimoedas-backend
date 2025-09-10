@@ -3,6 +3,7 @@ const importacaoRouter = require('./importacaoRouter');
 const listaRouter = require('./listaRouter');
 const etapaRouter = require('./etapaRouter');
 const usuarioRouter = require('./usuarioRouter');
+const sistemaRouter = require('./sistemaRouter');
 
 module.exports = {
   controleAlteracaoRouter,
@@ -10,4 +11,5 @@ module.exports = {
   listaRouter,
   etapaRouter,
   usuarioRouter,
+  sistemaRouter,
 };

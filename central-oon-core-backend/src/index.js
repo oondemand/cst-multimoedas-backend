@@ -17,13 +17,15 @@ const Importacao = require('./models/Importacao');
 const Lista = require('./models/Lista');
 const Etapa = require('./models/Etapa');
 const Usuario = require('./models/Usuario');
-const { usuarioController } = require('./controllers');
-const { usuarioRouter } = require('./routers');
+const Sistema = require('./models/Sistema');
+const { usuarioController, sistemaController } = require('./controllers');
+const { usuarioRouter, sistemaRouter } = require('./routers');
 const ControleAlteracaoService = require('./services/controleAlteracao');
 const ImportacaoService = require('./services/importacao');
 const ListaService = require('./services/lista');
 const EtapaService = require('./services/etapa');
 const UsuarioService = require('./services/usuario');
+const SistemaService = require('./services/sistema');
 const { registrarAcao } = require('./services/controleService');
 const { sendErrorResponse } = require('./utils/response');
 const helpers = require('./utils/helpers');
@@ -52,13 +54,17 @@ module.exports = {
     Lista,
     Etapa,
     Usuario,
+    Sistema,
     ControleAlteracaoService,
     ImportacaoService,
     ListaService,
     EtapaService,
     UsuarioService,
+    SistemaService,
     usuarioController,
+    sistemaController,
     usuarioRouter,
+    sistemaRouter,
     sendErrorResponse,
     helpers,
     excel,

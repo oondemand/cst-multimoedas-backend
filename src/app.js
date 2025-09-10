@@ -11,11 +11,11 @@ const {
   logMiddleware,
   authMiddleware,
 } = require("central-oon-core-backend");
-const Sistema = require("./models/Sistema");
-const getOrigin = async () => (await Sistema.findOne())?.appKey;
 const {
+  Sistema,
   helpers: { asyncHandler },
 } = require("central-oon-core-backend");
+const getOrigin = async () => (await Sistema.findOne())?.appKey;
 const IntegracaoController = require("./controllers/integracao");
 const MoedaController = require("./controllers/moeda");
 
@@ -76,7 +76,6 @@ app.use(
 // app.use("/bancos", require("./routers/bancoRouter"));
 app.use("/planejamento", require("./routers/planejamentoRouter"));
 app.use("/dashboard", require("./routers/dashboardRouter"));
-app.use("/sistema", require("./routers/sistemaRouter"));
 app.use("/lista-omie", require("./routers/listasOmieRouter"));
 app.use("/assistentes", require("./routers/assistenteRouter"));
 app.use("/integracao", require("./routers/integracaoRouter"));
