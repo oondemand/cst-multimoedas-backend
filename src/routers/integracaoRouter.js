@@ -1,9 +1,7 @@
 const express = require("express");
 const IntegracaoController = require("../controllers/integracao");
 const { asyncHandler } = require("../utils/helpers");
-const {
-  registrarAcaoMiddleware,
-} = require("../middlewares/registrarAcaoMiddleware");
+const { registrarAcaoMiddleware } = require("central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 
 const router = express.Router();

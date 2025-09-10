@@ -10,6 +10,7 @@ const {
   GenericError,
   logMiddleware,
   authMiddleware,
+  controleAlteracaoRouter,
 } = require("central-oon-core-backend");
 const Sistema = require("./models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
@@ -73,7 +74,7 @@ app.use(
   "/documentos-cadastrais",
   require("./routers/documentoCadastralRouter")
 );
-app.use("/registros", require("./routers/controleAlteracao"));
+app.use("/registros", controleAlteracaoRouter);
 app.use("/listas", require("./routers/listaRouter"));
 // app.use("/estados", require("./routers/estadoRouter"));
 // app.use("/bancos", require("./routers/bancoRouter"));

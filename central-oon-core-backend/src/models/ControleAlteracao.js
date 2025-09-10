@@ -1,5 +1,6 @@
-const mongoose = require("mongoose");
-const { ACOES, ENTIDADES, ORIGENS } = require("../constants/controleAlteracao");
+const mongoose = require('mongoose');
+const path = require('path');
+const { ACOES, ENTIDADES, ORIGENS } = require(path.join(process.cwd(), 'src', 'constants', 'controleAlteracao'));
 
 const controleAlteracaoSchema = new mongoose.Schema({
   dataHora: {
@@ -34,4 +35,4 @@ const controleAlteracaoSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("ControleAlteracao", controleAlteracaoSchema);
+module.exports = mongoose.model('ControleAlteracao', controleAlteracaoSchema);

@@ -1,9 +1,8 @@
-const { ORIGENS } = require("../constants/controleAlteracao");
-const { registrarAcao } = require("../services/controleService");
+const { registrarAcao } = require('../services/controleService');
 
 function registrarAcaoMiddleware({ entidade, acao }) {
   return async (req, res, next) => {
-    const origem = req.headers["x-origem"] ?? ORIGENS.API;
+    const origem = req.headers['x-origem'] ?? 'api';
 
     const originalJson = res.json;
     let responseBody;
@@ -13,11 +12,11 @@ function registrarAcaoMiddleware({ entidade, acao }) {
       return originalJson.call(this, body);
     };
 
-    res.on("finish", () => {
+    res.on('finish', () => {
       const { message, ...rest } = responseBody || {};
       const registradoAlterado = rest[Object.keys(rest)?.[0]];
 
-      console.log("REQ.usuario", req.usuario.nome);
+      console.log('REQ.usuario', req.usuario.nome);
 
       if (res.statusCode < 400) {
         registrarAcao({
@@ -38,4 +37,4 @@ function registrarAcaoMiddleware({ entidade, acao }) {
   };
 }
 
-module.exports = { registrarAcaoMiddleware };
+module.exports = registrarAcaoMiddleware;
