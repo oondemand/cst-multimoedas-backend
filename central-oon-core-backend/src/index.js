@@ -31,6 +31,7 @@ const excel = require('./utils/excel');
 const fileHandler = require('./utils/fileHandler');
 const pagination = require('./utils/pagination');
 const filters = require('./utils/pagination/filter');
+const email = require('./utils/email');
 
 module.exports = {
   createApp,
@@ -64,4 +65,5 @@ module.exports = {
     fileHandler,
     pagination,
     filters,
+    email,
 };

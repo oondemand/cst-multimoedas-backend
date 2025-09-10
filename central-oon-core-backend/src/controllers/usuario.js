@@ -1,8 +1,7 @@
-const path = require("path");
 const UsuarioService = require("../services/usuario");
 const Usuario = require("../models/Usuario");
 const bcrypt = require("bcryptjs");
-const emailUtils = require(path.join(process.cwd(), "src", "utils", "emailUtils"));
+const email = require("../utils/email");
 const jwt = require("jsonwebtoken");
 
 const {
@@ -71,7 +70,7 @@ const esqueciMinhaSenha = async (req, res) => {
   const url = new URL(pathUrl, baseUrl);
   url.searchParams.append("code", token);
 
-  await emailUtils.emailEsqueciMinhaSenha({
+  await email.emailEsqueciMinhaSenha({
     usuario,
     url: url.toString(),
   });

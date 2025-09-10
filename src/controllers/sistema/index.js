@@ -1,5 +1,5 @@
 const Sistema = require("../../models/Sistema");
-const { emailTeste } = require("../../utils/emailUtils");
+const { email } = require("central-oon-core-backend");
 
 listarSistemaConfig = async (req, res) => {
   const sistema = await Sistema.findOne();
@@ -30,7 +30,7 @@ atualizarSistemaConfig = async (req, res) => {
 };
 
 testeEmail = async (req, res) => {
-  await emailTeste({ email: req.body.email });
+  await email.emailTeste({ email: req.body.email });
   res.status(200).json();
 };
 
