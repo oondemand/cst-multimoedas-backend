@@ -1,7 +1,7 @@
 const sgMail = require("@sendgrid/mail");
 const { format } = require("date-fns");
 const Sistema = require("../models/Sistema");
-const { conviteTemplate } = require("../constants/template");
+// const { conviteTemplate } = require("../constants/template");
 
 const enviarEmail = async (emailTo, assunto, corpo, anexos = []) => {
   const config = await Sistema.findOne();
@@ -65,76 +65,76 @@ const emailEsqueciMinhaSenha = async ({ usuario, url }) => {
   }
 };
 
-const emailImportarRpas = async ({ usuario, detalhes }) => {
-  try {
-    const emailTo = {
-      email: usuario.email,
-      nome: usuario.nome,
-    };
+// const emailImportarRpas = async ({ usuario, detalhes }) => {
+//   try {
+//     const emailTo = {
+//       email: usuario.email,
+//       nome: usuario.nome,
+//     };
 
-    const assunto = "RPAs importadas";
+//     const assunto = "RPAs importadas";
 
-    const corpo = `<h1>Olá, ${usuario.nome}!</h1>
-    <p>Foram importados ${detalhes.sucesso} arquivos.</p>
-    <p>Arquivos com erro ${detalhes.erros.quantidade} arquivos.</p>
-    ${detalhes.erros.quantidade > 0 ? "<p>Segue em anexo o log de erros</p>" : ""}
-    `;
+//     const corpo = `<h1>Olá, ${usuario.nome}!</h1>
+//     <p>Foram importados ${detalhes.sucesso} arquivos.</p>
+//     <p>Arquivos com erro ${detalhes.erros.quantidade} arquivos.</p>
+//     ${detalhes.erros.quantidade > 0 ? "<p>Segue em anexo o log de erros</p>" : ""}
+//     `;
 
-    if (detalhes.erros.quantidade > 0) {
-      const arquivoDeErros = Buffer.from(detalhes.erros.logs).toString(
-        "base64",
-      );
-      const anexos = [
-        {
-          filename: `logs-de-erro-raps-${format(new Date(), "dd-MM-yyy")}.txt`,
-          fileBuffer: arquivoDeErros,
-        },
-      ];
+//     if (detalhes.erros.quantidade > 0) {
+//       const arquivoDeErros = Buffer.from(detalhes.erros.logs).toString(
+//         "base64",
+//       );
+//       const anexos = [
+//         {
+//           filename: `logs-de-erro-raps-${format(new Date(), "dd-MM-yyy")}.txt`,
+//           fileBuffer: arquivoDeErros,
+//         },
+//       ];
 
-      return await enviarEmail(emailTo, assunto, corpo, anexos);
-    }
+//       return await enviarEmail(emailTo, assunto, corpo, anexos);
+//     }
 
-    return await enviarEmail(emailTo, assunto, corpo);
-  } catch (error) {
-    throw new Error("Erro ao enviar e-mail de serviços exportados:");
-  }
-};
+//     return await enviarEmail(emailTo, assunto, corpo);
+//   } catch (error) {
+//     throw new Error("Erro ao enviar e-mail de serviços exportados:");
+//   }
+// };
 
-const emailErroIntegracaoOmie = async ({ usuario, error }) => {
-  try {
-    const emailTo = {
-      email: usuario.email,
-      nome: usuario.nome,
-    };
+// const emailErroIntegracaoOmie = async ({ usuario, error }) => {
+//   try {
+//     const emailTo = {
+//       email: usuario.email,
+//       nome: usuario.nome,
+//     };
 
-    const assunto = "Erro integração com omie";
+//     const assunto = "Erro integração com omie";
 
-    const corpo = `<h1>Olá, ${usuario.nome}!</h1>
-    <p>Ouve um erro na integração com o omie.</p>
-    <p>Detalhes do erro: ${error}</p>`;
+//     const corpo = `<h1>Olá, ${usuario.nome}!</h1>
+//     <p>Ouve um erro na integração com o omie.</p>
+//     <p>Detalhes do erro: ${error}</p>`;
 
-    await enviarEmail(emailTo, assunto, corpo);
-  } catch (error) {
-    throw new Error("Erro ao enviar e-mail para erro integração omie");
-  }
-};
+//     await enviarEmail(emailTo, assunto, corpo);
+//   } catch (error) {
+//     throw new Error("Erro ao enviar e-mail para erro integração omie");
+//   }
+// };
 
-const emailLinkCadastroUsuarioPrestador = async ({ email, nome, url }) => {
-  try {
-    const emailTo = {
-      email,
-      nome,
-    };
+// const emailLinkCadastroUsuarioPrestador = async ({ email, nome, url }) => {
+//   try {
+//     const emailTo = {
+//       email,
+//       nome,
+//     };
 
-    const assunto = "Acesso Liberado";
+//     const assunto = "Acesso Liberado";
 
-    const corpo = conviteTemplate({ url });
+//     const corpo = conviteTemplate({ url });
 
-    return await enviarEmail(emailTo, assunto, corpo);
-  } catch (error) {
-    throw error;
-  }
-};
+//     return await enviarEmail(emailTo, assunto, corpo);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const emailTeste = async ({ email }) => {
   try {
@@ -157,7 +157,7 @@ const emailTeste = async ({ email }) => {
 module.exports = {
   emailTeste,
   emailEsqueciMinhaSenha,
-  emailImportarRpas,
-  emailErroIntegracaoOmie,
-  emailLinkCadastroUsuarioPrestador,
+  // emailImportarRpas,
+  // emailErroIntegracaoOmie,
+  // emailLinkCadastroUsuarioPrestador,
 };
