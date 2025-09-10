@@ -10,7 +10,13 @@ const GenericError = require('./errors/GenericError');
 const authMiddleware = require('./middlewares/authMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const logMiddleware = require('./middlewares/logMiddleware');
+const registrarAcaoMiddleware = require('./middlewares/registrarAcaoMiddleware');
 const Log = require('./models/Log');
+const ControleAlteracao = require('./models/ControleAlteracao');
+const controleAlteracaoController = require('./controllers/controleAlteracao');
+const controleAlteracaoRouter = require('./routers/controleAlteracaoRouter');
+const ControleAlteracaoService = require('./services/controleAlteracao');
+const { registrarAcao } = require('./services/controleService');
 const { sendErrorResponse } = require('./utils/response');
 
 module.exports = {
@@ -23,7 +29,13 @@ module.exports = {
   GenericError,
   authMiddleware,
   errorMiddleware,
-  logMiddleware,
-  Log,
-  sendErrorResponse,
+    logMiddleware,
+    registrarAcaoMiddleware,
+    registrarAcao,
+    Log,
+    ControleAlteracao,
+    controleAlteracaoController,
+    ControleAlteracaoService,
+    controleAlteracaoRouter,
+    sendErrorResponse,
 };

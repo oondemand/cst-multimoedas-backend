@@ -17,7 +17,7 @@ const ImportacaoService = require("../../services/importacao");
 // const filtersUtils = require("../../utils/filter");
 // const { criarNomePersonalizado } = require("../../utils/formatters");
 
-// const { registrarAcao } = require("../../services/controleService");
+// const { registrarAcao } = require("central-oon-core-backend");
 // const {
 //   ACOES,
 //   ENTIDADES,

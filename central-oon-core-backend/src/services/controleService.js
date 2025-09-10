@@ -1,4 +1,4 @@
-const ControleAlteracao = require("../models/ControleAlteracao");
+const ControleAlteracao = require('../models/ControleAlteracao');
 
 async function registrarAcao({
   entidade,
@@ -20,7 +20,7 @@ async function registrarAcao({
 
     await controleAlteracao.save();
   } catch (e) {
-    console.log("ERRO AO REGISTRAR ACAO", e);
+    console.log('ERRO AO REGISTRAR ACAO', e);
   }
 }
 

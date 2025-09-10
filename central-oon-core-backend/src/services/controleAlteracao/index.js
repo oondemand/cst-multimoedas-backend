@@ -1,7 +1,8 @@
-const ControleAlteracao = require("../../models/ControleAlteracao");
-const FiltersUtils = require("../../utils/pagination/filter");
-const Usuario = require("../../models/Usuario");
-const PaginationUtils = require("../../utils/pagination");
+const path = require('path');
+const ControleAlteracao = require('../../models/ControleAlteracao');
+const FiltersUtils = require(path.join(process.cwd(), 'src', 'utils', 'pagination', 'filter'));
+const PaginationUtils = require(path.join(process.cwd(), 'src', 'utils', 'pagination'));
+const Usuario = require(path.join(process.cwd(), 'src', 'models', 'Usuario'));
 
 const buscarIdsUsuariosFiltrados = async ({ nome, searchTerm }) => {
   if (!nome && !searchTerm) return [];
@@ -10,12 +11,12 @@ const buscarIdsUsuariosFiltrados = async ({ nome, searchTerm }) => {
     filtros: { nome },
     schema: Usuario.schema,
     searchTerm,
-    camposBusca: ["nome"],
+    camposBusca: ['nome'],
   });
 
   const usuariosIds = await Usuario.find({
     $and: usuariosQuery,
-  }).select("_id");
+  }).select('_id');
 
   return usuariosIds.length > 0 ? usuariosIds.map((e) => e._id) : [];
 };
@@ -36,15 +37,13 @@ const listarComPaginacao = async ({
     filtros,
     schema: ControleAlteracao.schema,
     searchTerm,
-    camposBusca: ["status", "dataHora"],
+    camposBusca: ['status', 'dataHora'],
   });
 
   const queryCombinada = {
     $and: [
       ...controleQuery,
-      ...(arrayIdsUsuarios.length > 0
-        ? [{ usuario: { $in: arrayIdsUsuarios } }]
-        : []),
+      ...(arrayIdsUsuarios.length > 0 ? [{ usuario: { $in: arrayIdsUsuarios } }] : []),
     ],
   };
 
@@ -58,7 +57,7 @@ const listarComPaginacao = async ({
       .skip(skip)
       .limit(limite)
       .sort({ dataHora: -1 })
-      .select("-__v"),
+      .select('-__v'),
     ControleAlteracao.countDocuments(queryCombinada),
   ]);
 

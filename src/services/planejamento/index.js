@@ -1,7 +1,7 @@
 const Servico = require("../../models/Servico");
 const FiltersUtils = require("../../utils/pagination/filter");
 const PaginationUtils = require("../../utils/pagination");
-const { registrarAcao } = require("../../services/controleService");
+const { registrarAcao } = require("central-oon-core-backend");
 const ServicoTomadoTicket = require("../../models/ServicoTomadoTicket");
 const {
   ACOES,

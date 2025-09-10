@@ -2,9 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { ListaOmieController } = require("../controllers/listaOmieController");
 
-const {
-  registrarAcaoMiddleware,
-} = require("../middlewares/registrarAcaoMiddleware");
+const { registrarAcaoMiddleware } = require("central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 const { asyncHandler } = require("../utils/helpers");
 
