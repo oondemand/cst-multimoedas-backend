@@ -3,21 +3,30 @@ const fs = require("fs");
 const path = require("node:path");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./docs/swagger");
+const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const dotenv = require("dotenv");
 
-const {
-  createApp,
-  errorMiddleware,
-  GenericError,
-  logMiddleware,
-  authMiddleware,
-} = require("central-oon-core-backend");
+dotenv.config();
+
+const { authMiddleware } = require("central-oon-core-backend");
 const Sistema = require("./models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
 const { asyncHandler } = require("./utils/helpers");
 const IntegracaoController = require("./controllers/integracao");
 const MoedaController = require("./controllers/moeda");
+const errorMiddleware = require("./middlewares/errorMiddleware");
 
-const app = createApp();
+const app = express();
+app.use(cors({ origin: "*" }));
+app.use(helmet());
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -52,7 +61,6 @@ app.get("/image/:filename", (req, res) => {
 });
 
 app.use(authMiddleware({ getOrigin }));
-app.use(logMiddleware);
 
 app.use("/usuarios", require("./routers/usuarioRouter"));
 app.use("/pessoas", require("./routers/pessoaRouter"));
@@ -61,12 +69,7 @@ app.use(
   "/servicos-tomados/tickets",
   require("./routers/servicoTomadoTicketRouter")
 );
-// app.use("/baseomies", require("./routers/baseOmieRouter"));
-// app.use("/aprovacoes", require("./routers/aprovacaoRouter"));
 app.use("/etapas", require("./routers/etapaRouter"));
-// app.use("/esteiras", require("./routers/esteiraRouter"));
-
-// app.use("/logs", require("./routers/logRouter"));
 app.use("/servicos", require("./routers/servicoRouter"));
 app.use("/documentos-fiscais", require("./routers/documentoFiscalRouter"));
 app.use(
@@ -75,8 +78,6 @@ app.use(
 );
 app.use("/registros", require("./routers/controleAlteracao"));
 app.use("/listas", require("./routers/listaRouter"));
-// app.use("/estados", require("./routers/estadoRouter"));
-// app.use("/bancos", require("./routers/bancoRouter"));
 app.use("/planejamento", require("./routers/planejamentoRouter"));
 app.use("/importacoes", require("./routers/importacaoRouter"));
 app.use("/dashboard", require("./routers/dashboardRouter"));

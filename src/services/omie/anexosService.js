@@ -1,5 +1,5 @@
 const { compactFile } = require("../../utils/fileHandler");
-const { createHttpClient } = require("central-oon-core-backend");
+const createHttpClient = require("../../config/httpClient");
 
 const apiOmie = createHttpClient({ baseURL: process.env.API_OMIE });
 
