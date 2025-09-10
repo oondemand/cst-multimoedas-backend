@@ -36,6 +36,7 @@ function createApp({ middlewares = [], routers = [], autoRouters = true } = {}) 
       etapaRouter,
       usuarioRouter,
       sistemaRouter,
+      moedaRouter,
     } = require('../routers');
 
     routers.push(
@@ -44,7 +45,8 @@ function createApp({ middlewares = [], routers = [], autoRouters = true } = {}) 
       { path: '/listas', router: listaRouter },
       { path: '/etapas', router: etapaRouter },
       { path: '/usuarios', router: usuarioRouter },
-      { path: '/sistema', router: sistemaRouter }
+      { path: '/sistema', router: sistemaRouter },
+      { path: '/moedas', router: moedaRouter }
     );
   }
 

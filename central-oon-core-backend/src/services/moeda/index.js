@@ -1,9 +1,7 @@
-const Moeda = require("../../models/Moeda");
-const {
-  filters: FiltersUtils,
-  pagination: PaginationUtils,
-} = require("central-oon-core-backend");
-const CotacaoService = require("./bacen");
+const Moeda = require('../../models/Moeda');
+const FiltersUtils = require('../../utils/pagination/filter');
+const PaginationUtils = require('../../utils/pagination');
+const CotacaoService = require('./bacen');
 
 const listarComPaginacao = async ({
   pageIndex,
@@ -12,7 +10,7 @@ const listarComPaginacao = async ({
   filtros,
   ...rest
 }) => {
-  const camposBusca = ["sigla", "cotacao"];
+  const camposBusca = ['sigla', 'cotacao'];
 
   const query = FiltersUtils.buildQuery({
     filtros,
@@ -28,12 +26,12 @@ const listarComPaginacao = async ({
 
   const [moedas, totalDeMoedas] = await Promise.all([
     Moeda.find({
-      $and: [...query, { status: { $ne: "arquivado" } }],
+      $and: [...query, { status: { $ne: 'arquivado' } }],
     })
       .skip(skip)
       .limit(limite),
     Moeda.countDocuments({
-      $and: [...query, { status: { $ne: "arquivado" } }],
+      $and: [...query, { status: { $ne: 'arquivado' } }],
     }),
   ]);
 
@@ -41,18 +39,18 @@ const listarComPaginacao = async ({
 };
 
 const listarAtivas = async () => {
-  const moedas = await Moeda.find({ status: "ativo" });
+  const moedas = await Moeda.find({ status: 'ativo' });
   return moedas;
 };
 
 const atualizarCotacao = async () => {
-  const moedas = await Moeda.find({ status: "ativo" });
+  const moedas = await Moeda.find({ status: 'ativo' });
   const dezMinutos = 1000 * 60 * 10;
 
   await Promise.all(
     moedas.map(async (item) => {
       try {
-        if (item.sigla === "BRL") return;
+        if (item.sigla === 'BRL') return;
 
         const agora = Date.now();
         const atualizadoEm = new Date(item.atualizadoEm).getTime();
@@ -76,7 +74,7 @@ const atualizarCotacao = async () => {
 
         await moeda.save();
       } catch (error) {
-        console.log("ERROR", error);
+        console.log('ERROR', error);
       }
     })
   );
