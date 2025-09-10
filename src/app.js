@@ -12,6 +12,7 @@ const {
   authMiddleware,
   controleAlteracaoRouter,
   importacaoRouter,
+  listaRouter,
 } = require("central-oon-core-backend");
 const Sistema = require("./models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
@@ -78,7 +79,7 @@ app.use(
   require("./routers/documentoCadastralRouter")
 );
 app.use("/registros", controleAlteracaoRouter);
-app.use("/listas", require("./routers/listaRouter"));
+app.use("/listas", listaRouter);
 // app.use("/estados", require("./routers/estadoRouter"));
 // app.use("/bancos", require("./routers/bancoRouter"));
 app.use("/planejamento", require("./routers/planejamentoRouter"));

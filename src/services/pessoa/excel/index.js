@@ -10,7 +10,7 @@ const {
 const { mapImporter } = require("./mapImporter.js");
 const { mapExporter } = require("./mapExporter");
 const Pessoa = require("../../../models/Pessoa");
-const Lista = require("../../../models/Lista.js");
+const { Lista } = require("central-oon-core-backend");
 const PessoaService = require("../../pessoa");
 
 const criarNovoGrupo = async ({ grupo, usuario }) => {
