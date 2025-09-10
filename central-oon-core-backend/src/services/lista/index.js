@@ -1,5 +1,3 @@
-const path = require('path');
-const { LISTAS } = require(path.join(process.cwd(), 'src', 'constants', 'listas'));
 const Lista = require('../../models/Lista');
 const GenericError = require('../../errors/GenericError');
 const ListaNaoEncontradaError = require('../../errors/lista/listaNaoEncontrada');
@@ -70,7 +68,7 @@ const atualizarItem = async ({ codigo, itemId, valor }) => {
 };
 
 const listarCodigoDeListas = async () => {
-  return LISTAS;
+  return await Lista.distinct('codigo');
 };
 
 module.exports = {

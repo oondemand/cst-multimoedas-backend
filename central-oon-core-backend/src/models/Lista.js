@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const path = require('path');
-const { LISTAS } = require(path.join(process.cwd(), 'src', 'constants', 'listas'));
 
 const VALIDACAO = [
   {
@@ -10,7 +8,7 @@ const VALIDACAO = [
 ];
 
 const ListaSchema = new mongoose.Schema({
-  codigo: { type: String, enum: LISTAS, required: true, unique: true },
+  codigo: { type: String, required: true, unique: true },
   data: {
     type: [{ valor: String }],
     validate: VALIDACAO,
