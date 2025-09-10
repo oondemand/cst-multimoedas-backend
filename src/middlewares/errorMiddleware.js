@@ -1,5 +1,6 @@
 const multer = require('multer');
 const GenericError = require('../services/errors/generic');
+const CoreGenericError = require('central-oon-core-backend/src/errors/GenericError');
 const { sendErrorResponse } = require('../utils/helpers');
 
 const errorMiddleware = (error, _, res, next) => {
@@ -23,7 +24,20 @@ const errorMiddleware = (error, _, res, next) => {
     });
   }
 
-  if (error instanceof GenericError) {
+  if (['JsonWebTokenError', 'TokenExpiredError', 'NotBeforeError'].includes(error.name)) {
+    return sendErrorResponse({
+      res,
+      statusCode: 401,
+      error: error.message,
+      message: 'Token inválido ou expirado.',
+    });
+  }
+
+  if (
+    error instanceof GenericError ||
+    error instanceof CoreGenericError ||
+    typeof error.statusCode === 'number'
+  ) {
     return sendErrorResponse({
       res,
       statusCode: error.statusCode,
