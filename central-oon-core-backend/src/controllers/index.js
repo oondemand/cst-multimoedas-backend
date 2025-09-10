@@ -4,6 +4,7 @@ const listaController = require('./lista');
 const etapaController = require('./etapa');
 const usuarioController = require('./usuario');
 const sistemaController = require('./sistema');
+const moedaController = require('./moeda');
 
 module.exports = {
   controleAlteracaoController,
@@ -12,4 +13,5 @@ module.exports = {
   etapaController,
   usuarioController,
   sistemaController,
+  moedaController,
 };

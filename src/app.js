@@ -10,6 +10,7 @@ const {
   GenericError,
   logMiddleware,
   authMiddleware,
+  moedaRouter,
 } = require("central-oon-core-backend");
 const {
   Sistema,
@@ -17,7 +18,6 @@ const {
 } = require("central-oon-core-backend");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
 const IntegracaoController = require("./controllers/integracao");
-const MoedaController = require("./controllers/moeda");
 
 const app = createApp({ autoRouters: true });
 
@@ -37,10 +37,6 @@ app.use(
 
 app.use("/integracao/processar", asyncHandler(IntegracaoController.processar));
 
-app.use(
-  "/moedas/atualizar-cotacao",
-  asyncHandler(MoedaController.atualizarCotacao)
-);
 
 app.get("/image/:filename", (req, res) => {
   const filename = req.params.filename;
@@ -79,7 +75,7 @@ app.use("/dashboard", require("./routers/dashboardRouter"));
 app.use("/lista-omie", require("./routers/listasOmieRouter"));
 app.use("/assistentes", require("./routers/assistenteRouter"));
 app.use("/integracao", require("./routers/integracaoRouter"));
-app.use("/moedas", require("./routers/moedaRouter"));
+app.use("/moedas", moedaRouter);
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 app.use(errorMiddleware);
