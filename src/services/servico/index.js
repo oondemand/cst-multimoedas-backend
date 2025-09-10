@@ -1,6 +1,8 @@
 const Servico = require("../../models/Servico");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const {
+  filters: FiltersUtils,
+  pagination: PaginationUtils,
+} = require("central-oon-core-backend");
 const PessoaService = require("../pessoa");
 const MoedaService = require("../moeda/bacen");
 

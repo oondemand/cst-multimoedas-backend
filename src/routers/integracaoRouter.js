@@ -1,6 +1,8 @@
 const express = require("express");
 const IntegracaoController = require("../controllers/integracao");
-const { asyncHandler } = require("../utils/helpers");
+const {
+  helpers: { asyncHandler },
+} = require("central-oon-core-backend");
 const { registrarAcaoMiddleware } = require("central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 

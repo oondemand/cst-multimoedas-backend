@@ -1,6 +1,8 @@
 const Integracao = require("../../models/Integracao");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const {
+  filters: FiltersUtils,
+  pagination: PaginationUtils,
+} = require("central-oon-core-backend");
 const IntegracaoNaoEncontradoError = require("../errors/integracao/integracaoNaoEncontrado");
 const ServicoTomadoTicket = require("../../models/ServicoTomadoTicket");
 const ContaPagar = require("../../models/ContaPagar");

@@ -6,7 +6,9 @@ const router = express.Router();
 const { uploadExcel, uploadPDF } = require("central-oon-core-backend");
 const { registrarAcaoMiddleware } = require("central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const {
+  helpers: { asyncHandler },
+} = require("central-oon-core-backend");
 
 router.get("/", asyncHandler(DocumentoCadastralController.listar));
 router.get("/exportar", asyncHandler(DocumentoCadastralController.exportar));

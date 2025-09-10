@@ -3,7 +3,9 @@ const express = require("express");
 const PessoaWebhook = require("../controllers/pessoa/omie/webhook");
 const ContaPagarWebhook = require("../controllers/contaPagar/omie/webhook");
 
-const { asyncHandler } = require("../utils/helpers");
+const {
+  helpers: { asyncHandler },
+} = require("central-oon-core-backend");
 const router = express.Router();
 
 router.post("/pessoa", asyncHandler(PessoaWebhook.SyncPessoa));

@@ -23,10 +23,8 @@ const moedas = require("../seeds/moedas.json");
 const integracoes = require("../seeds/integracao.json");
 
 const {
-  sendErrorResponse,
-  sendResponse,
-  asyncHandler,
-} = require("../utils/helpers");
+  helpers: { sendErrorResponse, sendResponse, asyncHandler },
+} = require("central-oon-core-backend");
 
 const seed = async (req, res) => {
   const { baseOmie, appKey, openIaKey } = req.body;
