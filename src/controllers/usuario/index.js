@@ -1,14 +1,9 @@
 const UsuarioService = require("../../services/usuario");
-const Usuario = require("../../models/Usuario");
-const bcrypt = require("bcryptjs");
-const emailUtils = require("../../utils/emailUtils");
-const jwt = require("jsonwebtoken");
 
-const {
-  sendErrorResponse,
-  sendPaginatedResponse,
-  sendResponse,
-} = require("../../utils/helpers");
+const { login, validateToken: validateTokenCore, recoverPassword, changePassword } =
+  require("central-oon-core-backend");
+
+const { sendPaginatedResponse, sendResponse } = require("../../utils/helpers");
 
 const criarUsuario = async (req, res) => {
   const usuario = await UsuarioService.criar({ usuario: req.body });
@@ -35,151 +30,25 @@ const excluirUsuario = async (req, res) => {
 };
 
 const loginUsuario = async (req, res) => {
-  const { email, senha } = req.body;
-  const usuario = await UsuarioService.login({ email, senha });
-
-  sendResponse({
-    res,
-    statusCode: 200,
-    token: usuario.gerarToken(),
-    usuario: {
-      _id: usuario._id,
-      nome: usuario.nome,
-      tipo: usuario.tipo,
-      idioma: usuario?.configuracoes?.idioma,
-    },
-  });
+  const data = await login(req.body);
+  sendResponse({ res, statusCode: 200, ...data });
 };
 
 const validarToken = async (req, res) => {
-  // Se passou pelo middleware, `req.usuario` já está preenchido
-  sendResponse({ res, statusCode: 200, usuario: req.usuario });
+  const token = req.headers.authorization?.split(" ")[1];
+  const data = await validateTokenCore({ token });
+  sendResponse({ res, statusCode: 200, ...data });
 };
 
 const esqueciMinhaSenha = async (req, res) => {
-  const { email } = req.body;
-
-  const usuario = await UsuarioService.buscarUsuarioPorEmail({ email });
-  const token = usuario.gerarToken();
-
-  const baseUrl =
-    usuario.tipo === "prestador"
-      ? process.env.BASE_URL_APP_PUBLISHER
-      : process.env.BASE_URL_CST;
-
-  const path =
-    usuario.tipo === "prestador" ? "/recover-password" : "/alterar-senha";
-
-  const url = new URL(path, baseUrl);
-  url.searchParams.append("code", token);
-
-  await emailUtils.emailEsqueciMinhaSenha({
-    usuario,
-    url: url.toString(),
-  });
-
-  sendResponse({ res, statusCode: 200, usuario, message: "Email enviado" });
+  const data = await recoverPassword(req.body);
+  sendResponse({ res, statusCode: 200, ...data });
 };
 
 const alterarSenha = async (req, res) => {
   const token = req.headers.authorization?.split(" ")[1];
-  const { senhaAtual, novaSenha, confirmacao, code } = req.body;
-
-  if (!token && !code) {
-    return sendErrorResponse({
-      res,
-      statusCode: 401,
-      message: "Token inválido ou expirado",
-    });
-  }
-
-  if (!novaSenha) {
-    return sendErrorResponse({
-      res,
-      statusCode: 404,
-      message: "Nova senha é um campo obrigatório",
-    });
-  }
-
-  if (!confirmacao) {
-    return sendErrorResponse({
-      res,
-      statusCode: 404,
-      message: "Confirmação é um compo obrigatório",
-    });
-  }
-
-  if (novaSenha !== confirmacao) {
-    return sendErrorResponse({
-      res,
-      statusCode: 400,
-      message: "A confirmação precisa ser igual a senha.",
-    });
-  }
-
-  if (code) {
-    try {
-      const decoded = jwt.verify(code, process.env.JWT_SECRET);
-      const usuario = await Usuario.findById(decoded.id);
-      usuario.senha = novaSenha;
-      await usuario.save();
-      return sendResponse({
-        res,
-        statusCode: 200,
-        token: code,
-        usuario: {
-          _id: usuario._id,
-          nome: usuario.nome,
-          tipo: usuario.tipo,
-        },
-      });
-    } catch (error) {
-      return sendErrorResponse({
-        res,
-        statusCode: 401,
-        message: "Token inválido.",
-      });
-    }
-  }
-
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const usuario = await Usuario.findById(decoded.id);
-
-      if (!(await bcrypt.compare(senhaAtual, usuario.senha)))
-        return sendErrorResponse({
-          res,
-          statusCode: 401,
-          message: "Credenciais inválidas",
-        });
-
-      usuario.senha = novaSenha;
-      await usuario.save();
-      return sendResponse({
-        res,
-        statusCode: 200,
-        token,
-        usuario: {
-          _id: usuario._id,
-          nome: usuario.nome,
-          tipo: usuario.tipo,
-        },
-      });
-    } catch (error) {
-      return sendErrorResponse({
-        res,
-        statusCode: 401,
-        message: "Token inválido.",
-      });
-    }
-  }
-
-  return sendErrorResponse({
-    res,
-    statusCode: 404,
-    message: "Token inválido.",
-  });
+  const data = await changePassword({ ...req.body, token });
+  sendResponse({ res, statusCode: 200, ...data });
 };
 
 const listarUsuarios = async (req, res) => {
