@@ -7,9 +7,9 @@ const logger = require('./config/logger');
 const { uploadExcel, uploadPDF } = require('./config/multer');
 const createHttpClient = require('./config/httpClient');
 const GenericError = require('./errors/GenericError');
+const authMiddleware = require('./middlewares/authMiddleware');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const logMiddleware = require('./middlewares/logMiddleware');
-const authMiddleware = require('./middlewares/authMiddleware');
 const Log = require('./models/Log');
 const { sendErrorResponse } = require('./utils/response');
 
@@ -21,9 +21,9 @@ module.exports = {
   uploadPDF,
   createHttpClient,
   GenericError,
+  authMiddleware,
   errorMiddleware,
   logMiddleware,
-  authMiddleware,
   Log,
   sendErrorResponse,
 };
