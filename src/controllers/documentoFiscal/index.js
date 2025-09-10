@@ -10,6 +10,7 @@ const EtapaService = require("../../services/etapa");
 
 const DocumentoFiscalExcel = require("../../services/documentoFiscal/excel");
 const {
+  ImportacaoService,
   excel: { arrayToExcelBuffer },
   helpers: {
     sendPaginatedResponse,
@@ -17,7 +18,6 @@ const {
     // sendErrorResponse,
   },
 } = require("central-oon-core-backend");
-const ImportacaoService = require("../../services/importacao");
 
 // const DocumentoFidocumentoFiscal = require("../../models/DocumentoFidocumentoFiscal");
 

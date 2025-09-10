@@ -7,6 +7,7 @@
 const DocumentoCadastralService = require("../../services/documentoCadastral");
 const DocumentoCadastralExcel = require("../../services/documentoCadastral/excel");
 const {
+  ImportacaoService,
   excel: { arrayToExcelBuffer },
   helpers: {
     sendPaginatedResponse,
@@ -14,7 +15,6 @@ const {
     // sendErrorResponse,
   },
 } = require("central-oon-core-backend");
-const ImportacaoService = require("../../services/importacao");
 
 // const DocumentoCadastral = require("../../models/DocumentoCadastral");
 
