@@ -7,6 +7,7 @@ const {
   recoverPassword,
   changePassword,
   authMiddleware,
+  authRouter,
 } = require('./auth');
 
 module.exports = {
@@ -15,4 +16,5 @@ module.exports = {
   recoverPassword,
   changePassword,
   authMiddleware,
+  authRouter,
 };
