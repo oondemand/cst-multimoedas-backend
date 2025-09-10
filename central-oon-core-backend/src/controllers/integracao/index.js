@@ -7,27 +7,13 @@ const {
   sendErrorResponse,
 } = require("../../utils/helpers");
 
-// Services that live in the main application (outside the core package)
-const PessoaSync = require(path.join(
+// Handlers provided by the template application
+const integracaoHandlers = require(path.join(
   process.cwd(),
   "src",
   "services",
-  "pessoa",
-  "omie"
-));
-const ContaPagarSync = require(path.join(
-  process.cwd(),
-  "src",
-  "services",
-  "contaPagar",
-  "omie"
-));
-const ArquivosSync = require(path.join(
-  process.cwd(),
-  "src",
-  "services",
-  "arquivo",
-  "omie"
+  "integracao",
+  "handlers"
 ));
 
 const listar = async (req, res) => {
@@ -103,21 +89,16 @@ const processar = async (req, res) => {
     });
   }
 
-  const integracao = {
-    pessoa: {
-      omie_central: PessoaSync.omieCentral.queue.start,
-      central_omie: PessoaSync.centralOmie.queue.start,
-    },
-    conta_pagar: {
-      omie_central: ContaPagarSync.omieCentral.queue.start,
-      central_omie: ContaPagarSync.centralOmie.queue.start,
-    },
-    anexos: {
-      central_omie: ArquivosSync.centralOmie.queue.start,
-    },
-  };
+  const handler = integracaoHandlers?.[tipo]?.[direcao];
+  if (!handler) {
+    return sendErrorResponse({
+      res,
+      statusCode: 404,
+      message: "Integração não suportada",
+    });
+  }
 
-  integracao[tipo][direcao]();
+  handler();
   console.log(`🚀 [INTEGRAÇÃO] [TIPO: ${tipo}] [DIREÇÃO: ${direcao}]`);
 
   sendResponse({
@@ -129,28 +110,17 @@ const processar = async (req, res) => {
 const processarAtivas = async (req, res) => {
   const integracoesConfigs = await IntegracaoConfigService.listar();
 
-  const integracao = {
-    pessoa: {
-      omie_central: PessoaSync.omieCentral.queue.start,
-      central_omie: PessoaSync.centralOmie.queue.start,
-    },
-    conta_pagar: {
-      omie_central: ContaPagarSync.omieCentral.queue.start,
-      central_omie: ContaPagarSync.centralOmie.queue.start,
-    },
-    anexos: {
-      central_omie: ArquivosSync.centralOmie.queue.start,
-    },
-  };
-
   const promises = [];
 
   for (const config of integracoesConfigs) {
     if (config.ativa) {
-      console.log(
-        `🚀 [PROCESSANDO INTEGRAÇÃO] [TIPO: ${config.tipo}] [DIREÇÃO: ${config.direcao}] [ATIVA: ${config.ativa}]`
-      );
-      promises.push(integracao[config.tipo][config.direcao]());
+      const handler = integracaoHandlers?.[config.tipo]?.[config.direcao];
+      if (handler) {
+        console.log(
+          `🚀 [PROCESSANDO INTEGRAÇÃO] [TIPO: ${config.tipo}] [DIREÇÃO: ${config.direcao}] [ATIVA: ${config.ativa}]`
+        );
+        promises.push(handler());
+      }
     }
   }
 
