@@ -42,7 +42,7 @@ UsuarioSchema.pre("save", async function (next) {
 UsuarioSchema.methods.gerarToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
     expiresIn: "24h",
-  }); // Token expira em 24 horas
+  });
 };
 
 module.exports = mongoose.model("Usuario", UsuarioSchema);

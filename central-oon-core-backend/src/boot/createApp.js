@@ -10,7 +10,7 @@ const dotenv = require('dotenv');
 // @param {Array} [options.middlewares] - Additional middlewares to load.
 // @param {Array<{path: string, router: import('express').Router}>} [options.routers] - Routers to register.
 // @param {boolean} [options.autoRouters=true] - When true, core routers
-// (controleAlteracao, importacao, lista and etapa) are automatically
+// (controleAlteracao, importacao, lista, etapa and usuario) are automatically
 // registered on their default paths.
 function createApp({ middlewares = [], routers = [], autoRouters = true } = {}) {
   dotenv.config();
@@ -34,13 +34,15 @@ function createApp({ middlewares = [], routers = [], autoRouters = true } = {}) 
       importacaoRouter,
       listaRouter,
       etapaRouter,
+      usuarioRouter,
     } = require('../routers');
 
     routers.push(
       { path: '/registros', router: controleAlteracaoRouter },
       { path: '/importacoes', router: importacaoRouter },
       { path: '/listas', router: listaRouter },
-      { path: '/etapas', router: etapaRouter }
+      { path: '/etapas', router: etapaRouter },
+      { path: '/usuarios', router: usuarioRouter }
     );
   }
 

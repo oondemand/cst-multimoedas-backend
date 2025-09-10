@@ -1,4 +1,4 @@
-const GenericError = require("../generic");
+const GenericError = require("../GenericError");
 
 class CredenciaisInvalidasError extends GenericError {
   constructor() {

@@ -1,12 +1,15 @@
-const UsuarioService = require("../../services/usuario");
-const Usuario = require("../../models/Usuario");
+const path = require("path");
+const UsuarioService = require("../services/usuario");
+const Usuario = require("../models/Usuario");
 const bcrypt = require("bcryptjs");
-const emailUtils = require("../../utils/emailUtils");
+const emailUtils = require(path.join(process.cwd(), "src", "utils", "emailUtils"));
 const jwt = require("jsonwebtoken");
 
 const {
-  helpers: { sendErrorResponse, sendPaginatedResponse, sendResponse },
-} = require("central-oon-core-backend");
+  sendErrorResponse,
+  sendPaginatedResponse,
+  sendResponse,
+} = require("../utils/helpers");
 
 const criarUsuario = async (req, res) => {
   const usuario = await UsuarioService.criar({ usuario: req.body });
@@ -23,7 +26,6 @@ const atualizarUsuario = async (req, res) => {
     id: req.params.id,
     usuario: req.body,
   });
-
   sendResponse({ res, statusCode: 200, usuario });
 };
 
@@ -50,7 +52,6 @@ const loginUsuario = async (req, res) => {
 };
 
 const validarToken = async (req, res) => {
-  // Se passou pelo middleware, `req.usuario` já está preenchido
   sendResponse({ res, statusCode: 200, usuario: req.usuario });
 };
 
@@ -65,10 +66,9 @@ const esqueciMinhaSenha = async (req, res) => {
       ? process.env.BASE_URL_APP_PUBLISHER
       : process.env.BASE_URL_CST;
 
-  const path =
-    usuario.tipo === "prestador" ? "/recover-password" : "/alterar-senha";
+  const pathUrl = usuario.tipo === "prestador" ? "/recover-password" : "/alterar-senha";
 
-  const url = new URL(path, baseUrl);
+  const url = new URL(pathUrl, baseUrl);
   url.searchParams.append("code", token);
 
   await emailUtils.emailEsqueciMinhaSenha({
@@ -183,13 +183,12 @@ const alterarSenha = async (req, res) => {
 const listarUsuarios = async (req, res) => {
   const { pageIndex, pageSize, searchTerm, ...rest } = req.query;
 
-  const { limite, page, totalDeUsuarios, usuarios } =
-    await UsuarioService.listarComPaginacao({
-      filtros: rest,
-      pageIndex,
-      pageSize,
-      searchTerm,
-    });
+  const { limite, page, totalDeUsuarios, usuarios } = await UsuarioService.listarComPaginacao({
+    filtros: rest,
+    pageIndex,
+    pageSize,
+    searchTerm,
+  });
 
   sendPaginatedResponse({
     res,
