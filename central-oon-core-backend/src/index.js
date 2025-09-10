@@ -15,15 +15,22 @@ const Log = require('./models/Log');
 const ControleAlteracao = require('./models/ControleAlteracao');
 const Importacao = require('./models/Importacao');
 const Lista = require('./models/Lista');
+const Integracao = require('./models/Integracao');
+const IntegracaoConfig = require('./models/IntegracaoConfig');
 const controleAlteracaoController = require('./controllers/controleAlteracao');
 const importacaoController = require('./controllers/importacao');
 const listaController = require('./controllers/lista');
+const integracaoController = require('./controllers/integracao');
 const controleAlteracaoRouter = require('./routers/controleAlteracaoRouter');
 const importacaoRouter = require('./routers/importacaoRouter');
 const listaRouter = require('./routers/listaRouter');
+const integracaoRouter = require('./routers/integracaoRouter');
 const ControleAlteracaoService = require('./services/controleAlteracao');
 const ImportacaoService = require('./services/importacao');
 const ListaService = require('./services/lista');
+const IntegracaoService = require('./services/integracao');
+const IntegracaoConfigService = require('./services/integracao/config');
+const integracaoConstants = require('./constants/integracao');
 const { registrarAcao } = require('./services/controleService');
 const { sendErrorResponse } = require('./utils/response');
 const helpers = require('./utils/helpers');
@@ -49,15 +56,22 @@ module.exports = {
     ControleAlteracao,
     Importacao,
     Lista,
+    Integracao,
+    IntegracaoConfig,
     controleAlteracaoController,
     importacaoController,
     listaController,
+    integracaoController,
     ControleAlteracaoService,
     ImportacaoService,
     ListaService,
+    IntegracaoService,
+    IntegracaoConfigService,
     controleAlteracaoRouter,
     importacaoRouter,
     listaRouter,
+    integracaoRouter,
+    integracaoConstants,
     sendErrorResponse,
     helpers,
     excel,

@@ -1,11 +1,7 @@
 const Integracao = require("../../models/Integracao");
-const {
-  filters: FiltersUtils,
-  pagination: PaginationUtils,
-} = require("central-oon-core-backend");
-const IntegracaoNaoEncontradoError = require("../errors/integracao/integracaoNaoEncontrado");
-const ServicoTomadoTicket = require("../../models/ServicoTomadoTicket");
-const ContaPagar = require("../../models/ContaPagar");
+const FiltersUtils = require("../../utils/pagination/filter");
+const PaginationUtils = require("../../utils/pagination");
+const IntegracaoNaoEncontradoError = require("../../errors/integracao/integracaoNaoEncontrado");
 
 const listarTodos = async ({ tipo, direcao, arquivado = false, time }) => {
   const umDiaEmMilissegundos = 1000 * 60 * 60 * 24;
@@ -20,7 +16,7 @@ const listarTodos = async ({ tipo, direcao, arquivado = false, time }) => {
   return results;
 };
 
-const arquivar = async ({ id, integracao }) => {
+const arquivar = async ({ id }) => {
   const integracaoAtualizada = await Integracao.findByIdAndUpdate(id, {
     arquivado: true,
     motivoArquivamento: "Solicitado pelo usuário",
@@ -28,44 +24,10 @@ const arquivar = async ({ id, integracao }) => {
 
   if (!integracaoAtualizada) throw new IntegracaoNaoEncontradoError();
 
-  const { tipo, direcao, parentId } = integracaoAtualizada;
-
-  if (tipo === "conta_pagar" && direcao === "central_omie") {
-    await ServicoTomadoTicket.findOneAndUpdate(
-      { contaPagarOmie: parentId },
-      { etapa: "aprovacao-fiscal", $unset: { contaPagarOmie: "" } }
-    );
-  }
-
-  if (tipo === "anexos" && direcao === "central_omie") {
-    const isAnexoPendente = await Integracao.findOne({
-      parentId,
-      tipo: "anexos",
-      direcao: "central_omie",
-      arquivado: false,
-      etapa: { $nin: ["sucesso"] },
-    });
-
-    if (!isAnexoPendente) {
-      await Integracao.findOneAndUpdate(
-        {
-          parentId,
-          tipo: "conta_pagar",
-          direcao: "central_omie",
-          arquivado: false,
-          etapa: "anexos",
-        },
-        {
-          etapa: "sucesso",
-        }
-      );
-    }
-  }
-
   return integracaoAtualizada;
 };
 
-const reprocessar = async ({ id, integracao }) => {
+const reprocessar = async ({ id }) => {
   const integracaoAtualizada = await Integracao.findByIdAndUpdate(id, {
     etapa: "reprocessar",
   });

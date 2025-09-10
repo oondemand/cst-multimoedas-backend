@@ -1,5 +1,4 @@
-const Integracao = require("../../../../models/Integracao");
-const IntegracaoService = require("../../../integracao/");
+const { Integracao, IntegracaoService } = require("central-oon-core-backend");
 const Queue = require("../../../queue/index.js");
 const { handler } = require("./handler.js");
 

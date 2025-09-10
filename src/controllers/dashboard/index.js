@@ -1,7 +1,6 @@
-const { helpers: Helpers } = require("central-oon-core-backend");
+const { helpers: Helpers, IntegracaoService } = require("central-oon-core-backend");
 const ServicoService = require("../../services/servico");
 const ServicoTomadoTicketService = require("../../services/servicoTomadoTicket");
-const IntegracaoService = require("../../services/integracao");
 
 const estatisticas = async (req, res) => {
   const ticketPorStatus =

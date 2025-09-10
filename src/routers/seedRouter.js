@@ -10,7 +10,7 @@ const Sistema = require("../models/Sistema");
 const ListaOmie = require("../models/ListaOmie");
 const Assistente = require("../models/Assistente");
 const Moeda = require("../models/Moeda");
-const IntegracaoConfig = require("../models/IntegracaoConfig");
+const { IntegracaoConfig } = require("central-oon-core-backend");
 
 // const bancos = require("../seeds/bancos.json");
 // const estados = require("../seeds/estados.json");

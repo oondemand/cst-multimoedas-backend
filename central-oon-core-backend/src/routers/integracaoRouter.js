@@ -1,15 +1,13 @@
 const express = require("express");
+const path = require("path");
 const IntegracaoController = require("../controllers/integracao");
-const {
-  helpers: { asyncHandler },
-} = require("central-oon-core-backend");
-const { registrarAcaoMiddleware } = require("central-oon-core-backend");
-const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
+const { asyncHandler } = require("../utils/helpers");
+const registrarAcaoMiddleware = require("../middlewares/registrarAcaoMiddleware");
+const { ACOES, ENTIDADES } = require(path.join(process.cwd(), "src", "constants", "controleAlteracao"));
 
 const router = express.Router();
 router.get("/", asyncHandler(IntegracaoController.listar));
 router.get("/todos", asyncHandler(IntegracaoController.listaComPaginacao));
-// router.post("/processar", asyncHandler(IntegracaoController.processar));
 router.post("/reprocessar/:id", asyncHandler(IntegracaoController.reprocessar));
 
 router.post(
@@ -20,11 +18,6 @@ router.post(
   }),
   asyncHandler(IntegracaoController.arquivar)
 );
-
-// router.post(
-//   "/processar/ativas",
-//   asyncHandler(IntegracaoController.processarAtivas)
-// );
 
 router.get("/config", asyncHandler(IntegracaoController.listarConfigs));
 router.put("/config/:id", asyncHandler(IntegracaoController.atualizarConfig));

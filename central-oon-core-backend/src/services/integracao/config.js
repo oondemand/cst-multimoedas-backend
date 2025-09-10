@@ -1,5 +1,5 @@
 const IntegracaoConfig = require("../../models/IntegracaoConfig");
-const GenericError = require("../errors/generic");
+const GenericError = require("../../errors/GenericError");
 
 const listar = async () => {
   return await IntegracaoConfig.find();

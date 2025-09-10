@@ -13,13 +13,13 @@ const {
   controleAlteracaoRouter,
   importacaoRouter,
   listaRouter,
+  integracaoRouter,
 } = require("central-oon-core-backend");
 const Sistema = require("./models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
 const {
   helpers: { asyncHandler },
 } = require("central-oon-core-backend");
-const IntegracaoController = require("./controllers/integracao");
 const MoedaController = require("./controllers/moeda");
 
 const app = createApp();
@@ -32,13 +32,6 @@ app.use("/auth", require("./routers/authRouter"));
 app.use("/webhooks/", require("./routers/webhookRouter"));
 app.use("/ativacao", require("./routers/seedRouter"));
 app.use("/tipo-acesso", require("./routers/tipoAcessoRouter"));
-
-app.use(
-  "/integracao/processar/ativas",
-  asyncHandler(IntegracaoController.processarAtivas)
-);
-
-app.use("/integracao/processar", asyncHandler(IntegracaoController.processar));
 
 app.use(
   "/moedas/atualizar-cotacao",
@@ -88,7 +81,7 @@ app.use("/dashboard", require("./routers/dashboardRouter"));
 app.use("/sistema", require("./routers/sistemaRouter"));
 app.use("/lista-omie", require("./routers/listasOmieRouter"));
 app.use("/assistentes", require("./routers/assistenteRouter"));
-app.use("/integracao", require("./routers/integracaoRouter"));
+app.use("/integracao", integracaoRouter);
 app.use("/moedas", require("./routers/moedaRouter"));
 
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
