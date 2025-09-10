@@ -1,7 +1,7 @@
 const PessoaService = require("../../services/pessoa");
 const PessoaExcel = require("../../services/pessoa/excel");
-const ImportacaoService = require("../../services/importacao");
 const {
+  ImportacaoService,
   helpers: { sendPaginatedResponse, sendResponse },
   excel: { arrayToExcelBuffer, excelToJson },
 } = require("central-oon-core-backend");
