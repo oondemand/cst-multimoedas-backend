@@ -6,7 +6,7 @@ const {
 const router = express.Router();
 const { asyncHandler } = require("../utils/helpers");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { uploadExcel } = require("central-oon-core-backend");
+const { uploadExcel } = require("../config/multer");
 
 router.get("/", asyncHandler(ServicoController.listar));
 

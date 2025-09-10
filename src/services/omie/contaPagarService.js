@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const { createHttpClient } = require("central-oon-core-backend");
+const createHttpClient = require("../../config/httpClient");
 
 const { formatarDataOmie } = require("../../utils/dateUtils");
 
