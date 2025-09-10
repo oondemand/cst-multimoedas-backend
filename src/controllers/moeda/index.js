@@ -1,5 +1,4 @@
-const MoedaService = require("../../services/moeda");
-const { helpers: Helpers } = require("central-oon-core-backend");
+const { MoedaService, helpers: Helpers } = require("central-oon-core-backend");
 
 // const criar = async (req, res) => {
 //   const pessoa = await MoedaService.criar({ pessoa: req.body });

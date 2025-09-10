@@ -4,7 +4,6 @@ const {
   pagination: PaginationUtils,
 } = require("central-oon-core-backend");
 const PessoaService = require("../pessoa");
-const MoedaService = require("../moeda/bacen");
 
 const criar = async ({ servico }) => {
   const novoServico = new Servico(servico);
