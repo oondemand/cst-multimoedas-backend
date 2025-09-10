@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const sistemaSchema = new mongoose.Schema(
+const SistemaSchema = new mongoose.Schema(
   {
     openIaKey: String,
     appKey: String,
@@ -10,6 +10,4 @@ const sistemaSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Sistema = mongoose.model("Sistema", sistemaSchema);
-
-module.exports = Sistema;
+module.exports = mongoose.model('Sistema', SistemaSchema);

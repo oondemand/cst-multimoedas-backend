@@ -3,6 +3,7 @@ const importacaoController = require('./importacao');
 const listaController = require('./lista');
 const etapaController = require('./etapa');
 const usuarioController = require('./usuario');
+const sistemaController = require('./sistema');
 
 module.exports = {
   controleAlteracaoController,
@@ -10,4 +11,5 @@ module.exports = {
   listaController,
   etapaController,
   usuarioController,
+  sistemaController,
 };
