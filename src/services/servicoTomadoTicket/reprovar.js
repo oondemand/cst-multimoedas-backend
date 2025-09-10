@@ -1,6 +1,6 @@
 const Ticket = require("../../models/ServicoTomadoTicket");
 const GenericError = require("../errors/generic");
-const EtapaService = require("../etapa");
+const { EtapaService } = require("central-oon-core-backend");
 
 const reprovar = async ({ id }) => {
   const ticket = await Ticket.findById(id).populate("pessoa");

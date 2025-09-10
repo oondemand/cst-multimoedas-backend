@@ -3,10 +3,8 @@
 // const Ticket = require("../../models/Ticket");
 // const Arquivo = require("../../models/Arquivo");
 // const Servico = require("../../models/Servico");
-// const Etapa = require("../../models/Etapa");
 
 const DocumentoFiscalService = require("../../services/documentoFiscal");
-const EtapaService = require("../../services/etapa");
 
 const DocumentoFiscalExcel = require("../../services/documentoFiscal/excel");
 const {

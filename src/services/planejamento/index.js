@@ -10,7 +10,7 @@ const {
   ENTIDADES,
   ORIGENS,
 } = require("../../constants/controleAlteracao");
-const EtapaService = require("../etapa");
+const { EtapaService } = require("central-oon-core-backend");
 
 const ServicoNaoEncontradaError = require("../errors/servico/servicoNaoEncontrado");
 

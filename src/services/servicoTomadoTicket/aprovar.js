@@ -1,6 +1,6 @@
 const Ticket = require("../../models/ServicoTomadoTicket");
 const GenericError = require("../errors/generic");
-const EtapaService = require("../etapa");
+const { EtapaService } = require("central-oon-core-backend");
 const ContaPagar = require("../../models/ContaPagar");
 const Sistema = require("../../models/Sistema");
 const ContaPagarSync = require("../contaPagar/omie");
