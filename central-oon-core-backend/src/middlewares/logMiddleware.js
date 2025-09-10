@@ -5,7 +5,7 @@ const logMiddleware = (req, res, next) => {
     return next();
   }
 
-  const usuarioId = req.usuario ? req.usuario.id : null;
+  const usuarioId = req.usuario ? req.usuario._id : null;
   const endpoint = req.originalUrl;
   const metodo = req.method;
   const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
