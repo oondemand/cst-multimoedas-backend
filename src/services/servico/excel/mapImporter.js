@@ -1,4 +1,4 @@
-const Moeda = require("../../../models/Moeda");
+const { Moeda } = require("central-oon-core-backend");
 
 const mapImporter = async ({ row }) => {
   let moeda = await Moeda.findOne({

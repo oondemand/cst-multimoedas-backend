@@ -8,7 +8,7 @@ const { Etapa } = require("central-oon-core-backend");
 const { Sistema } = require("central-oon-core-backend");
 const ListaOmie = require("../models/ListaOmie");
 const Assistente = require("../models/Assistente");
-const Moeda = require("../models/Moeda");
+const { Moeda } = require("central-oon-core-backend");
 const IntegracaoConfig = require("../models/IntegracaoConfig");
 
 // const bancos = require("../seeds/bancos.json");
