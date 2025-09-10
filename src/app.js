@@ -9,9 +9,8 @@ const {
   errorMiddleware,
   GenericError,
   logMiddleware,
+  authMiddleware,
 } = require("central-oon-core-backend");
-
-const authMiddleware = require("./middlewares/authMiddleware");
 const Sistema = require("./models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
 const { asyncHandler } = require("./utils/helpers");
