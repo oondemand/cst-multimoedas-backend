@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const UsuarioController = require("../controllers/usuario");
-const { authMiddleware } = require("central-oon-core-backend");
+const authMiddleware = require("../middlewares/authMiddleware");
 const { asyncHandler } = require("../utils/helpers");
 const Sistema = require("../models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
