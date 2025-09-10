@@ -1,9 +1,7 @@
-const Etapa = require("../../models/Etapa");
-const EtapaNaoEncontradaError = require("../errors/etapa/etapaNaoEncontradaError");
-const {
-  filters: FiltersUtils,
-  pagination: PaginationUtils,
-} = require("central-oon-core-backend");
+const Etapa = require('../../models/Etapa');
+const EtapaNaoEncontradaError = require('../../errors/etapa/etapaNaoEncontrada');
+const FiltersUtils = require('../../utils/pagination/filter');
+const PaginationUtils = require('../../utils/pagination');
 
 const criar = async ({ etapa }) => {
   const etapaNova = new Etapa(etapa);
@@ -12,13 +10,11 @@ const criar = async ({ etapa }) => {
 };
 
 const listarEtapasAtivasPorEsteira = async ({ esteira }) => {
-  return await Etapa.find({ status: "ativo", esteira }).sort({ posicao: 1 });
+  return await Etapa.find({ status: 'ativo', esteira }).sort({ posicao: 1 });
 };
 
 const atualizar = async ({ id, etapa }) => {
-  const etapaAtualizada = await Etapa.findByIdAndUpdate(id, etapa, {
-    new: true,
-  });
+  const etapaAtualizada = await Etapa.findByIdAndUpdate(id, etapa, { new: true });
   if (!etapaAtualizada) return new EtapaNaoEncontradaError();
   return etapaAtualizada;
 };
@@ -35,18 +31,12 @@ const excluir = async ({ id }) => {
   return etapa;
 };
 
-const listarComPaginacao = async ({
-  filtros,
-  pageIndex,
-  pageSize,
-  searchTerm,
-  ...rest
-}) => {
+const listarComPaginacao = async ({ filtros, pageIndex, pageSize, searchTerm, ...rest }) => {
   const query = FiltersUtils.buildQuery({
     filtros,
     schema: Etapa.schema,
     searchTerm,
-    camposBusca: ["codigo", "nome", "posicao", "status"],
+    camposBusca: ['codigo', 'nome', 'posicao', 'status'],
   });
 
   const { page, limite, skip } = PaginationUtils.buildPaginationQuery({

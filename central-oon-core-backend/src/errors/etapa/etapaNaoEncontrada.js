@@ -1,8 +1,8 @@
-const GenericError = require("../generic");
+const GenericError = require('../GenericError');
 
 class EtapaNaoEncontradaError extends GenericError {
   constructor() {
-    super("Etapa não encontrada!", 404);
+    super('Etapa não encontrada!', 404);
   }
 }
 

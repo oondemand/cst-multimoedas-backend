@@ -2,7 +2,6 @@
 // const Ticket = require("../../models/Ticket");
 // const Arquivo = require("../../models/Arquivo");
 // const Servico = require("../../models/Servico");
-// const Etapa = require("../../models/Etapa");
 
 const DocumentoCadastralService = require("../../services/documentoCadastral");
 const DocumentoCadastralExcel = require("../../services/documentoCadastral/excel");

@@ -13,6 +13,7 @@ const {
   controleAlteracaoRouter,
   importacaoRouter,
   listaRouter,
+  etapaRouter,
 } = require("central-oon-core-backend");
 const Sistema = require("./models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
@@ -68,7 +69,7 @@ app.use(
 );
 // app.use("/baseomies", require("./routers/baseOmieRouter"));
 // app.use("/aprovacoes", require("./routers/aprovacaoRouter"));
-app.use("/etapas", require("./routers/etapaRouter"));
+app.use("/etapas", etapaRouter);
 // app.use("/esteiras", require("./routers/esteiraRouter"));
 
 // app.use("/logs", require("./routers/logRouter"));

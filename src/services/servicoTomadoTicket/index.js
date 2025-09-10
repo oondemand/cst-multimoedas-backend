@@ -12,7 +12,7 @@ const Arquivo = require("../../models/Arquivo");
 const ServicoNaoEncontradoError = require("../errors/servico/servicoNaoEncontrado");
 const { criarNomePersonalizado } = require("../../utils/formatters");
 const ArquivoNaoEncontradoError = require("../errors/arquivo/arquivoNaoEncontradoError");
-const EtapaService = require("../etapa");
+const { EtapaService } = require("central-oon-core-backend");
 const DocumentoFiscal = require("../../models/DocumentoFiscal");
 const DocumentoFiscalNaoEncontradoError = require("../errors/documentoFiscal/documentoFiscalNaoEncontradaError");
 

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const etapaSchema = new mongoose.Schema(
   {
@@ -9,7 +9,6 @@ const etapaSchema = new mongoose.Schema(
     },
     esteira: {
       type: String,
-      enum: ["servicos-tomados", "pedido-venda"],
       required: true,
     },
     codigo: {
@@ -24,8 +23,8 @@ const etapaSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["ativo", "inativo", "arquivado"],
-      default: "ativo",
+      enum: ['ativo', 'inativo', 'arquivado'],
+      default: 'ativo',
     },
   },
   {
@@ -33,5 +32,4 @@ const etapaSchema = new mongoose.Schema(
   }
 );
 
-const Etapa = mongoose.model("Etapa", etapaSchema);
-module.exports = Etapa;
+module.exports = mongoose.model('Etapa', etapaSchema);
