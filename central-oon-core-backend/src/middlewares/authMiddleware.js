@@ -23,6 +23,7 @@ const authMiddleware = async (req, res, next) => {
     });
 
     const usuario = {
+      _id: response.data.usuario._id,
       tipo:
         response.data.usuario.aplicativo.tipoAcesso === 'master'
           ? 'admin'
