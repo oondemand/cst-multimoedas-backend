@@ -2,6 +2,11 @@
   "name": "central-oon-core-backend",
   "version": "0.0.2",
   "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./controllers": "./src/controllers/index.js",
+    "./routers": "./src/routers/index.js"
+  },
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.7",
