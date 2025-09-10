@@ -1,11 +1,10 @@
 const express = require("express");
-const UsuarioController = require("../controllers/usuario");
-const { registrarAcaoMiddleware } = require("central-oon-core-backend");
-const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
+const path = require("path");
 const router = express.Router();
-const {
-  helpers: { asyncHandler },
-} = require("central-oon-core-backend");
+const UsuarioController = require("../controllers/usuario");
+const registrarAcaoMiddleware = require("../middlewares/registrarAcaoMiddleware");
+const { asyncHandler } = require("../utils/helpers");
+const { ACOES, ENTIDADES } = require(path.join(process.cwd(), "src", "constants", "controleAlteracao"));
 
 router.get("/", asyncHandler(UsuarioController.listarUsuarios));
 

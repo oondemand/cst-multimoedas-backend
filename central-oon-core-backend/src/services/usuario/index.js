@@ -1,11 +1,9 @@
 const Usuario = require("../../models/Usuario");
-const CredenciaisInvalidasError = require("../errors/usuario/credenciaisInvalidas");
-const UsuarioNaoEncontradoError = require("../errors/usuario/usuarioNaoEncontrado");
+const CredenciaisInvalidasError = require("../../errors/usuario/credenciaisInvalidas");
+const UsuarioNaoEncontradoError = require("../../errors/usuario/usuarioNaoEncontrado");
 const bcrypt = require("bcryptjs");
-const {
-  filters: FiltersUtils,
-  pagination: PaginationUtils,
-} = require("central-oon-core-backend");
+const FiltersUtils = require("../../utils/pagination/filter");
+const PaginationUtils = require("../../utils/pagination");
 
 const criar = async ({ usuario }) => {
   const novoUsuario = new Usuario(usuario);
@@ -50,13 +48,7 @@ const login = async ({ email, senha }) => {
   return usuario;
 };
 
-const listarComPaginacao = async ({
-  pageIndex,
-  pageSize,
-  searchTerm,
-  filtros,
-  ...rest
-}) => {
+const listarComPaginacao = async ({ pageIndex, pageSize, searchTerm, filtros, ...rest }) => {
   const schema = Usuario.schema;
   const camposBusca = ["status", "nome", "email", "tipo"];
 

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const BaseOmie = require("../models/BaseOmie");
-const Usuario = require("../models/Usuario");
 // const Banco = require("../models/Banco");
 // const Estado = require("../models/Estado");
 const { Etapa } = require("central-oon-core-backend");
