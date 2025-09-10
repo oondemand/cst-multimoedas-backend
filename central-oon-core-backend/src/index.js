@@ -14,12 +14,16 @@ const registrarAcaoMiddleware = require('./middlewares/registrarAcaoMiddleware')
 const Log = require('./models/Log');
 const ControleAlteracao = require('./models/ControleAlteracao');
 const Importacao = require('./models/Importacao');
+const Lista = require('./models/Lista');
 const controleAlteracaoController = require('./controllers/controleAlteracao');
 const importacaoController = require('./controllers/importacao');
+const listaController = require('./controllers/lista');
 const controleAlteracaoRouter = require('./routers/controleAlteracaoRouter');
 const importacaoRouter = require('./routers/importacaoRouter');
+const listaRouter = require('./routers/listaRouter');
 const ControleAlteracaoService = require('./services/controleAlteracao');
 const ImportacaoService = require('./services/importacao');
+const ListaService = require('./services/lista');
 const { registrarAcao } = require('./services/controleService');
 const { sendErrorResponse } = require('./utils/response');
 const helpers = require('./utils/helpers');
@@ -44,12 +48,16 @@ module.exports = {
     Log,
     ControleAlteracao,
     Importacao,
+    Lista,
     controleAlteracaoController,
     importacaoController,
+    listaController,
     ControleAlteracaoService,
     ImportacaoService,
+    ListaService,
     controleAlteracaoRouter,
     importacaoRouter,
+    listaRouter,
     sendErrorResponse,
     helpers,
     excel,

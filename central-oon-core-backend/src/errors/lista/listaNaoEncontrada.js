@@ -1,8 +1,8 @@
-const GenericError = require("../generic");
+const GenericError = require('../GenericError');
 
 class ListaNaoEncontradaError extends GenericError {
   constructor() {
-    super("Lista não encontrada!", 404);
+    super('Lista não encontrada!', 404);
   }
 }
 

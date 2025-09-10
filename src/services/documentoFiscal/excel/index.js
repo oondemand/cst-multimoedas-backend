@@ -10,7 +10,6 @@ const {
 const { mapImporter } = require("./mapImporter.js");
 const { mapExporter } = require("./mapExporter");
 const Servico = require("../../../models/Servico.js");
-const Lista = require("../../../models/Lista.js");
 const Pessoa = require("../../../models/Pessoa");
 const PessoaService = require("../../pessoa");
 const DocumentoFiscalService = require("../../documentoFiscal");

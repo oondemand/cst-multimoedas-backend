@@ -1,13 +1,8 @@
-const {
-  helpers: { sendResponse },
-} = require("central-oon-core-backend");
-const { registrarAcao } = require("central-oon-core-backend");
-const {
-  ENTIDADES,
-  ACOES,
-  ORIGENS,
-} = require("../../constants/controleAlteracao");
-const ListaService = require("../../services/lista");
+const path = require('path');
+const { sendResponse } = require('../utils/helpers');
+const { registrarAcao } = require('../services/controleService');
+const { ENTIDADES, ACOES, ORIGENS } = require(path.join(process.cwd(), 'src', 'constants', 'controleAlteracao'));
+const ListaService = require('../services/lista');
 
 const createLista = async (req, res) => {
   const lista = await ListaService.create({ codigo: req.body.codigo });
@@ -30,7 +25,7 @@ const addItem = async (req, res) => {
     usuario: req.usuario,
     idRegistro: lista._id,
     dadosAtualizados: lista,
-    origem: req.headers["x-origem"] ?? ORIGENS.API,
+    origem: req.headers['x-origem'] ?? ORIGENS.API,
   });
 
   sendResponse({ res, statusCode: 200, lista });
@@ -40,7 +35,7 @@ const removeItem = async (req, res) => {
   const { codigo, itemId } = req.params;
   const lista = await ListaService.removeItem({ codigo, itemId });
 
-  const entidade = Object.entries(ENTIDADES).find(([key, value]) =>
+  const entidade = Object.entries(ENTIDADES).find(([_, value]) =>
     value.includes(lista.codigo)
   )?.[1];
 
@@ -50,7 +45,7 @@ const removeItem = async (req, res) => {
     usuario: req.usuario,
     idRegistro: lista._id,
     dadosAtualizados: lista,
-    origem: req.headers["x-origem"] ?? ORIGENS.API,
+    origem: req.headers['x-origem'] ?? ORIGENS.API,
   });
 
   sendResponse({ res, statusCode: 200, lista });
@@ -66,7 +61,7 @@ const updateItem = async (req, res) => {
   const { itemId, valor } = req.body;
 
   const lista = await ListaService.atualizarItem({ codigo, itemId, valor });
-  const entidade = Object.entries(ENTIDADES).find(([key, value]) =>
+  const entidade = Object.entries(ENTIDADES).find(([_, value]) =>
     value.includes(lista.codigo)
   )?.[1];
 
@@ -76,7 +71,7 @@ const updateItem = async (req, res) => {
     usuario: req.usuario,
     idRegistro: lista._id,
     dadosAtualizados: lista,
-    origem: req.headers["x-origem"] ?? ORIGENS.API,
+    origem: req.headers['x-origem'] ?? ORIGENS.API,
   });
 
   sendResponse({ res, statusCode: 200, lista });
@@ -98,6 +93,7 @@ const obterCodigos = async (req, res) => {
     codigos,
   });
 };
+
 module.exports = {
   addItem,
   getListas,
