@@ -5,7 +5,14 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 
 // Loads environment variables and returns a configured Express application
-function createApp({ middlewares = [], routers = [] } = {}) {
+//
+// @param {Object} [options]
+// @param {Array} [options.middlewares] - Additional middlewares to load.
+// @param {Array<{path: string, router: import('express').Router}>} [options.routers] - Routers to register.
+// @param {boolean} [options.autoRouters=true] - When true, core routers
+// (controleAlteracao, importacao, lista and etapa) are automatically
+// registered on their default paths.
+function createApp({ middlewares = [], routers = [], autoRouters = true } = {}) {
   dotenv.config();
 
   const app = express();
@@ -20,6 +27,20 @@ function createApp({ middlewares = [], routers = [] } = {}) {
   }
 
   middlewares.forEach((mw) => app.use(mw));
+
+  if (autoRouters) {
+    const controleAlteracaoRouter = require('../routers/controleAlteracaoRouter');
+    const importacaoRouter = require('../routers/importacaoRouter');
+    const listaRouter = require('../routers/listaRouter');
+    const etapaRouter = require('../routers/etapaRouter');
+
+    routers.push(
+      { path: '/registros', router: controleAlteracaoRouter },
+      { path: '/importacoes', router: importacaoRouter },
+      { path: '/listas', router: listaRouter },
+      { path: '/etapas', router: etapaRouter }
+    );
+  }
 
   routers.forEach(({ path = '/', router }) => {
     app.use(path, router);

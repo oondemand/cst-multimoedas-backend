@@ -10,10 +10,6 @@ const {
   GenericError,
   logMiddleware,
   authMiddleware,
-  controleAlteracaoRouter,
-  importacaoRouter,
-  listaRouter,
-  etapaRouter,
 } = require("central-oon-core-backend");
 const Sistema = require("./models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
@@ -23,7 +19,7 @@ const {
 const IntegracaoController = require("./controllers/integracao");
 const MoedaController = require("./controllers/moeda");
 
-const app = createApp();
+const app = createApp({ autoRouters: true });
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -69,7 +65,6 @@ app.use(
 );
 // app.use("/baseomies", require("./routers/baseOmieRouter"));
 // app.use("/aprovacoes", require("./routers/aprovacaoRouter"));
-app.use("/etapas", etapaRouter);
 // app.use("/esteiras", require("./routers/esteiraRouter"));
 
 // app.use("/logs", require("./routers/logRouter"));
@@ -79,12 +74,9 @@ app.use(
   "/documentos-cadastrais",
   require("./routers/documentoCadastralRouter")
 );
-app.use("/registros", controleAlteracaoRouter);
-app.use("/listas", listaRouter);
 // app.use("/estados", require("./routers/estadoRouter"));
 // app.use("/bancos", require("./routers/bancoRouter"));
 app.use("/planejamento", require("./routers/planejamentoRouter"));
-app.use("/importacoes", importacaoRouter);
 app.use("/dashboard", require("./routers/dashboardRouter"));
 app.use("/sistema", require("./routers/sistemaRouter"));
 app.use("/lista-omie", require("./routers/listasOmieRouter"));
