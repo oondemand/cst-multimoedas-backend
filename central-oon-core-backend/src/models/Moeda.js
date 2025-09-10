@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const moedaSchema = new mongoose.Schema(
   {
@@ -6,7 +6,7 @@ const moedaSchema = new mongoose.Schema(
     cotacao: { type: Number, default: 1 },
     requisicao: {
       type: {
-        url: { type: String, default: "" },
+        url: { type: String, default: '' },
         body: { type: mongoose.Schema.Types.Mixed, default: {} },
       },
     },
@@ -14,11 +14,11 @@ const moedaSchema = new mongoose.Schema(
     atualizadoEm: { type: Date, default: new Date() },
     status: {
       type: String,
-      enum: ["ativo", "inativo", "arquivado"],
-      default: "ativo",
+      enum: ['ativo', 'inativo', 'arquivado'],
+      default: 'ativo',
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Moeda", moedaSchema);
+module.exports = mongoose.model('Moeda', moedaSchema);
