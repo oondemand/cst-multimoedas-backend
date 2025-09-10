@@ -1,6 +1,6 @@
 const path = require('path');
 const ControleAlteracaoService = require('../services/controleAlteracao');
-const { sendPaginatedResponse } = require(path.join(process.cwd(), 'src', 'utils', 'helpers'));
+const { sendPaginatedResponse } = require("../utils/helpers");
 
 const listarTodosRegistros = async (req, res) => {
   const {

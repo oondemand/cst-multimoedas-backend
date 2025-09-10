@@ -1,7 +1,7 @@
 const path = require('path');
 const ControleAlteracao = require('../../models/ControleAlteracao');
-const FiltersUtils = require(path.join(process.cwd(), 'src', 'utils', 'pagination', 'filter'));
-const PaginationUtils = require(path.join(process.cwd(), 'src', 'utils', 'pagination'));
+const FiltersUtils = require('../../utils/pagination/filter');
+const PaginationUtils = require('../../utils/pagination');
 const Usuario = require(path.join(process.cwd(), 'src', 'models', 'Usuario'));
 
 const buscarIdsUsuariosFiltrados = async ({ nome, searchTerm }) => {
