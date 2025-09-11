@@ -10,6 +10,7 @@ const {
   GenericError,
   logMiddleware,
   authMiddleware,
+  authRouter,
 } = require("central-oon-core-backend");
 const {
   Sistema,
@@ -24,7 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", require("./routers/statusRouter"));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use("/auth", require("./routers/authRouter"));
+app.use("/auth", authRouter);
 app.use("/webhooks/", require("./routers/webhookRouter"));
 app.use("/ativacao", require("./routers/seedRouter"));
 app.use("/tipo-acesso", require("./routers/tipoAcessoRouter"));

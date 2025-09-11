@@ -5,6 +5,7 @@ const etapaRouter = require('./etapaRouter');
 const usuarioRouter = require('./usuarioRouter');
 const sistemaRouter = require('./sistemaRouter');
 const moedaRouter = require('./moedaRouter');
+const authRouter = require('./authRouter');
 
 module.exports = {
   controleAlteracaoRouter,
@@ -14,4 +15,5 @@ module.exports = {
   usuarioRouter,
   sistemaRouter,
   moedaRouter,
+  authRouter,
 };
