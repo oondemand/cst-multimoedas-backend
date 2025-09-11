@@ -5,7 +5,7 @@ const { processarIntegracao } = require("../../../queue/defaultHandler.js");
 const {
   fileHandler: { compactFile },
 } = require("central-oon-core-backend");
-const Integracao = require("../../../../models/Integracao.js");
+const Integracao = require("../../../../models/Integracao");
 
 const handler = async (integracao) => {
   return processarIntegracao({
