@@ -20,7 +20,7 @@ const Usuario = require('./models/Usuario');
 const Sistema = require('./models/Sistema');
 const Moeda = require('./models/Moeda');
 const { usuarioController, sistemaController, moedaController } = require('./controllers');
-const { usuarioRouter, sistemaRouter, moedaRouter } = require('./routers');
+const { usuarioRouter, sistemaRouter, moedaRouter, authRouter } = require('./routers');
 const ControleAlteracaoService = require('./services/controleAlteracao');
 const ImportacaoService = require('./services/importacao');
 const ListaService = require('./services/lista');
@@ -71,6 +71,7 @@ module.exports = {
     usuarioRouter,
     sistemaRouter,
     moedaRouter,
+    authRouter,
     sendErrorResponse,
     helpers,
     excel,

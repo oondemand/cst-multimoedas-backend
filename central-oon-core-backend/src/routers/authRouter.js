@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { usuarioController: UsuarioController } = require("central-oon-core-backend");
-const { authMiddleware } = require("central-oon-core-backend");
+const UsuarioController = require("../controllers/usuario");
+const authMiddleware = require("../middlewares/authMiddleware");
 const {
-  helpers: { asyncHandler },
-} = require("central-oon-core-backend");
-const { Sistema } = require("central-oon-core-backend");
+  asyncHandler,
+} = require("../utils/helpers");
+const Sistema = require("../models/Sistema");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
 
 router.post("/login", asyncHandler(UsuarioController.loginUsuario));
