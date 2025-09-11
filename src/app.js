@@ -11,13 +11,21 @@ const {
   logMiddleware,
   authMiddleware,
   authRouter,
-} = require("central-oon-core-backend");
-const {
-  Sistema,
+  registrarAcaoMiddleware,
   helpers: { asyncHandler },
+  createIntegracaoRouter,
+  Sistema,
 } = require("central-oon-core-backend");
 const getOrigin = async () => (await Sistema.findOne())?.appKey;
 const IntegracaoController = require("./controllers/integracao");
+const { ACOES, ENTIDADES } = require("./constants/controleAlteracao");
+
+const integracaoRouter = createIntegracaoRouter({
+  controller: IntegracaoController,
+  registrarAcaoMiddleware,
+  ACOES,
+  ENTIDADES,
+});
 
 const app = createApp({ autoRouters: true });
 
@@ -74,7 +82,7 @@ app.use("/planejamento", require("./routers/planejamentoRouter"));
 app.use("/dashboard", require("./routers/dashboardRouter"));
 app.use("/lista-omie", require("./routers/listasOmieRouter"));
 app.use("/assistentes", require("./routers/assistenteRouter"));
-app.use("/integracao", require("./routers/integracaoRouter"));
+app.use("/integracao", integracaoRouter);
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 app.use(errorMiddleware);
 
