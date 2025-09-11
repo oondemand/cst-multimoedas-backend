@@ -30,8 +30,6 @@ const integracaoRouter = createIntegracaoRouter({
 const app = createApp({ autoRouters: true });
 
 app.use(express.static(path.join(__dirname, "public")));
-
-app.use("/", require("./routers/statusRouter"));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", authRouter);
 app.use("/webhooks/", require("./routers/webhookRouter"));
