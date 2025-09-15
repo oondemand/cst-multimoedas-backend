@@ -1,8 +1,10 @@
-const queue = ({ handler, limit = 1, next, onError }) => {
+const defaultHandler = require('./defaultHandler');
+
+const createQueue = ({ handler, limit = 1, next, onError }) => {
   let activeTasks = 0;
   let queueRunning = false;
 
-  if (!next) throw new Error("Função next não implementada!");
+  if (!next) throw new Error('Função next não implementada!');
 
   const runNext = async () => {
     if (!queueRunning || activeTasks >= limit) return;
@@ -20,7 +22,7 @@ const queue = ({ handler, limit = 1, next, onError }) => {
       await handler(item);
     } catch (error) {
       onError?.(error);
-      console.error("🔴 [QUEUE ERROR]", error);
+      console.error('🔴 [QUEUE ERROR]', error);
     } finally {
       activeTasks--;
       runNext();
@@ -38,4 +40,7 @@ const queue = ({ handler, limit = 1, next, onError }) => {
   return { start };
 };
 
-module.exports = queue;
+module.exports = {
+  createQueue,
+  defaultHandler,
+};

@@ -1,7 +1,8 @@
 const AnexoService = require("../../../omie/anexosService.js");
 const ContaPagar = require("../../../../models/ContaPagar.js");
 const BaseOmie = require("../../../../models/BaseOmie.js");
-const { processarIntegracao } = require("../../../queue/defaultHandler.js");
+const { QueueService } = require("central-oon-core-backend");
+const { processarIntegracao } = QueueService.defaultHandler;
 const {
   fileHandler: { compactFile },
 } = require("central-oon-core-backend");
