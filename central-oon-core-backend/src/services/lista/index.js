@@ -1,4 +1,7 @@
 const Lista = require('../../models/Lista');
+const path = require('path');
+const ListaOmie = require(path.join(process.cwd(), 'src', 'models', 'ListaOmie'));
+const { LISTAS } = require(path.join(process.cwd(), 'src', 'constants', 'listas'));
 const GenericError = require('../../errors/GenericError');
 const ListaNaoEncontradaError = require('../../errors/lista/listaNaoEncontrada');
 const { validarMoedaExistente } = require('./validations');
@@ -68,7 +71,11 @@ const atualizarItem = async ({ codigo, itemId, valor }) => {
 };
 
 const listarCodigoDeListas = async () => {
-  return await Lista.distinct('codigo');
+  const codigos = await Lista.distinct('codigo');
+  const codigosOmie = await ListaOmie.distinct('codigo');
+  return Array.from(
+    new Set([...(LISTAS || []), ...codigos, ...codigosOmie])
+  );
 };
 
 module.exports = {
