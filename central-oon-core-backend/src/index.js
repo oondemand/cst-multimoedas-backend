@@ -28,6 +28,7 @@ const {
   moedaRouter,
   authRouter,
   createIntegracaoRouter,
+    statusRouter,
 } = require('./routers');
 const ControleAlteracaoService = require('./services/controleAlteracao');
 const ImportacaoService = require('./services/importacao');
@@ -83,6 +84,7 @@ module.exports = {
     moedaRouter,
     authRouter,
     createIntegracaoRouter,
+    statusRouter,
     sendErrorResponse,
     helpers,
     excel,

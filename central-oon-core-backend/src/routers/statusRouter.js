@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", (req, res) => {
   const dbState = mongoose.connection.readyState;
   const status = {
     0: "Desconectado",
