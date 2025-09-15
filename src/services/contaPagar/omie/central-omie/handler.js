@@ -1,7 +1,8 @@
 const { mapExporter } = require("../mapExporter.js");
 const ClienteService = require("../../../omie/clienteService.js");
 const BaseOmie = require("../../../../models/BaseOmie.js");
-const { processarIntegracao } = require("../../../queue/defaultHandler.js");
+const { QueueService } = require("central-oon-core-backend");
+const { processarIntegracao } = QueueService.defaultHandler;
 const ServicoTomadoTicket = require("../../../../models/ServicoTomadoTicket.js");
 const PessoaSync = require("../../../pessoa/omie");
 const ContaPagarService = require("../../../omie/contaPagarService.js");

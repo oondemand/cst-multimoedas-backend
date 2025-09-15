@@ -1,9 +1,9 @@
 const Integracao = require("../../../../models/Integracao");
 const IntegracaoService = require("../../../integracao/");
-const Queue = require("../../../queue/index.js");
+const { QueueService } = require("central-oon-core-backend");
 const { handler } = require("./handler.js");
 
-const queue = Queue({
+const queue = QueueService.createQueue({
   handler,
   next: () =>
     IntegracaoService.buscarTaskAtiva({

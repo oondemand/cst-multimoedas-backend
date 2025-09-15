@@ -3,7 +3,8 @@ const ClienteService = require("../../../omie/clienteService.js");
 const Pessoa = require("../../../../models/Pessoa");
 const BaseOmie = require("../../../../models/BaseOmie.js");
 const { randomUUID } = require("crypto");
-const { processarIntegracao } = require("../../../queue/defaultHandler.js");
+const { QueueService } = require("central-oon-core-backend");
+const { processarIntegracao } = QueueService.defaultHandler;
 
 const handler = async (integracao) => {
   return processarIntegracao({
