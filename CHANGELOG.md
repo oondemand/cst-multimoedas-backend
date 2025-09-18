@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.13 (2025-09-18)
+
+### 🐛 Bug Fixes
+
+* fix some issues ([90bb669](https://github.com/oondemand/cst-multimoedas-backend/commit/90bb6690dc245c080201ccc4b99f3eac0a2d1d00))
+
 ## 0.0.12 (2025-09-02)
 
 ## 0.0.11 (2025-08-29)
