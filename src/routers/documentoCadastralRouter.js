@@ -3,7 +3,7 @@ const DocumentoCadastralController = require("../controllers/documentoCadastral"
 
 const router = express.Router();
 
-const { uploadExcel, uploadPDF } = require("../config/multer");
+const { uploadExcel, uploadPDFAndImage } = require("../config/multer");
 const {
   registrarAcaoMiddleware,
 } = require("../middlewares/registrarAcaoMiddleware");
@@ -55,7 +55,7 @@ router.post(
 
 router.post(
   "/anexar-arquivo/:documentoCadastralId",
-  uploadPDF.single("file"),
+  uploadPDFAndImage.single("file"),
   asyncHandler(DocumentoCadastralController.anexarArquivo)
 );
 
