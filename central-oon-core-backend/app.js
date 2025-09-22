@@ -110,7 +110,6 @@ const createApp = ({
   // app.use("/bancos", require("../src/routers/bancoRouter"));
   app.use("/importacoes", require("../src/routers/importacaoRouter"));
   app.use("/sistema", require("../src/routers/sistemaRouter"));
-  app.use("/lista-omie", require("../src/routers/listasOmieRouter"));
   app.use("/assistentes", require("../src/routers/assistenteRouter"));
   app.use("/integracao", require("../src/routers/integracaoRouter"));
   app.use("/moedas", require("../src/routers/moedaRouter"));
