@@ -4,9 +4,9 @@ const { ListaOmieController } = require("../controllers/listaOmieController");
 
 const {
   registrarAcaoMiddleware,
-} = require("../middlewares/registrarAcaoMiddleware");
+} = require("../../packages/central-oon-core-backend/src/middlewares/registrarAcaoMiddleware");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../packages/central-oon-core-backend/src/utils/helpers");
 
 router.post("/", asyncHandler(ListaOmieController.create));
 router.get("/", asyncHandler(ListaOmieController.listAll));

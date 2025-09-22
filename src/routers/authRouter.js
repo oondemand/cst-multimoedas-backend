@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const UsuarioController = require("../controllers/usuario");
-const authMiddleware = require("../middlewares/authMiddleware");
-const { asyncHandler } = require("../utils/helpers");
+const authMiddleware = require("../../packages/central-oon-core-backend/src/middlewares/authMiddleware");
+const { asyncHandler } = require("../../packages/central-oon-core-backend/src/utils/helpers");
 
 router.post("/login", asyncHandler(UsuarioController.loginUsuario));
 router.get(

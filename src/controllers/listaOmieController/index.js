@@ -1,5 +1,5 @@
 const ListaOmieService = require("../../services/listaOmie");
-const { sendResponse } = require("../../utils/helpers");
+const { sendResponse } = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 
 const syncOmie = async (req, res) => {
   const lista = await ListaOmieService.syncWithOmie({ id: req.params.id });

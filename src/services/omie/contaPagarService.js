@@ -1,7 +1,7 @@
 const crypto = require("crypto");
-const apiOmie = require("../../config/apiOmie");
+const apiOmie = require("../../../packages/central-oon-core-backend/src/config/apiOmie");
 
-const { formatarDataOmie } = require("../../utils/dateUtils");
+const { formatarDataOmie } = require("../../../packages/central-oon-core-backend/src/utils/dateUtils");
 
 const criarConta = ({
   numeroDocumento,

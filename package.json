@@ -2,12 +2,12 @@
   "name": "cst-multimoedas-backend",
   "version": "0.0.13",
   "description": "Backend para cst-multimoedas",
-  "main": "src/server.js",
+  "main": "apps/multimoedas/src/index.js",
   "scripts": {
     "release": "release-it",
     "format": "prettier --write .",
-    "start": "node src/server.js",
-    "dev": "cross-env NODE_ENV=development nodemon src/server.js"
+    "start": "node apps/multimoedas/src/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon apps/multimoedas/src/index.js"
   },
   "keywords": [],
   "author": "",

@@ -6,13 +6,13 @@
 
 const DocumentoCadastralService = require("../../services/documentoCadastral");
 const DocumentoCadastralExcel = require("../../services/documentoCadastral/excel");
-const { arrayToExcelBuffer } = require("../../utils/excel");
+const { arrayToExcelBuffer } = require("../../../packages/central-oon-core-backend/src/utils/excel");
 const ImportacaoService = require("../../services/importacao");
 
 // const DocumentoCadastral = require("../../models/DocumentoCadastral");
 
-// const filtersUtils = require("../../utils/filter");
-// const { criarNomePersonalizado } = require("../../utils/formatters");
+// const filtersUtils = require("../../../packages/central-oon-core-backend/src/utils/filter");
+// const { criarNomePersonalizado } = require("../../../packages/central-oon-core-backend/src/utils/formatters");
 
 // const { registrarAcao } = require("../../services/controleService");
 // const {
@@ -25,7 +25,7 @@ const {
   sendPaginatedResponse,
   sendResponse,
   // sendErrorResponse,
-} = require("../../utils/helpers");
+} = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 
 const criar = async (req, res) => {
   const documentoCadastral = await DocumentoCadastralService.criar({

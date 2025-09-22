@@ -3,12 +3,12 @@ const DocumentoCadastralController = require("../controllers/documentoCadastral"
 
 const router = express.Router();
 
-const { uploadExcel, uploadPDFAndImage } = require("../config/multer");
+const { uploadExcel, uploadPDFAndImage } = require("../../packages/central-oon-core-backend/src/config/multer");
 const {
   registrarAcaoMiddleware,
-} = require("../middlewares/registrarAcaoMiddleware");
+} = require("../../packages/central-oon-core-backend/src/middlewares/registrarAcaoMiddleware");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../packages/central-oon-core-backend/src/utils/helpers");
 
 router.get("/", asyncHandler(DocumentoCadastralController.listar));
 router.get("/exportar", asyncHandler(DocumentoCadastralController.exportar));

@@ -1,7 +1,7 @@
 const sgMail = require("@sendgrid/mail");
 const { format } = require("date-fns");
-const Sistema = require("../models/Sistema");
-const { conviteTemplate } = require("../constants/template");
+const Sistema = require("../../../../src/models/Sistema");
+const { conviteTemplate } = require("../../../../src/constants/template");
 
 const enviarEmail = async (emailTo, assunto, corpo, anexos = []) => {
   const config = await Sistema.findOne();

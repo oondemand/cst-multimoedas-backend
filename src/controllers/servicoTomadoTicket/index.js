@@ -2,7 +2,7 @@ const {
   sendResponse,
   sendErrorResponse,
   sendPaginatedResponse,
-} = require("../../utils/helpers");
+} = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 
 const ServicoTomadoTicketService = require("../../services/servicoTomadoTicket");
 const ServicoService = require("../../services/servico");

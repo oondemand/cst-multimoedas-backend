@@ -1,6 +1,6 @@
 const Moeda = require("../../models/Moeda");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const FiltersUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination/filter");
+const PaginationUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination");
 const CotacaoService = require("./bacen");
 
 const listarComPaginacao = async ({

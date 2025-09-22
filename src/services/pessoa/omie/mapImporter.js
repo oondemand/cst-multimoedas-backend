@@ -1,5 +1,5 @@
 const { LISTA_PAISES_OMIE } = require("../../../constants/omie/paises");
-const { findCaracteristica } = require("../../../utils/caracteristicas");
+const { findCaracteristica } = require("../../../../packages/central-oon-core-backend/src/utils/caracteristicas");
 
 const mapImporter = ({ cliente }) => {
   const pais = LISTA_PAISES_OMIE.find(

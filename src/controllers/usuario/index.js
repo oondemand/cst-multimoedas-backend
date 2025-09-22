@@ -1,14 +1,14 @@
 const UsuarioService = require("../../services/usuario");
 const Usuario = require("../../models/Usuario");
 const bcrypt = require("bcryptjs");
-const emailUtils = require("../../utils/emailUtils");
+const emailUtils = require("../../../packages/central-oon-core-backend/src/utils/emailUtils");
 const jwt = require("jsonwebtoken");
 
 const {
   sendErrorResponse,
   sendPaginatedResponse,
   sendResponse,
-} = require("../../utils/helpers");
+} = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 
 const criarUsuario = async (req, res) => {
   const usuario = await UsuarioService.criar({ usuario: req.body });

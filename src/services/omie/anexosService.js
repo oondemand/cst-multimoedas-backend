@@ -1,5 +1,5 @@
-const { compactFile } = require("../../utils/fileHandler");
-const apiOmie = require("../../config/apiOmie");
+const { compactFile } = require("../../../packages/central-oon-core-backend/src/utils/fileHandler");
+const apiOmie = require("../../../packages/central-oon-core-backend/src/config/apiOmie");
 
 const incluir = async (
   {

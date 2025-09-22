@@ -1,4 +1,4 @@
-const apiOmie = require("../../config/apiOmie");
+const apiOmie = require("../../../packages/central-oon-core-backend/src/config/apiOmie");
 
 function filterFields(sourceObj, fieldTemplate) {
   const result = {};

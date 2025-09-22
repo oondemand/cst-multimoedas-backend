@@ -1,14 +1,14 @@
 const ServicoTomadoTicket = require("../../models/ServicoTomadoTicket");
 const Servico = require("../../models/Servico");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const FiltersUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination/filter");
+const PaginationUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination");
 const { aprovar } = require("./aprovar");
 const { reprovar } = require("./reprovar");
 const TicketNaoEncontradoError = require("../errors/ticket/ticketNaoEncontrado");
 const GenericError = require("../errors/generic");
 const Arquivo = require("../../models/Arquivo");
 const ServicoNaoEncontradoError = require("../errors/servico/servicoNaoEncontrado");
-const { criarNomePersonalizado } = require("../../utils/formatters");
+const { criarNomePersonalizado } = require("../../../packages/central-oon-core-backend/src/utils/formatters");
 const ArquivoNaoEncontradoError = require("../errors/arquivo/arquivoNaoEncontradoError");
 const EtapaService = require("../etapa");
 const DocumentoFiscal = require("../../models/DocumentoFiscal");

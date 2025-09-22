@@ -1,4 +1,4 @@
-const Log = require("../models/Log");
+const Log = require("../../../../src/models/Log");
 
 const logMiddleware = async (req, res, next) => {
   if (req.method === "GET") {

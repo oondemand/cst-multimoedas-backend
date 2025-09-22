@@ -1,5 +1,5 @@
 const IntegracaoService = require("../../services/integracao");
-const Helpers = require("../../utils/helpers");
+const Helpers = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 const PessoaSync = require("../../services/pessoa/omie");
 const ContaPagarSync = require("../../services/contaPagar/omie");
 const ArquivosSync = require("../../services/arquivo/omie");
