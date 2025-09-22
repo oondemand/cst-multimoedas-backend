@@ -8,6 +8,7 @@ const documentoFiscalRouter = require("./routers/documentoFiscalRouter");
 const documentoCadastralRouter = require("./routers/documentoCadastralRouter");
 const planejamentoRouter = require("./routers/planejamentoRouter");
 const dashboardRouter = require("./routers/dashboardRouter");
+const listasOmieRouter = require("./routers/listasOmieRouter");
 
 const registerPublicRoutes = (app) => {
   app.use("/webhooks/", webhookRouter);
@@ -21,6 +22,7 @@ const registerPrivateRoutes = (app) => {
   app.use("/documentos-cadastrais", documentoCadastralRouter,);
   app.use("/planejamento", planejamentoRouter);
   app.use("/dashboard", dashboardRouter);
+  app.use("/listas-omie", listasOmieRouter);
 };
 
 module.exports = createApp({

@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const UsuarioController = require("../controllers/usuario");
-const authMiddleware = require("../middlewares/authMiddleware");
+const {
+  middlewares: { authMiddleware },
+} = require("../../central-oon-core-backend");
 const { asyncHandler } = require("../utils/helpers");
 
 router.post("/login", asyncHandler(UsuarioController.loginUsuario));

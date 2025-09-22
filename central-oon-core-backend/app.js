@@ -10,9 +10,11 @@ const swaggerDocument = require("../src/docs/swagger");
 
 dotenv.config();
 
-const authMiddleware = require("../src/middlewares/authMiddleware");
-const logMiddleware = require("../src/middlewares/logMiddleware");
-const errorMiddleware = require("../src/middlewares/errorMiddleware");
+const {
+  authMiddleware,
+  logMiddleware,
+  errorMiddleware,
+} = require("./middlewares");
 const { asyncHandler } = require("../src/utils/helpers");
 const IntegracaoController = require("../src/controllers/integracao");
 const MoedaController = require("../src/controllers/moeda");
@@ -108,7 +110,6 @@ const createApp = ({
   // app.use("/bancos", require("../src/routers/bancoRouter"));
   app.use("/importacoes", require("../src/routers/importacaoRouter"));
   app.use("/sistema", require("../src/routers/sistemaRouter"));
-  app.use("/lista-omie", require("../src/routers/listasOmieRouter"));
   app.use("/assistentes", require("../src/routers/assistenteRouter"));
   app.use("/integracao", require("../src/routers/integracaoRouter"));
   app.use("/moedas", require("../src/routers/moedaRouter"));

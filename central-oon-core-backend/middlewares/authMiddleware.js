@@ -1,6 +1,6 @@
 const axios = require("axios");
-const Sistema = require("../models/Sistema");
-const Helpers = require("../utils/helpers");
+const Sistema = require("../../src/models/Sistema");
+const Helpers = require("../../src/utils/helpers");
 
 const authMiddleware = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
