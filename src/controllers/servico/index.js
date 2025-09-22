@@ -1,7 +1,7 @@
-const { sendPaginatedResponse, sendResponse } = require("../../utils/helpers");
+const { sendPaginatedResponse, sendResponse } = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 const ServicoService = require("../../services/servico");
 const ServicoExcel = require("../../services/servico/excel");
-const { arrayToExcelBuffer } = require("../../utils/excel");
+const { arrayToExcelBuffer } = require("../../../packages/central-oon-core-backend/src/utils/excel");
 const ImportacaoService = require("../../services/importacao");
 
 const criar = async (req, res) => {

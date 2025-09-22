@@ -1,6 +1,6 @@
 const multer = require("multer");
 const helpers = require("../utils/helpers");
-const GenericError = require("../services/errors/generic");
+const GenericError = require("../../../../src/services/errors/generic");
 
 const errorMiddleware = (error, _, res, next) => {
   if (!error) return next();

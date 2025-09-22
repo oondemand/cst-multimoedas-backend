@@ -3,12 +3,12 @@ const DocumentoFiscalController = require("../controllers/documentoFiscal");
 
 const router = express.Router();
 
-const { uploadExcel, uploadPDFAndImage } = require("../config/multer");
+const { uploadExcel, uploadPDFAndImage } = require("../../packages/central-oon-core-backend/src/config/multer");
 const {
   registrarAcaoMiddleware,
-} = require("../middlewares/registrarAcaoMiddleware");
+} = require("../../packages/central-oon-core-backend/src/middlewares/registrarAcaoMiddleware");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../packages/central-oon-core-backend/src/utils/helpers");
 
 router.get("/", asyncHandler(DocumentoFiscalController.listar));
 router.get("/exportar", asyncHandler(DocumentoFiscalController.exportar));

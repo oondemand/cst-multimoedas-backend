@@ -1,5 +1,5 @@
 const axios = require("axios");
-const Sistema = require("../models/Sistema");
+const Sistema = require("../../../../src/models/Sistema");
 const Helpers = require("../utils/helpers");
 
 const authMiddleware = async (req, res, next) => {

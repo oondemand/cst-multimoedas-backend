@@ -2,10 +2,10 @@ const express = require("express");
 const UsuarioController = require("../controllers/usuario");
 const {
   registrarAcaoMiddleware,
-} = require("../middlewares/registrarAcaoMiddleware");
+} = require("../../packages/central-oon-core-backend/src/middlewares/registrarAcaoMiddleware");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 const router = express.Router();
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../packages/central-oon-core-backend/src/utils/helpers");
 
 router.get("/", asyncHandler(UsuarioController.listarUsuarios));
 

@@ -1,5 +1,5 @@
 const ContaPagar = require("../../../models/ContaPagar");
-const { formatarDataOmie } = require("../../../utils/dateUtils");
+const { formatarDataOmie } = require("../../../../packages/central-oon-core-backend/src/utils/dateUtils");
 
 const mapExporter = ({ contaPagar }) => {
   try {

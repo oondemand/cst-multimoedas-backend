@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ListaController = require("../controllers/lista");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../packages/central-oon-core-backend/src/utils/helpers");
 
 router.post("/", asyncHandler(ListaController.createLista));
 router.get("/", asyncHandler(ListaController.getListas));

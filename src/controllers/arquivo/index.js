@@ -1,4 +1,4 @@
-const { sendResponse } = require("../../utils/helpers");
+const { sendResponse } = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 const ArquivoService = require("../../services/arquivo");
 
 const obterArquivoPorId = async (req, res) => {

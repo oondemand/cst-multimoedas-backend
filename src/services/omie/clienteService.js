@@ -1,4 +1,4 @@
-const apiOmie = require("../../config/apiOmie");
+const apiOmie = require("../../../packages/central-oon-core-backend/src/config/apiOmie");
 
 const cache = {};
 const consultar = async (appKey, appSecret, codCliente) => {

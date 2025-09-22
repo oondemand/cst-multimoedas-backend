@@ -1,4 +1,4 @@
-const { sendResponse } = require("../../utils/helpers");
+const { sendResponse } = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 const { registrarAcao } = require("../../services/controleService");
 const {
   ENTIDADES,

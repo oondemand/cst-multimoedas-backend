@@ -1,5 +1,5 @@
 const ControleAlteracaoService = require("../../services/controleAlteracao");
-const { sendPaginatedResponse } = require("../../utils/helpers");
+const { sendPaginatedResponse } = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 
 const listarTodosRegistros = async (req, res) => {
   const {

@@ -1,5 +1,5 @@
 const EtapaService = require("../../services/etapa");
-const { sendResponse, sendPaginatedResponse } = require("../../utils/helpers");
+const { sendResponse, sendPaginatedResponse } = require("../../../packages/central-oon-core-backend/src/utils/helpers");
 
 const criarEtapa = async (req, res) => {
   const etapa = await EtapaService.criar({ etapa: req.body });

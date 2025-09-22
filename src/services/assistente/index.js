@@ -1,6 +1,6 @@
 const Assistente = require("../../models/Assistente");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const FiltersUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination/filter");
+const PaginationUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination");
 const AssistenteNaoEncontradoError = require("../errors/assistente/assistenteNaoEncontrado");
 
 const criar = async ({ assistente }) => {

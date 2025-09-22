@@ -1,5 +1,5 @@
 const Importacao = require("../../models/Importacao");
-const PaginationUtils = require("../../utils/pagination");
+const PaginationUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination");
 const GenericError = require("../errors/generic");
 
 const criar = async ({ tipo, arquivo }) => {

@@ -1,5 +1,5 @@
-const { ORIGENS } = require("../constants/controleAlteracao");
-const { registrarAcao } = require("../services/controleService");
+const { ORIGENS } = require("../../../../src/constants/controleAlteracao");
+const { registrarAcao } = require("../../../../src/services/controleService");
 
 function registrarAcaoMiddleware({ entidade, acao }) {
   return async (req, res, next) => {

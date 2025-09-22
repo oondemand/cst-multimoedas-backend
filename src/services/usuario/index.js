@@ -2,8 +2,8 @@ const Usuario = require("../../models/Usuario");
 const CredenciaisInvalidasError = require("../errors/usuario/credenciaisInvalidas");
 const UsuarioNaoEncontradoError = require("../errors/usuario/usuarioNaoEncontrado");
 const bcrypt = require("bcryptjs");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const FiltersUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination/filter");
+const PaginationUtils = require("../../../packages/central-oon-core-backend/src/utils/pagination");
 
 const criar = async ({ usuario }) => {
   const novoUsuario = new Usuario(usuario);

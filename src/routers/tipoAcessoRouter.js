@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Helpers = require("../utils/helpers");
+const Helpers = require("../../packages/central-oon-core-backend/src/utils/helpers");
 
 router.get(
   "/",

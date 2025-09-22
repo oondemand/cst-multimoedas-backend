@@ -1,8 +1,8 @@
 const PessoaService = require("../../services/pessoa");
 const PessoaExcel = require("../../services/pessoa/excel");
 const ImportacaoService = require("../../services/importacao");
-const { sendPaginatedResponse, sendResponse } = require("../../utils/helpers");
-const { arrayToExcelBuffer, excelToJson } = require("../../utils/excel");
+const { sendPaginatedResponse, sendResponse } = require("../../../packages/central-oon-core-backend/src/utils/helpers");
+const { arrayToExcelBuffer, excelToJson } = require("../../../packages/central-oon-core-backend/src/utils/excel");
 
 const criar = async (req, res) => {
   const pessoa = await PessoaService.criar({ pessoa: req.body });
