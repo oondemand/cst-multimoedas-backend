@@ -28,31 +28,6 @@ const DEFAULT_ASSETS_DIR = path.join(
 );
 const DEFAULT_UPLOADS_DIR = path.join(__dirname, "..", "uploads");
 
-const registerPublicAssets = (app, publicDir) => {
-  if (!publicDir) {
-    return;
-  }
-
-  app.use(express.static(publicDir));
-};
-
-const registerImageRoute = (app, assetsDir) => {
-  if (!assetsDir) {
-    return;
-  }
-
-  app.get("/image/:filename", (req, res) => {
-    const filename = req.params.filename;
-    const imagePath = path.join(assetsDir, filename);
-
-    if (fs.existsSync(imagePath)) {
-      res.sendFile(imagePath);
-    } else {
-      res.status(404).send("Imagem não encontrada");
-    }
-  });
-};
-
 const createApp = ({
   corsOptions = { origin: "*" },
   helmetOptions,
@@ -60,6 +35,8 @@ const createApp = ({
   publicDir = DEFAULT_PUBLIC_DIR,
   assetsDir = DEFAULT_ASSETS_DIR,
   uploadsDir = DEFAULT_UPLOADS_DIR,
+  registerPublicRoutes,
+  registerPrivateRoutes,
 } = {}) => {
   const app = express();
 
@@ -68,7 +45,9 @@ const createApp = ({
   app.use(express.json({ limit: requestLimit }));
   app.use(express.urlencoded({ extended: true, limit: requestLimit }));
 
-  registerPublicAssets(app, publicDir);
+  if (publicDir) {
+    app.use(express.static(publicDir));
+  }
 
   if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
@@ -77,9 +56,12 @@ const createApp = ({
   app.use("/", require("../src/routers/statusRouter"));
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use("/auth", require("../src/routers/authRouter"));
-  app.use("/webhooks/", require("../src/routers/webhookRouter"));
   app.use("/ativacao", require("../src/routers/seedRouter"));
   app.use("/tipo-acesso", require("../src/routers/tipoAcessoRouter"));
+
+  if (typeof registerPublicRoutes === "function") {
+    registerPublicRoutes(app);
+  }
 
   app.use(
     "/integracao/processar/ativas",
@@ -96,45 +78,44 @@ const createApp = ({
     asyncHandler(MoedaController.atualizarCotacao),
   );
 
-  registerImageRoute(app, assetsDir);
+  if (assetsDir) {
+    app.get("/image/:filename", (req, res) => {
+      const filename = req.params.filename;
+      const imagePath = path.join(assetsDir, filename);
+
+      if (fs.existsSync(imagePath)) {
+        res.sendFile(imagePath);
+      } else {
+        res.status(404).send("Imagem não encontrada");
+      }
+    });
+  }
 
   app.use(authMiddleware);
   app.use(logMiddleware);
 
   app.use("/usuarios", require("../src/routers/usuarioRouter"));
-  app.use("/pessoas", require("../src/routers/pessoaRouter"));
   app.use("/arquivos", require("../src/routers/arquivoRouter"));
-  app.use(
-    "/servicos-tomados/tickets",
-    require("../src/routers/servicoTomadoTicketRouter"),
-  );
   // app.use("/baseomies", require("../src/routers/baseOmieRouter"));
   // app.use("/aprovacoes", require("../src/routers/aprovacaoRouter"));
   app.use("/etapas", require("../src/routers/etapaRouter"));
   // app.use("/esteiras", require("../src/routers/esteiraRouter"));
 
   // app.use("/logs", require("../src/routers/logRouter"));
-  app.use("/servicos", require("../src/routers/servicoRouter"));
-  app.use(
-    "/documentos-fiscais",
-    require("../src/routers/documentoFiscalRouter"),
-  );
-  app.use(
-    "/documentos-cadastrais",
-    require("../src/routers/documentoCadastralRouter"),
-  );
   app.use("/registros", require("../src/routers/controleAlteracao"));
   app.use("/listas", require("../src/routers/listaRouter"));
   // app.use("/estados", require("../src/routers/estadoRouter"));
   // app.use("/bancos", require("../src/routers/bancoRouter"));
-  app.use("/planejamento", require("../src/routers/planejamentoRouter"));
   app.use("/importacoes", require("../src/routers/importacaoRouter"));
-  app.use("/dashboard", require("../src/routers/dashboardRouter"));
   app.use("/sistema", require("../src/routers/sistemaRouter"));
   app.use("/lista-omie", require("../src/routers/listasOmieRouter"));
   app.use("/assistentes", require("../src/routers/assistenteRouter"));
   app.use("/integracao", require("../src/routers/integracaoRouter"));
   app.use("/moedas", require("../src/routers/moedaRouter"));
+
+  if (typeof registerPrivateRoutes === "function") {
+    registerPrivateRoutes(app);
+  }
 
   if (uploadsDir) {
     app.use("/uploads", express.static(uploadsDir));
