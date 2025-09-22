@@ -1,0 +1,7 @@
+{
+  "name": "central-oon-core-backend",
+  "version": "0.0.1",
+  "description": "Core abstractions for the Central OON backend application.",
+  "main": "index.js",
+  "license": "ISC"
+}
