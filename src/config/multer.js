@@ -18,15 +18,16 @@ const uploadExcel = multer({
   limits: { fileSize: 20 * 1024 * 1024 }, // Limite de 20MB
 });
 
-const uploadPDF = multer({
+const uploadPDFAndImage = multer({
   storage: multer.memoryStorage(),
   fileFilter: (req, file, cb) => {
-    const tipoPDF = "application/pdf";
-
-    if (file.mimetype === tipoPDF) {
+    if (
+      file.mimetype === "application/pdf" ||
+      file.mimetype.startsWith("image/")
+    ) {
       cb(null, true);
     } else {
-      cb(new Error("Apenas arquivos PDF são permitidos"), false);
+      cb(new Error("Apenas arquivos PDF ou imagens são permitidos"), false);
     }
   },
   limits: { fileSize: 2 * 1024 * 1024 }, // Limite de 2MB
@@ -34,5 +35,5 @@ const uploadPDF = multer({
 
 module.exports = {
   uploadExcel,
-  uploadPDF,
+  uploadPDFAndImage,
 };
