@@ -10,9 +10,11 @@ const swaggerDocument = require("../src/docs/swagger");
 
 dotenv.config();
 
-const authMiddleware = require("../src/middlewares/authMiddleware");
-const logMiddleware = require("../src/middlewares/logMiddleware");
-const errorMiddleware = require("../src/middlewares/errorMiddleware");
+const {
+  authMiddleware,
+  logMiddleware,
+  errorMiddleware,
+} = require("./middlewares");
 const { asyncHandler } = require("../src/utils/helpers");
 const IntegracaoController = require("../src/controllers/integracao");
 const MoedaController = require("../src/controllers/moeda");

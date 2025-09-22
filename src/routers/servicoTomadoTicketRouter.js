@@ -3,8 +3,8 @@ const router = express.Router();
 const ServicoTomadoTicketController = require("../controllers/servicoTomadoTicket");
 const multer = require("multer");
 const {
-  registrarAcaoMiddleware,
-} = require("../middlewares/registrarAcaoMiddleware");
+  middlewares: { registrarAcaoMiddleware },
+} = require("../../central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 const { asyncHandler } = require("../utils/helpers");
 const storage = multer.memoryStorage({});
