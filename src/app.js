@@ -1,26 +1,26 @@
 const { createApp } = require("../central-oon-core-backend");
 
+const webhookRouter = require("./routers/webhookRouter");
+const pessoaRouter = require("./routers/pessoaRouter");
+const servicoTomadoTicketRouter = require("./routers/servicoTomadoTicketRouter");
+const servicoRouter = require("./routers/servicoRouter");
+const documentoFiscalRouter = require("./routers/documentoFiscalRouter");
+const documentoCadastralRouter = require("./routers/documentoCadastralRouter");
+const planejamentoRouter = require("./routers/planejamentoRouter");
+const dashboardRouter = require("./routers/dashboardRouter");
+
 const registerPublicRoutes = (app) => {
-  app.use("/webhooks/", require("./routers/webhookRouter"));
+  app.use("/webhooks/", webhookRouter);
 };
 
 const registerPrivateRoutes = (app) => {
-  app.use("/pessoas", require("./routers/pessoaRouter"));
-  app.use(
-    "/servicos-tomados/tickets",
-    require("./routers/servicoTomadoTicketRouter"),
-  );
-  app.use("/servicos", require("./routers/servicoRouter"));
-  app.use(
-    "/documentos-fiscais",
-    require("./routers/documentoFiscalRouter"),
-  );
-  app.use(
-    "/documentos-cadastrais",
-    require("./routers/documentoCadastralRouter"),
-  );
-  app.use("/planejamento", require("./routers/planejamentoRouter"));
-  app.use("/dashboard", require("./routers/dashboardRouter"));
+  app.use("/pessoas", pessoaRouter);
+  app.use("/servicos-tomados/tickets", servicoTomadoTicketRouter);
+  app.use("/servicos", servicoRouter);
+  app.use("/documentos-fiscais", documentoFiscalRouter,);
+  app.use("/documentos-cadastrais", documentoCadastralRouter,);
+  app.use("/planejamento", planejamentoRouter);
+  app.use("/dashboard", dashboardRouter);
 };
 
 module.exports = createApp({
