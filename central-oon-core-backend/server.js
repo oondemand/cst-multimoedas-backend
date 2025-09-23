@@ -58,15 +58,10 @@ const startServer = async ({
     await connectDB();
 
     const server = app.listen(resolvedPort, () => {
-      logInfo(
-        "****************************************************************",
-      );
-      logInfo(
-        `${resolvedServiceName} rodando na porta ${resolvedPort} e conectado ao MongoDB`,
-      );
-      logInfo(
-        "****************************************************************",
-      );
+      logInfo("");
+      logInfo("************************************************************************",);
+      logInfo(`${resolvedServiceName} rodando na porta ${resolvedPort} e conectado ao MongoDB`,);
+      logInfo("************************************************************************",);
       logInfo("");
     });
 

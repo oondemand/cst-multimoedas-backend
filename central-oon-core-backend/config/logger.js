@@ -49,12 +49,10 @@ const createLogger = ({
   }
 
   if (enableConsole) {
-    const defaultConsoleOptions = {
+    const defaultConsoleOptions = { 
       format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.simple(),
-      ),
-    };
+        winston.format.printf(({ level, message }) => `${level}: ${message}`)) 
+      };
 
     resolvedTransports.push(
       new winston.transports.Console({
