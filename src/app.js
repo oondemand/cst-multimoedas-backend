@@ -25,7 +25,9 @@ const registerPrivateRoutes = (app) => {
   app.use("/lista-omie", listaOmieRouter);
 };
 
-module.exports = createApp({
+const app = createApp({
   registerPublicRoutes,
   registerPrivateRoutes,
 });
+
+module.exports = app;
