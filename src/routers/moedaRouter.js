@@ -2,11 +2,13 @@ const express = require("express");
 const MoedaController = require("../controllers/moeda");
 const {
   middlewares: { registrarAcaoMiddleware },
+  config: {
+    multer: { uploadExcel },
+  },
 } = require("../../central-oon-core-backend");
 const router = express.Router();
 const { asyncHandler } = require("../utils/helpers");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { uploadExcel } = require("../config/multer");
 
 router.get("/", asyncHandler(MoedaController.listarComPaginacao));
 router.get("/ativas", asyncHandler(MoedaController.listarAtivas));

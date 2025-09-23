@@ -3,8 +3,10 @@ const DocumentoFiscalController = require("../controllers/documentoFiscal");
 
 const router = express.Router();
 
-const { uploadExcel, uploadPDFAndImage } = require("../config/multer");
 const {
+  config: {
+    multer: { uploadExcel, uploadPDFAndImage },
+  },
   middlewares: { registrarAcaoMiddleware },
 } = require("../../central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
