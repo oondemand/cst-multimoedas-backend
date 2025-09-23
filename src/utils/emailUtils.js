@@ -1,7 +1,6 @@
 const sgMail = require("@sendgrid/mail");
-const { format } = require("date-fns");
+// const { format } = require("date-fns");
 const Sistema = require("../models/Sistema");
-const { conviteTemplate } = require("../constants/template");
 
 const enviarEmail = async (emailTo, assunto, corpo, anexos = []) => {
   const config = await Sistema.findOne();
@@ -46,59 +45,59 @@ const enviarEmail = async (emailTo, assunto, corpo, anexos = []) => {
   }
 };
 
-const emailEsqueciMinhaSenha = async ({ usuario, url }) => {
-  try {
-    const emailTo = {
-      email: usuario.email,
-      nome: usuario.nome,
-    };
+// const emailEsqueciMinhaSenha = async ({ usuario, url }) => {
+//   try {
+//     const emailTo = {
+//       email: usuario.email,
+//       nome: usuario.nome,
+//     };
 
-    const assunto = "Recuperação de senha";
+//     const assunto = "Recuperação de senha";
 
-    const corpo = `<h1>Olá, ${usuario.nome}!</h1>
-    <p>Clique no link abaixo darmos inicio ao processo de recuperação de senha:</p>
-    <a href="${url}">Recuperar minha senha</a>`;
+//     const corpo = `<h1>Olá, ${usuario.nome}!</h1>
+//     <p>Clique no link abaixo darmos inicio ao processo de recuperação de senha:</p>
+//     <a href="${url}">Recuperar minha senha</a>`;
 
-    await enviarEmail(emailTo, assunto, corpo);
-  } catch (error) {
-    throw new Error("Erro ao enviar e-mail para recuperação de senha");
-  }
-};
+//     await enviarEmail(emailTo, assunto, corpo);
+//   } catch (error) {
+//     throw new Error("Erro ao enviar e-mail para recuperação de senha");
+//   }
+// };
 
-const emailImportarRpas = async ({ usuario, detalhes }) => {
-  try {
-    const emailTo = {
-      email: usuario.email,
-      nome: usuario.nome,
-    };
+// const emailImportarRpas = async ({ usuario, detalhes }) => {
+//   try {
+//     const emailTo = {
+//       email: usuario.email,
+//       nome: usuario.nome,
+//     };
 
-    const assunto = "RPAs importadas";
+//     const assunto = "RPAs importadas";
 
-    const corpo = `<h1>Olá, ${usuario.nome}!</h1>
-    <p>Foram importados ${detalhes.sucesso} arquivos.</p>
-    <p>Arquivos com erro ${detalhes.erros.quantidade} arquivos.</p>
-    ${detalhes.erros.quantidade > 0 ? "<p>Segue em anexo o log de erros</p>" : ""}
-    `;
+//     const corpo = `<h1>Olá, ${usuario.nome}!</h1>
+//     <p>Foram importados ${detalhes.sucesso} arquivos.</p>
+//     <p>Arquivos com erro ${detalhes.erros.quantidade} arquivos.</p>
+//     ${detalhes.erros.quantidade > 0 ? "<p>Segue em anexo o log de erros</p>" : ""}
+//     `;
 
-    if (detalhes.erros.quantidade > 0) {
-      const arquivoDeErros = Buffer.from(detalhes.erros.logs).toString(
-        "base64",
-      );
-      const anexos = [
-        {
-          filename: `logs-de-erro-raps-${format(new Date(), "dd-MM-yyy")}.txt`,
-          fileBuffer: arquivoDeErros,
-        },
-      ];
+//     if (detalhes.erros.quantidade > 0) {
+//       const arquivoDeErros = Buffer.from(detalhes.erros.logs).toString(
+//         "base64",
+//       );
+//       const anexos = [
+//         {
+//           filename: `logs-de-erro-raps-${format(new Date(), "dd-MM-yyy")}.txt`,
+//           fileBuffer: arquivoDeErros,
+//         },
+//       ];
 
-      return await enviarEmail(emailTo, assunto, corpo, anexos);
-    }
+//       return await enviarEmail(emailTo, assunto, corpo, anexos);
+//     }
 
-    return await enviarEmail(emailTo, assunto, corpo);
-  } catch (error) {
-    throw new Error("Erro ao enviar e-mail de serviços exportados:");
-  }
-};
+//     return await enviarEmail(emailTo, assunto, corpo);
+//   } catch (error) {
+//     throw new Error("Erro ao enviar e-mail de serviços exportados:");
+//   }
+// };
 
 const emailErroIntegracaoOmie = async ({ usuario, error }) => {
   try {
@@ -119,22 +118,22 @@ const emailErroIntegracaoOmie = async ({ usuario, error }) => {
   }
 };
 
-const emailLinkCadastroUsuarioPrestador = async ({ email, nome, url }) => {
-  try {
-    const emailTo = {
-      email,
-      nome,
-    };
+// const emailLinkCadastroUsuarioPrestador = async ({ email, nome, url }) => {
+//   try {
+//     const emailTo = {
+//       email,
+//       nome,
+//     };
 
-    const assunto = "Acesso Liberado";
+//     const assunto = "Acesso Liberado";
 
-    const corpo = await conviteTemplate({ url });
+//     const corpo = await conviteTemplate({ url });
 
-    return await enviarEmail(emailTo, assunto, corpo);
-  } catch (error) {
-    throw error;
-  }
-};
+//     return await enviarEmail(emailTo, assunto, corpo);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 const emailTeste = async ({ email }) => {
   try {
@@ -156,8 +155,8 @@ const emailTeste = async ({ email }) => {
 
 module.exports = {
   emailTeste,
-  emailEsqueciMinhaSenha,
-  emailImportarRpas,
+  // emailEsqueciMinhaSenha,
+  // emailImportarRpas,
   emailErroIntegracaoOmie,
-  emailLinkCadastroUsuarioPrestador,
+  // emailLinkCadastroUsuarioPrestador,
 };

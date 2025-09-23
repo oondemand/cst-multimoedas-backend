@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { ListaOmieController } = require("../controllers/listaOmieController");
+const ListaOmieController = require("../controllers/listaOmie");
 
 const {
   middlewares: { registrarAcaoMiddleware },

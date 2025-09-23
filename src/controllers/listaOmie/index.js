@@ -64,11 +64,11 @@ const deleteLista = async (req, res) => {
   });
 };
 
-exports.ListaOmieController = {
+module.exports = {
   update,
   listAll,
   getListaPorCodigo,
   create,
   deleteLista,
   syncOmie,
-};
+}
