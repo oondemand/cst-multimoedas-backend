@@ -10,7 +10,7 @@ const {
   middlewares: { registrarAcaoMiddleware },
 } = require("../../central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../central-oon-core-backend/utils/helpers");
 
 router.get("/", asyncHandler(DocumentoCadastralController.listar));
 router.get("/exportar", asyncHandler(DocumentoCadastralController.exportar));

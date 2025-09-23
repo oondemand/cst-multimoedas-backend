@@ -1,7 +1,7 @@
 const PessoaBusiness = require("./business");
 const Pessoa = require("../../models/Pessoa");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const FiltersUtils = require("../../../central-oon-core-backend/utils/pagination/filter");
+const PaginationUtils = require("../../../central-oon-core-backend/utils/pagination");
 const PessoaNaoEncontradaError = require("../errors/pessoa/pessoaNaoEncontradaError");
 const { LISTA_PAISES_OMIE } = require("../../constants/omie/paises");
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const PlanejamentoController = require("../controllers/planejamento");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../central-oon-core-backend/utils/helpers");
 const router = express.Router();
 
 router.get("/listar-servicos", asyncHandler(PlanejamentoController.listar));

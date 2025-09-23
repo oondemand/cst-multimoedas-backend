@@ -5,7 +5,7 @@ const {
 } = require("../../central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
 const router = express.Router();
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../central-oon-core-backend/utils/helpers");
 
 router.get("/", asyncHandler(UsuarioController.listarUsuarios));
 

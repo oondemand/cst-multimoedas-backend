@@ -1,5 +1,5 @@
 const multer = require("multer");
-const helpers = require("../../src/utils/helpers");
+const helpers = require("../utils/helpers");
 const GenericError = require("../../src/services/errors/generic");
 
 const errorMiddleware = (error, _, res, next) => {

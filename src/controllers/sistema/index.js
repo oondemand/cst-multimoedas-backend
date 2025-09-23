@@ -1,6 +1,6 @@
 const Sistema = require("../../models/Sistema");
 const { emailTeste } = require("../../utils/emailUtils");
-const Helpers = require("../../utils/helpers");
+const Helpers = require("../../../central-oon-core-backend/utils/helpers");
 
 listarSistemaConfig = async (req, res) => {
   const sistema = await Sistema.findOne();

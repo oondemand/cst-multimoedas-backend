@@ -1,7 +1,7 @@
 const ControleAlteracao = require("../../models/ControleAlteracao");
-const FiltersUtils = require("../../utils/pagination/filter");
+const FiltersUtils = require("../../../central-oon-core-backend/utils/pagination/filter");
 const Usuario = require("../../models/Usuario");
-const PaginationUtils = require("../../utils/pagination");
+const PaginationUtils = require("../../../central-oon-core-backend/utils/pagination");
 
 const buscarIdsUsuariosFiltrados = async ({ nome, searchTerm }) => {
   if (!nome && !searchTerm) return [];

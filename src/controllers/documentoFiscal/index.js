@@ -9,13 +9,13 @@ const DocumentoFiscalService = require("../../services/documentoFiscal");
 const EtapaService = require("../../services/etapa");
 
 const DocumentoFiscalExcel = require("../../services/documentoFiscal/excel");
-const { arrayToExcelBuffer } = require("../../utils/excel");
+const { arrayToExcelBuffer } = require("../../../central-oon-core-backend/utils/excel");
 const ImportacaoService = require("../../services/importacao");
 
 // const DocumentoFidocumentoFiscal = require("../../models/DocumentoFidocumentoFiscal");
 
 // const filtersUtils = require("../../utils/filter");
-// const { criarNomePersonalizado } = require("../../utils/formatters");
+// const { criarNomePersonalizado } = require("../../../central-oon-core-backend/utils/formatters");
 
 // const { registrarAcao } = require("../../services/controleService");
 // const {
@@ -28,7 +28,7 @@ const {
   sendPaginatedResponse,
   sendResponse,
   // sendErrorResponse,
-} = require("../../utils/helpers");
+} = require("../../../central-oon-core-backend/utils/helpers");
 const ServicoTomadoTicket = require("../../models/ServicoTomadoTicket");
 
 const criar = async (req, res) => {

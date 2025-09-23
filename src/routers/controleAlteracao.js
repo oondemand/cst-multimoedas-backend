@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controleAlteracao = require("../controllers/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../central-oon-core-backend/utils/helpers");
 
 router.get("/", asyncHandler(controleAlteracao.listarTodosRegistros));
 

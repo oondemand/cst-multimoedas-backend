@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../central-oon-core-backend/utils/helpers");
 const DashboardController = require("../controllers/dashboard");
 const router = Router();
 

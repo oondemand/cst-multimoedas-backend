@@ -1,4 +1,4 @@
-const { sendResponse, sendPaginatedResponse } = require("../../utils/helpers");
+const { sendResponse, sendPaginatedResponse } = require("../../../central-oon-core-backend/utils/helpers");
 const AssistenteService = require("../../services/assistente");
 
 const criarAssistente = async (req, res) => {

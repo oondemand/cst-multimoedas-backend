@@ -1,8 +1,8 @@
 const DocumentoCadastral = require("../../models/DocumentoCadastral");
-const FiltersUtils = require("../../utils/pagination/filter");
-const PaginationUtils = require("../../utils/pagination");
+const FiltersUtils = require("../../../central-oon-core-backend/utils/pagination/filter");
+const PaginationUtils = require("../../../central-oon-core-backend/utils/pagination");
 const Arquivo = require("../../models/Arquivo");
-const { criarNomePersonalizado } = require("../../utils/formatters");
+const { criarNomePersonalizado } = require("../../../central-oon-core-backend/utils/formatters");
 const ArquivoNaoEncontradoError = require("../errors/arquivo/arquivoNaoEncontradoError");
 const GenericError = require("../errors/generic");
 
