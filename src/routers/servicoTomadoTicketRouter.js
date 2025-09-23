@@ -6,7 +6,7 @@ const {
   middlewares: { registrarAcaoMiddleware },
 } = require("../../central-oon-core-backend");
 const { ACOES, ENTIDADES } = require("../constants/controleAlteracao");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../central-oon-core-backend/utils/helpers");
 const storage = multer.memoryStorage({});
 
 const fileFilter = (req, file, cb) => {

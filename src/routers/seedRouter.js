@@ -26,7 +26,7 @@ const {
   sendErrorResponse,
   sendResponse,
   asyncHandler,
-} = require("../utils/helpers");
+} = require("../../central-oon-core-backend/utils/helpers");
 
 const seed = async (req, res) => {
   const { baseOmie, appKey, openIaKey } = req.body;

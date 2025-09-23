@@ -15,7 +15,7 @@ const {
   logMiddleware,
   errorMiddleware,
 } = require("./middlewares");
-const { asyncHandler } = require("../src/utils/helpers");
+const { asyncHandler } = require("./utils/helpers");
 const IntegracaoController = require("../src/controllers/integracao");
 const MoedaController = require("../src/controllers/moeda");
 

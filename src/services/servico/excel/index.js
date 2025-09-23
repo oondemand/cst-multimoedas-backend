@@ -1,4 +1,4 @@
-const { excelToJson } = require("../../../utils/excel.js");
+const { excelToJson } = require("../../../../central-oon-core-backend/utils/excel.js");
 const { registrarAcao } = require("../../controleService.js");
 const {
   ACOES,

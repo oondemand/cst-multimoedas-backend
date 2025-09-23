@@ -1,5 +1,5 @@
 const ImportacaoService = require("../../services/importacao");
-const { sendPaginatedResponse } = require("../../utils/helpers");
+const { sendPaginatedResponse } = require("../../../central-oon-core-backend/utils/helpers");
 
 const listar = async (req, res) => {
   const { pageIndex = 0, pageSize = 10, tipo } = req.query;

@@ -1,4 +1,4 @@
-const Helpers = require("../../../utils/helpers");
+const Helpers = require("../../../../central-oon-core-backend/utils/helpers");
 const PessoaSync = require("../../../services/pessoa/omie");
 const BaseOmie = require("../../../models/BaseOmie");
 

@@ -1,4 +1,4 @@
-const { excelToJson } = require("../../../utils/excel.js");
+const { excelToJson } = require("../../../../central-oon-core-backend/utils/excel.js");
 const { registrarAcao } = require("../../controleService.js");
 const {
   ACOES,
@@ -13,7 +13,7 @@ const Pessoa = require("../../../models/Pessoa");
 const PessoaService = require("../../pessoa");
 const DocumentoFiscalService = require("../../documentoFiscal");
 const DocumentoFiscal = require("../../../models/DocumentoFiscal.js");
-const { formatarCompetencia } = require("../../../utils/formatters.js");
+const { formatarCompetencia } = require("../../../../central-oon-core-backend/utils/formatters.js");
 
 const criarNovoDocumentoFiscal = async ({ documentoFiscal, usuario }) => {
   const novoDocumentoFiscal = new DocumentoFiscal(documentoFiscal);

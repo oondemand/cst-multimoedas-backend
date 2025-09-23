@@ -4,7 +4,7 @@ const UsuarioController = require("../controllers/usuario");
 const {
   middlewares: { authMiddleware },
 } = require("../../central-oon-core-backend");
-const { asyncHandler } = require("../utils/helpers");
+const { asyncHandler } = require("../../central-oon-core-backend/utils/helpers");
 
 router.post("/login", asyncHandler(UsuarioController.loginUsuario));
 router.get(

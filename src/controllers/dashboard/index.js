@@ -1,4 +1,4 @@
-const Helpers = require("../../utils/helpers");
+const Helpers = require("../../../central-oon-core-backend/utils/helpers");
 const ServicoService = require("../../services/servico");
 const ServicoTomadoTicketService = require("../../services/servicoTomadoTicket");
 const IntegracaoService = require("../../services/integracao");

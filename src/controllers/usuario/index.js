@@ -8,7 +8,7 @@ const {
   sendErrorResponse,
   sendPaginatedResponse,
   sendResponse,
-} = require("../../utils/helpers");
+} = require("../../../central-oon-core-backend/utils/helpers");
 
 const criarUsuario = async (req, res) => {
   const usuario = await UsuarioService.criar({ usuario: req.body });
