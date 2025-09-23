@@ -3,6 +3,7 @@ const { startServer } = require("./server");
 const middlewares = require("./middlewares");
 const config = require("./config");
 const utils = require("./utils");
+const modelsModule = require("./models");
 
 module.exports = {
   createApp,
@@ -10,4 +11,5 @@ module.exports = {
   middlewares,
   config,
   utils,
+  ...modelsModule,
 };
